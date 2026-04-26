@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
+import { Footer } from "@/components/layout/footer";
+import { CookieBanner } from "@/components/layout/cookie-banner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -39,8 +41,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className="min-h-screen bg-rzpanda-fond antialiased">
-        {children}
+      <body className="flex min-h-screen flex-col bg-rzpanda-fond antialiased">
+        <div className="flex-1">{children}</div>
+        <Footer />
+        <CookieBanner />
         <Toaster
           position="top-right"
           richColors

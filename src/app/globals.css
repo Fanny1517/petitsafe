@@ -61,3 +61,32 @@
   background: hsl(var(--border));
   border-radius: 3px;
 }
+
+/* Pages légales */
+.legal-content h1 {
+  @apply mb-4 text-2xl font-bold text-rzpanda-texte;
+}
+.legal-content h2 {
+  @apply mb-3 mt-6 text-lg font-semibold text-rzpanda-texte;
+}
+.legal-content h3 {
+  @apply mb-2 mt-4 text-base font-semibold text-rzpanda-texte;
+}
+.legal-content p {
+  @apply mb-3 leading-relaxed;
+}
+.legal-content ul {
+  @apply mb-3 list-disc space-y-1 pl-6;
+}
+.legal-content li {
+  @apply leading-relaxed;
+}
+.legal-content a {
+  @apply text-rzpanda-primary hover:underline;
+}
+.legal-content strong {
+  @apply font-semibold;
+}
+.legal-content .meta {
+  @apply mb-6 text-xs text-gray-500;
+}
