@@ -1,6 +1,9 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
+import { logAudit } from "@/lib/security/audit";
+import { AuditAction } from "@prisma/client";
 import type { ActionResult } from "@/types";
 
 export interface ExportDDPPData {
@@ -40,6 +43,7 @@ export async function getExportDDPPData(
   structureId: string, debut: string, fin: string
 ): Promise<ActionResult<ExportDDPPData>> {
   try {
+    await assertAccess(structureId);
     const dateDebut = new Date(debut);
     dateDebut.setHours(0, 0, 0, 0);
     const dateFin = new Date(fin);
@@ -159,8 +163,8 @@ export async function getExportDDPPData(
         })),
       },
     };
-  } catch {
-    return { success: false, error: "Erreur lors de la récupération des données." };
+  } catch (e) {
+    return authErrorToResult(e) as ActionResult<ExportDDPPData>;
   }
 }
 
@@ -193,6 +197,7 @@ export async function getExportPMIData(
   structureId: string, debut: string, fin: string
 ): Promise<ActionResult<ExportPMIData>> {
   try {
+    await assertAccess(structureId);
     const dateDebut = new Date(debut);
     dateDebut.setHours(0, 0, 0, 0);
     const dateFin = new Date(fin);
@@ -272,20 +277,24 @@ export async function getExportPMIData(
         })),
       },
     };
-  } catch {
-    return { success: false, error: "Erreur lors de la récupération des données PMI." };
+  } catch (e) {
+    return authErrorToResult(e) as ActionResult<ExportPMIData>;
   }
 }
 
-export async function sauvegarderExport(data: {
-  structure_id: string;
-  type_export: "DDPP" | "PMI" | "INTERNE";
-  periode_debut: string;
-  periode_fin: string;
-  genere_par: string;
-  url: string;
-}): Promise<ActionResult<{ id: string }>> {
+export async function sauvegarderExport(
+  data: {
+    structure_id: string;
+    type_export: "DDPP" | "PMI" | "INTERNE";
+    periode_debut: string;
+    periode_fin: string;
+    genere_par: string;
+    url: string;
+  },
+  actorProfilId?: string
+): Promise<ActionResult<{ id: string }>> {
   try {
+    const ctx = await assertAccess(data.structure_id, { profilId: actorProfilId });
     const exportPdf = await prisma.exportPDF.create({
       data: {
         structure_id: data.structure_id,
@@ -296,9 +305,23 @@ export async function sauvegarderExport(data: {
         url: data.url,
       },
     });
+    await logAudit({
+      structureId: data.structure_id,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.EXPORT,
+      entity: "export",
+      entityId: exportPdf.id,
+      details: {
+        type: data.type_export,
+        debut: data.periode_debut,
+        fin: data.periode_fin,
+      },
+    });
     return { success: true, data: { id: exportPdf.id } };
-  } catch {
-    return { success: false, error: "Erreur lors de la sauvegarde de l'export." };
+  } catch (e) {
+    return authErrorToResult(e) as ActionResult<{ id: string }>;
   }
 }
 
@@ -309,6 +332,7 @@ export async function getHistoriqueExports(
   periode_fin: string; genere_par: string; url: string; created_at: string;
 }[]>> {
   try {
+    await assertAccess(structureId);
     const exports = await prisma.exportPDF.findMany({
       where: { structure_id: structureId },
       orderBy: { created_at: "desc" },
@@ -326,7 +350,10 @@ export async function getHistoriqueExports(
         created_at: e.created_at.toISOString(),
       })),
     };
-  } catch {
-    return { success: false, error: "Erreur lors du chargement de l'historique." };
+  } catch (e) {
+    return authErrorToResult(e) as ActionResult<{
+      id: string; type_export: string; periode_debut: string;
+      periode_fin: string; genere_par: string; url: string; created_at: string;
+    }[]>;
   }
 }

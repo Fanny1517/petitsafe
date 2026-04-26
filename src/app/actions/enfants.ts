@@ -1,12 +1,20 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
-import { verifierAdmin } from "@/lib/permissions";
-import { enfantSchema, importEnfantSchema } from "@/lib/schemas/enfant";
+import { enfantSchema } from "@/lib/schemas/enfant";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
+import { logAudit } from "@/lib/security/audit";
+import { AuditAction } from "@prisma/client";
 import { z } from "zod";
 
-export async function creerEnfant(structureId: string, data: z.infer<typeof enfantSchema>) {
+export async function creerEnfant(
+  structureId: string,
+  data: z.infer<typeof enfantSchema>,
+  profilId?: string
+) {
   try {
+    const ctx = await assertAccess(structureId, { profilId });
+
     const parsed = enfantSchema.safeParse(data);
     if (!parsed.success) return { success: false as const, error: "Données invalides." };
 
@@ -41,18 +49,37 @@ export async function creerEnfant(structureId: string, data: z.infer<typeof enfa
       },
       include: { allergies: true, contacts: true },
     });
+
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.CREATE,
+      entity: "enfant",
+      entityId: enfant.id,
+      details: { prenom: enfant.prenom, nom: enfant.nom },
+    });
+
     return { success: true as const, data: enfant };
-  } catch (error) {
-    return { success: false as const, error: "Erreur lors de la création. Réessayez." };
+  } catch (e) {
+    if (e instanceof Error && e.constructor.name === "AuthError") return authErrorToResult(e);
+    return authErrorToResult(e);
   }
 }
 
-export async function modifierEnfant(enfantId: string, structureId: string, data: z.infer<typeof enfantSchema>) {
+export async function modifierEnfant(
+  enfantId: string,
+  structureId: string,
+  data: z.infer<typeof enfantSchema>,
+  profilId?: string
+) {
   try {
+    const ctx = await assertAccess(structureId, { profilId });
+
     const parsed = enfantSchema.safeParse(data);
     if (!parsed.success) return { success: false as const, error: "Données invalides." };
 
-    // Delete existing allergies and contacts, then recreate
     await prisma.allergieEnfant.deleteMany({ where: { enfant_id: enfantId } });
     await prisma.contactUrgence.deleteMany({ where: { enfant_id: enfantId } });
 
@@ -87,64 +114,97 @@ export async function modifierEnfant(enfantId: string, structureId: string, data
       },
       include: { allergies: true, contacts: true },
     });
+
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.UPDATE,
+      entity: "enfant",
+      entityId: enfant.id,
+      details: { prenom: enfant.prenom, nom: enfant.nom },
+    });
+
     return { success: true as const, data: enfant };
-  } catch (error) {
-    return { success: false as const, error: "Erreur lors de la modification. Réessayez." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function archiverEnfant(enfantId: string, structureId: string, profilId?: string) {
   try {
-    if (profilId && !(await verifierAdmin(profilId))) {
-      return { success: false as const, error: "Action réservée aux administrateurs." };
-    }
+    const ctx = await assertAccess(structureId, { profilId, requireAdmin: true });
     await prisma.enfant.update({
       where: { id: enfantId, structure_id: structureId },
       data: { actif: false },
     });
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.ARCHIVE,
+      entity: "enfant",
+      entityId: enfantId,
+    });
     return { success: true as const };
-  } catch {
-    return { success: false as const, error: "Erreur lors de l'archivage." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function supprimerEnfant(enfantId: string, structureId: string, profilId?: string) {
   try {
-    if (profilId && !(await verifierAdmin(profilId))) {
-      return { success: false as const, error: "Action réservée aux administrateurs." };
-    }
+    const ctx = await assertAccess(structureId, { profilId, requireAdmin: true });
+    const enfant = await prisma.enfant.findFirst({
+      where: { id: enfantId, structure_id: structureId },
+      select: { prenom: true, nom: true },
+    });
     await prisma.enfant.delete({
       where: { id: enfantId, structure_id: structureId },
     });
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.DELETE,
+      entity: "enfant",
+      entityId: enfantId,
+      details: enfant ? { prenom: enfant.prenom, nom: enfant.nom } : undefined,
+    });
     return { success: true as const };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la suppression." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function getEnfants(structureId: string) {
   try {
+    await assertAccess(structureId);
     const enfants = await prisma.enfant.findMany({
       where: { structure_id: structureId, actif: true },
       include: { allergies: true, contacts: true },
       orderBy: { prenom: "asc" },
     });
     return { success: true as const, data: enfants };
-  } catch (error) {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function getEnfant(enfantId: string, structureId: string) {
   try {
+    await assertAccess(structureId);
     const enfant = await prisma.enfant.findFirst({
       where: { id: enfantId, structure_id: structureId },
       include: { allergies: true, contacts: true },
     });
     if (!enfant) return { success: false as const, error: "Enfant non trouvé." };
     return { success: true as const, data: enfant };
-  } catch (error) {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -157,8 +217,9 @@ interface ImportRow {
   allergies: { allergene: string; severite: string }[];
 }
 
-export async function importerEnfants(structureId: string, rows: ImportRow[]) {
+export async function importerEnfants(structureId: string, rows: ImportRow[], profilId?: string) {
   try {
+    await assertAccess(structureId, { profilId, requireAdmin: true });
     const results: { prenom: string; nom: string; success: boolean; error?: string }[] = [];
 
     for (const row of rows) {
@@ -192,13 +253,14 @@ export async function importerEnfants(structureId: string, rows: ImportRow[]) {
     const imported = results.filter((r) => r.success).length;
     const failed = results.filter((r) => !r.success).length;
     return { success: true as const, data: { imported, failed, results } };
-  } catch (error) {
-    return { success: false as const, error: "Erreur lors de l'import." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function checkDoublons(structureId: string, enfants: { prenom: string; nom: string }[]) {
   try {
+    await assertAccess(structureId);
     const existing = await prisma.enfant.findMany({
       where: { structure_id: structureId, actif: true },
       select: { prenom: true, nom: true },

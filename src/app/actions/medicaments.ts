@@ -1,7 +1,9 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
-import type { VoieAdministration } from "@prisma/client";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
+import { logAudit } from "@/lib/security/audit";
+import { AuditAction, type VoieAdministration } from "@prisma/client";
 
 export interface AdministrationInput {
   enfant_id: string;
@@ -18,8 +20,22 @@ export interface SignaturePayload {
   nom_complet: string;
 }
 
+async function loadAdminAndAssert(id: string, opts: { profilId?: string; requireAdmin?: boolean } = {}) {
+  const existing = await prisma.administrationMedicament.findUnique({
+    where: { id },
+    select: {
+      id: true, structure_id: true, signe: true, signe_par_id: true,
+      temoin_id: true, temoin_signe_le: true, enfant_id: true, nom_medicament: true,
+    },
+  });
+  if (!existing) return { existing: null, error: "Administration introuvable." as const };
+  await assertAccess(existing.structure_id, opts);
+  return { existing, error: null };
+}
+
 export async function listerAdministrations(structureId: string, opts?: { enfantId?: string }) {
   try {
+    await assertAccess(structureId);
     const list = await prisma.administrationMedicament.findMany({
       where: {
         structure_id: structureId,
@@ -29,8 +45,8 @@ export async function listerAdministrations(structureId: string, opts?: { enfant
       orderBy: { date_administration: "desc" },
     });
     return { success: true as const, data: list };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement des administrations." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -41,17 +57,31 @@ export async function getAdministration(id: string) {
       include: { enfant: { select: { id: true, prenom: true, nom: true } } },
     });
     if (!a) return { success: false as const, error: "Administration introuvable." };
+    await assertAccess(a.structure_id);
     return { success: true as const, data: a };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
-export async function creerAdministration(structureId: string, data: AdministrationInput) {
+export async function creerAdministration(
+  structureId: string,
+  data: AdministrationInput,
+  actorProfilId?: string
+) {
   try {
+    const ctx = await assertAccess(structureId, { profilId: actorProfilId });
+
     if (!data.nom_medicament?.trim()) return { success: false as const, error: "Nom du médicament requis." };
     if (!data.posologie?.trim()) return { success: false as const, error: "Posologie requise." };
     if (!data.date_administration) return { success: false as const, error: "Date et heure d'administration requises." };
+
+    // L'enfant doit appartenir à la structure
+    const enfant = await prisma.enfant.findFirst({
+      where: { id: data.enfant_id, structure_id: structureId },
+      select: { id: true },
+    });
+    if (!enfant) return { success: false as const, error: "Enfant introuvable dans cette structure." };
 
     const admin = await prisma.administrationMedicament.create({
       data: {
@@ -65,16 +95,26 @@ export async function creerAdministration(structureId: string, data: Administrat
         observations: data.observations?.trim() || null,
       },
     });
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.CREATE,
+      entity: "administration_medicament",
+      entityId: admin.id,
+      details: { nom_medicament: admin.nom_medicament, enfant_id: admin.enfant_id },
+    });
     return { success: true as const, data: admin };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la création." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
-export async function modifierAdministration(id: string, data: AdministrationInput) {
+export async function modifierAdministration(id: string, data: AdministrationInput, actorProfilId?: string) {
   try {
-    const existing = await prisma.administrationMedicament.findUnique({ where: { id } });
-    if (!existing) return { success: false as const, error: "Administration introuvable." };
+    const { existing, error } = await loadAdminAndAssert(id, { profilId: actorProfilId });
+    if (error || !existing) return { success: false as const, error: error ?? "Administration introuvable." };
     if (existing.signe) return { success: false as const, error: "Administration signée — modification impossible." };
 
     const admin = await prisma.administrationMedicament.update({
@@ -89,8 +129,8 @@ export async function modifierAdministration(id: string, data: AdministrationInp
       },
     });
     return { success: true as const, data: admin };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la modification." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -99,8 +139,8 @@ export async function signerAdministration(id: string, sig: SignaturePayload) {
     if (!sig.profil_id || !sig.nom_complet) {
       return { success: false as const, error: "Profil et nom complet requis pour signer." };
     }
-    const existing = await prisma.administrationMedicament.findUnique({ where: { id } });
-    if (!existing) return { success: false as const, error: "Administration introuvable." };
+    const { existing, error } = await loadAdminAndAssert(id, { profilId: sig.profil_id });
+    if (error || !existing) return { success: false as const, error: error ?? "Administration introuvable." };
     if (existing.signe) return { success: false as const, error: "Déjà signée — signature irréversible." };
 
     const admin = await prisma.administrationMedicament.update({
@@ -113,8 +153,8 @@ export async function signerAdministration(id: string, sig: SignaturePayload) {
       },
     });
     return { success: true as const, data: admin };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la signature." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -123,8 +163,8 @@ export async function cosignerAdministration(id: string, sig: SignaturePayload) 
     if (!sig.profil_id || !sig.nom_complet) {
       return { success: false as const, error: "Profil témoin et nom complet requis." };
     }
-    const existing = await prisma.administrationMedicament.findUnique({ where: { id } });
-    if (!existing) return { success: false as const, error: "Administration introuvable." };
+    const { existing, error } = await loadAdminAndAssert(id, { profilId: sig.profil_id });
+    if (error || !existing) return { success: false as const, error: error ?? "Administration introuvable." };
     if (!existing.signe) return { success: false as const, error: "L'administration doit d'abord être signée par l'administrateur." };
     if (existing.temoin_signe_le) return { success: false as const, error: "Témoin déjà enregistré." };
     if (existing.signe_par_id === sig.profil_id) {
@@ -140,19 +180,30 @@ export async function cosignerAdministration(id: string, sig: SignaturePayload) 
       },
     });
     return { success: true as const, data: admin };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la co-signature." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
-export async function supprimerAdministration(id: string) {
+export async function supprimerAdministration(id: string, actorProfilId?: string) {
   try {
-    const existing = await prisma.administrationMedicament.findUnique({ where: { id } });
-    if (!existing) return { success: false as const, error: "Administration introuvable." };
+    const { existing, error } = await loadAdminAndAssert(id, { profilId: actorProfilId, requireAdmin: true });
+    if (error || !existing) return { success: false as const, error: error ?? "Administration introuvable." };
     if (existing.signe) return { success: false as const, error: "Administration signée — suppression interdite." };
+
     await prisma.administrationMedicament.delete({ where: { id } });
+
+    await logAudit({
+      structureId: existing.structure_id,
+      profilId: actorProfilId,
+      action: AuditAction.DELETE,
+      entity: "administration_medicament",
+      entityId: id,
+      details: { nom_medicament: existing.nom_medicament, enfant_id: existing.enfant_id },
+    });
+
     return { success: true as const };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la suppression." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }

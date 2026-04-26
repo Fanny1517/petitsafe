@@ -6,6 +6,7 @@ import { useState } from "react";
 import { PandaIcon } from "@/components/shared/panda-icon";
 import { LogoText } from "@/components/shared/logo-text";
 import { createClient } from "@/lib/supabase/client";
+import { checkLoginRateLimit } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -26,6 +27,12 @@ export default function LoginPage() {
       return;
     }
     setLoading(true);
+    const rl = await checkLoginRateLimit();
+    if (!rl.ok) {
+      setLoading(false);
+      toast.error(rl.error);
+      return;
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {

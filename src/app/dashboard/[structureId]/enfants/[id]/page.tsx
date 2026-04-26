@@ -38,7 +38,7 @@ export default function FicheEnfantPage() {
   const router = useRouter();
   const structureId = params.structureId as string;
   const enfantId = params.id as string;
-  const { isAdmin } = useProfil();
+  const { isAdmin, profil } = useProfil();
   const [enfant, setEnfant] = useState<Enfant | null>(null);
   const [transmissions, setTransmissions] = useState<TransmissionEnfant[]>([]);
   const [paiActif, setPaiActif] = useState(false);
@@ -57,7 +57,7 @@ export default function FicheEnfantPage() {
       if (result.success && result.data) {
         setEnfant({ ...result.data, date_naissance: result.data.date_naissance.toISOString() });
       } else {
-        toast.error(result.error ?? "Enfant non trouvé.");
+        toast.error(!result.success ? result.error : "Enfant non trouvé.");
         router.push(`/dashboard/${structureId}/enfants`);
       }
       if (transRes.success && transRes.data) {
@@ -73,7 +73,7 @@ export default function FicheEnfantPage() {
 
   const handleArchive = async () => {
     if (!confirm("Archiver cet enfant ? Il n'apparaîtra plus dans la liste mais son historique sera conservé.")) return;
-    const result = await archiverEnfant(enfantId, structureId);
+    const result = await archiverEnfant(enfantId, structureId, profil?.id);
     if (result.success) { toast.success("Enfant archivé."); router.push(`/dashboard/${structureId}/enfants`); }
     else toast.error(result.error);
   };
@@ -82,7 +82,7 @@ export default function FicheEnfantPage() {
     if (!enfant) return;
     if (!confirm(`Supprimer définitivement ${enfant.prenom} ${enfant.nom} ?`)) return;
     if (!confirm("Cette action est IRRÉVERSIBLE. Tous les biberons, repas, changes, siestes, transmissions et allergies liés seront également supprimés. Confirmer ?")) return;
-    const result = await supprimerEnfant(enfantId, structureId);
+    const result = await supprimerEnfant(enfantId, structureId, profil?.id);
     if (result.success) { toast.success("Enfant supprimé."); router.push(`/dashboard/${structureId}/enfants`); }
     else toast.error(result.error);
   };

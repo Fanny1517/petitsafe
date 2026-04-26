@@ -108,7 +108,7 @@ export default function TransmissionsPage() {
 
   const handleSaveNotes = async () => {
     if (!selectedMembre) return;
-    const res = await modifierProfil(selectedMembre.id, { notes: notesTemp });
+    const res = await modifierProfil(selectedMembre.id, { notes: notesTemp }, profil?.id);
     if (res.success) {
       toast.success("Notes enregistrées");
       setEditNotes(false);

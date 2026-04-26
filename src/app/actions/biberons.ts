@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
 
 export async function creerBiberon(data: {
   structure_id: string; enfant_id: string; type_lait: string; nom_lait?: string;
@@ -10,6 +11,7 @@ export async function creerBiberon(data: {
   boite_lait_id?: string; lait_maternel_id?: string;
 }) {
   try {
+    await assertAccess(data.structure_id, { profilId: data.profil_id });
     if (!data.preparateur_nom) return { success: false as const, error: "Nom du préparateur obligatoire (émargement)." };
 
     let nomLait = data.nom_lait || null;
@@ -80,8 +82,8 @@ export async function creerBiberon(data: {
     }
 
     return { success: true as const, data: biberon };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la création du biberon." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -111,6 +113,7 @@ export async function marquerNettoye(biberonId: string) {
 
 export async function getBiberonsDuJour(structureId: string) {
   try {
+    await assertAccess(structureId);
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const todayEnd = new Date(); todayEnd.setHours(23, 59, 59, 999);
 
@@ -120,7 +123,7 @@ export async function getBiberonsDuJour(structureId: string) {
       orderBy: { heure_preparation: "asc" },
     });
     return { success: true as const, data: biberons };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }

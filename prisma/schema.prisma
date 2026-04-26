@@ -158,6 +158,16 @@ enum StatutLaitMaternel {
   PERIME
 }
 
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  ARCHIVE
+  EXPORT
+  ROLE_CHANGE
+  LOGIN_FAILED
+}
+
 // ═══ MULTI-TENANT ═══
 
 model Structure {
@@ -198,6 +208,7 @@ model Structure {
   laits_maternels            LaitMaternel[]
   administrations_medicament AdministrationMedicament[]
   pais                       PAI[]
+  audit_logs                 AuditLog[]
 }
 
 model UserStructure {
@@ -778,4 +789,26 @@ model DemandeDemo {
   structure_id      String?
 
   structure Structure? @relation(fields: [structure_id], references: [id], onDelete: SetNull)
+}
+
+// ═══ AUDIT LOG ═══
+
+model AuditLog {
+  id           String      @id @default(uuid())
+  structure_id String?
+  user_id      String?
+  profil_id    String?
+  profil_nom   String?
+  action       AuditAction
+  entity       String
+  entity_id    String?
+  details      Json?
+  ip           String?
+  created_at   DateTime    @default(now())
+
+  structure Structure? @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+
+  @@index([structure_id, created_at])
+  @@index([profil_id, created_at])
+  @@index([entity, entity_id])
 }

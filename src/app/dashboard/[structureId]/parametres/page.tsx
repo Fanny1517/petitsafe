@@ -48,11 +48,12 @@ export default function ParametresPage() {
   const [equipeForm, setEquipeForm] = useState({ prenom: "", nom: "", poste: "", role: "PROFESSIONNEL" as RoleProfil, telephone: "", email: "", certifications: "", notes: "", pin: "" });
   const [equipeSaving, setEquipeSaving] = useState(false);
 
-  const { isAdmin } = useProfil();
+  const { isAdmin, profil } = useProfil();
   const isGestionnaire = isAdmin || activeRole === "GESTIONNAIRE";
+  const actorProfilId = profil?.id;
 
   const loadEquipe = async () => {
-    const res = await listerTousProfils(structureId);
+    const res = await listerTousProfils(structureId, actorProfilId);
     if (res.success) setEquipeProfils(res.data as ProfilActif[]);
     setEquipeLoaded(true);
   };
@@ -88,7 +89,7 @@ export default function ParametresPage() {
       ville: infoVille,
       telephone: infoTel,
       email: infoEmail,
-    });
+    }, actorProfilId);
     setInfoSaving(false);
     if (result.success) {
       toast.success("Informations enregistrées ! Rechargement...");
@@ -101,7 +102,7 @@ export default function ParametresPage() {
   const handleNettoyer = async () => {
     if (!confirm("Supprimer définitivement toutes les données aberrantes (températures hors plage, stocks > 10 000, produits au nom invalide) ?")) return;
     setCleaning(true);
-    const result = await nettoyerDonneesAberrantes(structureId);
+    const result = await nettoyerDonneesAberrantes(structureId, actorProfilId);
     setCleaning(false);
     if (result.success && result.data) {
       const { relevesSupprimes, equipementsSupprimes, stocksSupprimes, receptionsSupprimees } = result.data;
@@ -113,7 +114,7 @@ export default function ParametresPage() {
 
   const handleSaveSeuils = async () => {
     setSeuilsSaving(true);
-    const result = await updateSeuilsAge(structureId, seuilBebes, seuilMoyens);
+    const result = await updateSeuilsAge(structureId, seuilBebes, seuilMoyens, actorProfilId);
     setSeuilsSaving(false);
     if (result.success) toast.success("Seuils d'âge enregistrés !");
     else toast.error(result.error);
@@ -164,8 +165,8 @@ export default function ParametresPage() {
     };
 
     const result = editingProfil
-      ? await modifierProfil(editingProfil.id, payload)
-      : await creerProfil({ structure_id: structureId, ...payload });
+      ? await modifierProfil(editingProfil.id, payload, actorProfilId)
+      : await creerProfil({ structure_id: structureId, ...payload }, actorProfilId);
 
     setEquipeSaving(false);
     if (result.success) {
@@ -181,7 +182,7 @@ export default function ParametresPage() {
   const handleDesactiverProfil = async (profilId: string, actif: boolean) => {
     if (actif && !confirm("Désactiver ce profil ? Il ne pourra plus se connecter.")) return;
     if (!actif) {
-      const result = await modifierProfil(profilId, { actif: true });
+      const result = await modifierProfil(profilId, { actif: true }, actorProfilId);
       if (result.success) {
         toast.success("Profil réactivé !");
         await loadEquipe();
@@ -191,7 +192,7 @@ export default function ParametresPage() {
       }
       return;
     }
-    const result = await desactiverProfil(profilId);
+    const result = await desactiverProfil(profilId, actorProfilId);
     if (result.success) {
       toast.success("Profil désactivé.");
       await loadEquipe();

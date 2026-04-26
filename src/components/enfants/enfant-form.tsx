@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { creerEnfant, modifierEnfant } from "@/app/actions/enfants";
+import { useProfil } from "@/hooks/use-profil";
 import { GROUPES_ENFANTS, REGIMES_ALIMENTAIRES } from "@/lib/constants";
 import { toast } from "sonner";
 import { Loader2, Plus, Trash2, ArrowLeft, X } from "lucide-react";
@@ -22,6 +23,7 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
   const params = useParams();
   const router = useRouter();
   const structureId = params.structureId as string;
+  const { profil } = useProfil();
   const [loading, setLoading] = useState(false);
 
   const [prenom, setPrenom] = useState(initial?.prenom ?? "");
@@ -72,8 +74,8 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
     };
 
     const result = mode === "create"
-      ? await creerEnfant(structureId, data)
-      : await modifierEnfant(initial!.id, structureId, data);
+      ? await creerEnfant(structureId, data, profil?.id)
+      : await modifierEnfant(initial!.id, structureId, data, profil?.id);
 
     setLoading(false);
     if (result.success) {

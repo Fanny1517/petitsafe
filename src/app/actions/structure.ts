@@ -1,56 +1,92 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
+import { logAudit } from "@/lib/security/audit";
+import { AuditAction } from "@prisma/client";
+import { z } from "zod";
+
+const structureUpdateSchema = z.object({
+  nom: z.string().trim().min(2).max(120),
+  adresse: z.string().trim().max(200).nullable().optional(),
+  code_postal: z.string().trim().max(10).nullable().optional(),
+  ville: z.string().trim().max(80).nullable().optional(),
+  telephone: z.string().trim().max(40).nullable().optional(),
+  email: z
+    .string()
+    .trim()
+    .email()
+    .max(120)
+    .nullable()
+    .optional()
+    .or(z.literal("")),
+});
 
 export async function getStructureInfo(structureId: string) {
   try {
+    await assertAccess(structureId);
     const structure = await prisma.structure.findUnique({
       where: { id: structureId },
       select: {
-        id: true,
-        nom: true,
-        type: true,
-        adresse: true,
-        code_postal: true,
-        ville: true,
-        telephone: true,
-        email: true,
-        numero_agrement: true,
+        id: true, nom: true, type: true, adresse: true,
+        code_postal: true, ville: true, telephone: true,
+        email: true, numero_agrement: true,
       },
     });
     if (!structure) return { success: false as const, error: "Structure introuvable." };
     return { success: true as const, data: structure };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
 export async function getSeuilsAge(structureId: string) {
   try {
+    await assertAccess(structureId);
     const structure = await prisma.structure.findUnique({
       where: { id: structureId },
       select: { seuil_bebes_max: true, seuil_moyens_max: true },
     });
     if (!structure) return { success: false as const, error: "Structure introuvable." };
     return { success: true as const, data: structure };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
-export async function updateSeuilsAge(structureId: string, seuilBebesMax: number, seuilMoyensMax: number) {
+export async function updateSeuilsAge(
+  structureId: string,
+  seuilBebesMax: number,
+  seuilMoyensMax: number,
+  actorProfilId?: string
+) {
   try {
-    if (seuilBebesMax < 6 || seuilBebesMax > 48) return { success: false as const, error: "Le seuil bébés doit être entre 6 et 48 mois." };
-    if (seuilMoyensMax <= seuilBebesMax) return { success: false as const, error: "Le seuil moyens doit être supérieur au seuil bébés." };
-    if (seuilMoyensMax > 60) return { success: false as const, error: "Le seuil moyens ne peut pas dépasser 60 mois." };
+    const ctx = await assertAccess(structureId, { profilId: actorProfilId, requireAdmin: true });
+
+    if (seuilBebesMax < 6 || seuilBebesMax > 48)
+      return { success: false as const, error: "Le seuil bébés doit être entre 6 et 48 mois." };
+    if (seuilMoyensMax <= seuilBebesMax)
+      return { success: false as const, error: "Le seuil moyens doit être supérieur au seuil bébés." };
+    if (seuilMoyensMax > 60)
+      return { success: false as const, error: "Le seuil moyens ne peut pas dépasser 60 mois." };
 
     await prisma.structure.update({
       where: { id: structureId },
       data: { seuil_bebes_max: seuilBebesMax, seuil_moyens_max: seuilMoyensMax },
     });
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.UPDATE,
+      entity: "structure",
+      entityId: structureId,
+      details: { seuilBebesMax, seuilMoyensMax },
+    });
     return { success: true as const };
-  } catch {
-    return { success: false as const, error: "Erreur lors de la mise à jour des seuils." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
@@ -63,62 +99,57 @@ export async function updateStructureInfo(
     ville?: string | null;
     telephone?: string | null;
     email?: string | null;
-  }
+  },
+  actorProfilId?: string
 ) {
   try {
-    if (!data.nom || data.nom.trim().length < 2) {
-      return { success: false as const, error: "Le nom de la structure doit faire au moins 2 caractères." };
+    const ctx = await assertAccess(structureId, { profilId: actorProfilId, requireAdmin: true });
+
+    const parsed = structureUpdateSchema.safeParse(data);
+    if (!parsed.success) {
+      return { success: false as const, error: "Données invalides." };
     }
-    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      return { success: false as const, error: "Email invalide." };
-    }
+
     await prisma.structure.update({
       where: { id: structureId },
       data: {
-        nom: data.nom.trim(),
-        adresse: data.adresse?.trim() || null,
-        code_postal: data.code_postal?.trim() || null,
-        ville: data.ville?.trim() || null,
-        telephone: data.telephone?.trim() || null,
-        email: data.email?.trim() || null,
+        nom: parsed.data.nom,
+        adresse: parsed.data.adresse?.trim() || null,
+        code_postal: parsed.data.code_postal?.trim() || null,
+        ville: parsed.data.ville?.trim() || null,
+        telephone: parsed.data.telephone?.trim() || null,
+        email: parsed.data.email?.trim() || null,
       },
     });
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.UPDATE,
+      entity: "structure",
+      entityId: structureId,
+      details: { nom: parsed.data.nom },
+    });
     return { success: true as const };
-  } catch {
-    return { success: false as const, error: "Erreur lors de l'enregistrement." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }
 
-/**
- * Détecte un nom "gibberish" (saisies de test type "dzadaz", "fdzed", "EZVEZ").
- * Heuristiques cumulatives :
- *  - longueur < 3
- *  - aucune voyelle
- *  - "z" adjacent à une autre consonne (sauf h) — quasi inexistant en français/anglais
- *    courant, mais typique du clavier-rage ("dz", "zv", "zd", "zf"...)
- *    Exclut volontairement "zz" (pizza), "zy" (crazy), "zh" (Zhang).
- */
 function isGibberishNom(input: string): boolean {
   const nom = input.trim();
   if (nom.length < 3) return true;
-  // Si contient autre chose que des lettres/espaces/accents/tirets/apostrophes, on laisse
   if (!/^[a-zA-ZÀ-ÿ\s'\-]+$/.test(nom)) return false;
   if (!/[aeiouyàâäéèêëîïôöùûüAEIOUYÀÂÄÉÈÊËÎÏÔÖÙÛÜ]/.test(nom)) return true;
-  // z accolé à une consonne (hors h, y, z)
   if (/z[bcdfgjklmnpqrstvwx]|[bcdfgjklmnpqrstvwx]z/i.test(nom)) return true;
   return false;
 }
 
-/**
- * Supprime les données aberrantes d'une structure :
- * - Relevés de température hors plage plausible (< -50 ou > 100)
- * - Équipements de température avec nom gibberish (cascade : supprime aussi leurs relevés)
- * - Stocks avec quantité absurde (> 10 000) ou nom gibberish
- * - Réceptions avec nom de produit invalide (< 3 caractères ou gibberish)
- */
-export async function nettoyerDonneesAberrantes(structureId: string) {
+export async function nettoyerDonneesAberrantes(structureId: string, actorProfilId?: string) {
   try {
-    // 1. Relevés de température hors plage physique
+    const ctx = await assertAccess(structureId, { profilId: actorProfilId, requireAdmin: true });
+
     const relevesHorsPlage = await prisma.releveTemperature.deleteMany({
       where: {
         structure_id: structureId,
@@ -126,7 +157,6 @@ export async function nettoyerDonneesAberrantes(structureId: string) {
       },
     });
 
-    // 2. Équipements avec nom gibberish (cascade supprime leurs relevés)
     const equipements = await prisma.equipement.findMany({
       where: { structure_id: structureId },
       select: { id: true, nom: true },
@@ -138,7 +168,6 @@ export async function nettoyerDonneesAberrantes(structureId: string) {
       ? await prisma.equipement.deleteMany({ where: { id: { in: equipementsAberrantsIds } } })
       : { count: 0 };
 
-    // 3. Stocks : quantité absurde OU nom gibberish
     const stocksHorsQuantite = await prisma.stock.deleteMany({
       where: { structure_id: structureId, quantite: { gt: 10000 } },
     });
@@ -153,7 +182,6 @@ export async function nettoyerDonneesAberrantes(structureId: string) {
       ? await prisma.stock.deleteMany({ where: { id: { in: stocksAberrantsIds } } })
       : { count: 0 };
 
-    // 4. Réceptions avec nom de produit gibberish
     const receptions = await prisma.receptionMarchandise.findMany({
       where: { structure_id: structureId },
       select: { id: true, nom_produit: true },
@@ -165,16 +193,26 @@ export async function nettoyerDonneesAberrantes(structureId: string) {
       ? await prisma.receptionMarchandise.deleteMany({ where: { id: { in: receptionsAberrantesIds } } })
       : { count: 0 };
 
-    return {
-      success: true as const,
-      data: {
-        relevesSupprimes: relevesHorsPlage.count,
-        equipementsSupprimes: equipDeleted.count,
-        stocksSupprimes: stocksHorsQuantite.count + stocksGibberishDeleted.count,
-        receptionsSupprimees: recDeleted.count,
-      },
+    const totals = {
+      relevesSupprimes: relevesHorsPlage.count,
+      equipementsSupprimes: equipDeleted.count,
+      stocksSupprimes: stocksHorsQuantite.count + stocksGibberishDeleted.count,
+      receptionsSupprimees: recDeleted.count,
     };
-  } catch {
-    return { success: false as const, error: "Erreur lors du nettoyage." };
+
+    await logAudit({
+      structureId,
+      userId: ctx.userId,
+      profilId: ctx.profil?.id,
+      profilNom: ctx.profil ? `${ctx.profil.prenom} ${ctx.profil.nom}` : undefined,
+      action: AuditAction.DELETE,
+      entity: "structure",
+      entityId: structureId,
+      details: totals,
+    });
+
+    return { success: true as const, data: totals };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }

@@ -134,7 +134,7 @@ export function MedicamentsTab({ structureId, enfantId }: MedicamentsTabProps) {
       ordonnance_fournie: ordonnance,
       observations: observations || undefined,
     };
-    const res = await creerAdministration(structureId, payload);
+    const res = await creerAdministration(structureId, payload, profil?.id);
     setSaving(false);
     if (res.success) {
       toast.success("Administration enregistrée. À signer pour valider.");
@@ -151,7 +151,7 @@ export function MedicamentsTab({ structureId, enfantId }: MedicamentsTabProps) {
       return;
     }
     if (!confirm(`Supprimer l'administration de ${a.nom_medicament} ?`)) return;
-    const res = await supprimerAdministration(a.id);
+    const res = await supprimerAdministration(a.id, profil?.id);
     if (res.success) {
       toast.success("Administration supprimée.");
       fetchData();

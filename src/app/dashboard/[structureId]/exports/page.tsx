@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic';
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
+import { useProfil } from "@/hooks/use-profil";
 import { AdminGuard } from "@/components/shared/admin-guard";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +39,7 @@ export default function ExportsPage() {
   const params = useParams();
   const structureId = params.structureId as string;
   const { prenom, user } = useAuth();
+  const { profil } = useProfil();
   const [generating, setGenerating] = useState(false);
   const [historique, setHistorique] = useState<ExportHistorique[]>([]);
   const [loadingHist, setLoadingHist] = useState(true);
@@ -111,7 +113,7 @@ export default function ExportsPage() {
         periode_fin: data.periode_fin,
         genere_par: prenom,
         url: `local-${Date.now()}`,
-      });
+      }, profil?.id);
 
       // Rafraîchir l'historique
       const hist = await getHistoriqueExports(structureId);

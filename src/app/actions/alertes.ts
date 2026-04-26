@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/supabase/prisma";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
 
 export interface AlerteItem {
   id: string;
@@ -13,6 +14,7 @@ export interface AlerteItem {
 
 export async function getAlertes(structureId: string) {
   try {
+    await assertAccess(structureId);
     const now = new Date();
     const aujourdhuiDebut = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const dansTroisJoursFin = new Date(aujourdhuiDebut);
@@ -251,7 +253,7 @@ export async function getAlertes(structureId: string) {
     }
 
     return { success: true as const, data: alertes };
-  } catch {
-    return { success: false as const, error: "Erreur lors du chargement des alertes." };
+  } catch (e) {
+    return authErrorToResult(e);
   }
 }

@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/supabase/prisma";
 import { getNettoyageKpi } from "@/app/actions/nettoyage";
+import { assertAccess, authErrorToResult } from "@/lib/security/auth-context";
 
 export interface AlerteLaitDashboard {
   enfantPrenom: string;
@@ -28,6 +29,7 @@ export async function getDashboardData(
   modulesActifs: string[]
 ): Promise<{ success: true; data: DashboardData } | { success: false; error: string }> {
   try {
+    await assertAccess(structureId);
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const todayEnd = new Date(); todayEnd.setHours(23, 59, 59, 999);
     const isActif = (m: string) => modulesActifs.includes(m);
@@ -204,7 +206,7 @@ export async function getDashboardData(
       success: true,
       data: { enfantsCount, nettoyage, prochainesDlc, alertesLait, biberonsEnAttente, temperatures, activiteRecente },
     };
-  } catch {
-    return { success: false, error: "Erreur lors du chargement du tableau de bord." };
+  } catch (e) {
+    return authErrorToResult(e) as { success: true; data: DashboardData } | { success: false; error: string };
   }
 }

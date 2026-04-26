@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { importerEnfants, checkDoublons } from "@/app/actions/enfants";
+import { useProfil } from "@/hooks/use-profil";
 import { toast } from "sonner";
 import { X, Upload, Download, Loader2, Check, AlertTriangle, XCircle } from "lucide-react";
 
@@ -18,6 +19,7 @@ interface ParsedRow {
 }
 
 export function ImportCSVModal({ structureId, onClose, onImported }: ImportCSVModalProps) {
+  const { profil } = useProfil();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [rows, setRows] = useState<ParsedRow[]>([]);
   const [importing, setImporting] = useState(false);
@@ -111,14 +113,14 @@ export function ImportCSVModal({ structureId, onClose, onImported }: ImportCSVMo
     const validRows = rows.filter((r) => r.valid);
     if (validRows.length === 0) { toast.error("Aucune ligne valide à importer."); return; }
     setImporting(true);
-    const res = await importerEnfants(structureId, validRows);
+    const res = await importerEnfants(structureId, validRows, profil?.id);
     setImporting(false);
     if (res.success && res.data) {
       setResult(res.data);
       setStep(3);
       onImported();
     } else {
-      toast.error(res.error ?? "Erreur lors de l'import.");
+      toast.error(!res.success ? res.error : "Erreur lors de l'import.");
     }
   };
 
