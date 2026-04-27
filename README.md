@@ -37,6 +37,21 @@ Pour déclencher le workflow GitHub à la demande : onglet **Actions** → **Bac
 BDD quotidien** → **Run workflow**. L'artifact est ensuite téléchargeable depuis
 la page du run.
 
+### Déploiement sécurisé (backup + commit + push)
+
+Pour ne jamais déployer sans une sauvegarde fraîche, utilise `deploy-safe` :
+
+```bash
+npm run deploy-safe "message du commit"
+```
+
+Le script enchaîne : `npm run backup` → `git add .` → `git commit -m "..."` → `git push`.
+Si aucun changement n'est détecté après le backup, le commit et le push sont sautés
+(le backup local est créé quand même).
+
+⚠ `git add .` stage **tout** ce qui est non suivi. Vérifie ton `git status` avant
+si tu as des fichiers en cours que tu ne veux pas commit.
+
 ### Restaurer depuis un fichier de backup
 
 ```bash
@@ -77,3 +92,4 @@ variables → Actions** :
 | `npm run db:studio`   | Ouvre Prisma Studio                                |
 | `npm run backup`      | Dump JSON complet de la BDD vers `backups/`        |
 | `npm run restore --`  | Restaure depuis un fichier de backup               |
+| `npm run deploy-safe` | Backup + `git add . && commit && push` en une commande |

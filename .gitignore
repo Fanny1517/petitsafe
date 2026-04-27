@@ -33,6 +33,11 @@ yarn-error.log*
 # backups BDD
 /backups/
 
+# scripts de debug locaux (init-*, recolor)
+/scripts/init-chapichapo.ts
+/scripts/init-fanny-zongo.ts
+/scripts/recolor.ts
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
