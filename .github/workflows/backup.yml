@@ -1,0 +1,39 @@
+name: Backup BDD quotidien
+
+on:
+  schedule:
+    # Tous les jours à 03:00 UTC (≈ 04:00 Paris hiver / 05:00 été)
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run backup
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: npm run backup
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: petitsafe-backup-${{ github.run_id }}
+          path: backups/*.json
+          retention-days: 30
+          if-no-files-found: error
