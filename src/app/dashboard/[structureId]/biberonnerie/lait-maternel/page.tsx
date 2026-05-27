@@ -9,6 +9,7 @@ import {
   decongelerLaitMaternel, changerStatutLaitMaternel, supprimerLaitMaternel,
 } from "@/app/actions/lait-maternel";
 import { getEnfants } from "@/app/actions/enfants";
+import { DateWarning } from "@/components/shared/date-warning";
 import { toast } from "sonner";
 import { ArrowLeft, Loader2, Plus, Milk, Snowflake, Thermometer, Trash2, AlertTriangle, CheckCircle2, X } from "lucide-react";
 import type { StatutLaitMaternel } from "@prisma/client";
@@ -222,6 +223,9 @@ export default function LaitMaternelPage() {
               <label className="block text-xs font-medium text-gray-600 mb-1">Date et heure de recueil *</label>
               <input type="datetime-local" value={dateRecueil} onChange={(e) => setDateRecueil(e.target.value)} className={inputClass} />
             </div>
+            <div className="sm:col-span-2">
+              <DateWarning date={dateRecueil} />
+            </div>
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1">Quantité (ml) *</label>
               <input
@@ -250,6 +254,9 @@ export default function LaitMaternelPage() {
                 <p className="text-xs text-gray-400 mt-1">
                   Si vide : DLC = recueil + 6 mois. Sinon : décongélation + 24h.
                 </p>
+                <div className="mt-2">
+                  <DateWarning date={dateDecongelation} />
+                </div>
               </div>
             )}
             <div className="sm:col-span-2">

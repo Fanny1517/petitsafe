@@ -8,6 +8,7 @@ import { getEquipements, creerEquipement, supprimerEquipement, supprimerReleve, 
 import { getConformiteTemperature, getConformitePlat, validerPlageTemperature } from "@/lib/business-logic";
 import { SEUILS_TEMPERATURE } from "@/lib/constants";
 import { PastilleStatut } from "@/components/shared/pastille-statut";
+import { DateWarning } from "@/components/shared/date-warning";
 import { useAuth } from "@/hooks/use-auth";
 import { useProfil } from "@/hooks/use-profil";
 import { useRealtimeSubscription } from "@/hooks/use-realtime-subscription";
@@ -255,6 +256,7 @@ export default function TemperaturesPage() {
                   <input type="time" value={formHeure} onChange={(e) => setFormHeure(e.target.value)} className={inputClass} />
                 </div>
               </div>
+              <DateWarning date={date} />
               {formPlageWarning && (
                 <div className="space-y-2">
                   <p className="text-sm text-red-600 font-medium">{formPlageWarning}</p>

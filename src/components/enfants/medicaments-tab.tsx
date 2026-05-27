@@ -11,6 +11,7 @@ import {
 } from "@/app/actions/medicaments";
 import { useProfil, type ProfilActif } from "@/hooks/use-profil";
 import { listerProfils } from "@/app/actions/profils";
+import { DateWarning } from "@/components/shared/date-warning";
 import type { VoieAdministration } from "@prisma/client";
 
 interface MedicamentsTabProps {
@@ -262,6 +263,9 @@ export function MedicamentsTab({ structureId, enfantId }: MedicamentsTabProps) {
             <div>
               <label className="block text-xs font-medium text-gray-600 mb-1">Date et heure d&apos;administration *</label>
               <input type="datetime-local" value={dateAdmin} onChange={(e) => setDateAdmin(e.target.value)} className={inputClass} />
+            </div>
+            <div className="sm:col-span-2">
+              <DateWarning date={dateAdmin} />
             </div>
             <div className="sm:col-span-2">
               <label className="flex items-center gap-2 text-sm text-gray-700">
