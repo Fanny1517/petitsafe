@@ -239,16 +239,16 @@ export default function ParametresPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Paramètres</h1>
+      <h1 className="text-2xl font-bold text-gray-800 animate-fade-in-up">Paramètres</h1>
 
       {!isGestionnaire ? (
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up">
           <p className="text-gray-500">Seul le gestionnaire peut modifier les paramètres.</p>
         </div>
       ) : (
         <>
           {/* Infos structure */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-75">
             <div>
               <h2 className="text-lg font-semibold text-gray-800">Informations de la structure</h2>
               <p className="text-sm text-gray-500 mt-1">Ces informations apparaissent sur les exports PDF et le portail parents.</p>
@@ -260,39 +260,39 @@ export default function ParametresPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nom de la structure *</label>
                   <input type="text" value={infoNom} onChange={(e) => setInfoNom(e.target.value)} placeholder="Crèche Les Petits Pandas"
-                    className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                    className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
                   <input type="text" value={infoAdresse} onChange={(e) => setInfoAdresse(e.target.value)} placeholder="12 rue des Lilas"
-                    className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                    className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="col-span-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Code postal</label>
                     <input type="text" value={infoCp} onChange={(e) => setInfoCp(e.target.value)} placeholder="75001"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                   </div>
                   <div className="col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Ville</label>
                     <input type="text" value={infoVille} onChange={(e) => setInfoVille(e.target.value)} placeholder="Paris"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
                     <input type="tel" value={infoTel} onChange={(e) => setInfoTel(e.target.value)} placeholder="01 23 45 67 89"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email de contact</label>
                     <input type="email" value={infoEmail} onChange={(e) => setInfoEmail(e.target.value)} placeholder="contact@creche.fr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
+                      className="w-full h-12 px-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" />
                   </div>
                 </div>
                 <button onClick={handleSaveInfo} disabled={infoSaving}
-                  className="h-11 px-5 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center gap-2">
+                  className="h-11 px-5 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 flex items-center gap-2">
                   {infoSaving && <Loader2 size={16} className="animate-spin" />}
                   Enregistrer
                 </button>
@@ -301,7 +301,7 @@ export default function ParametresPage() {
           </div>
 
           {/* Section Équipe */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-150">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
@@ -312,7 +312,7 @@ export default function ParametresPage() {
               </div>
               {!showEquipeForm && (
                 <button onClick={() => { resetEquipeForm(); setShowEquipeForm(true); }}
-                  className="h-9 px-4 rounded-lg bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 flex items-center gap-1.5">
+                  className="h-9 px-4 rounded-lg bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1.5">
                   <Plus size={16} />
                   Ajouter
                 </button>
@@ -321,23 +321,23 @@ export default function ParametresPage() {
 
             {/* Formulaire ajout/édition */}
             {showEquipeForm && (
-              <div className="border border-rzpanda-primary/20 rounded-xl p-4 bg-rzpanda-primary/5 space-y-3">
+              <div className="border border-rzpanda-primary/20 rounded-xl p-4 bg-rzpanda-primary/5 space-y-3 animate-fade-in-up duration-300">
                 <p className="text-sm font-medium text-gray-700">{editingProfil ? "Modifier le profil" : "Nouveau profil"}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Prénom *</label>
                     <input type="text" value={equipeForm.prenom} onChange={(e) => setEquipeForm((f) => ({ ...f, prenom: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm" placeholder="Marie" />
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" placeholder="Marie" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Nom *</label>
                     <input type="text" value={equipeForm.nom} onChange={(e) => setEquipeForm((f) => ({ ...f, nom: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm" placeholder="Dupont" />
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" placeholder="Dupont" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Poste</label>
                     <select value={equipeForm.poste} onChange={(e) => setEquipeForm((f) => ({ ...f, poste: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm bg-white">
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white">
                       <option value="">— Choisir —</option>
                       <option value="Directrice">Directrice</option>
                       <option value="Auxiliaire">Auxiliaire de puériculture</option>
@@ -350,7 +350,7 @@ export default function ParametresPage() {
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Rôle</label>
                     <select value={equipeForm.role} onChange={(e) => setEquipeForm((f) => ({ ...f, role: e.target.value as RoleProfil }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm bg-white">
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white">
                       <option value="PROFESSIONNEL">Professionnel</option>
                       <option value="ADMINISTRATEUR">Administrateur</option>
                     </select>
@@ -358,39 +358,39 @@ export default function ParametresPage() {
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Téléphone</label>
                     <input type="tel" value={equipeForm.telephone} onChange={(e) => setEquipeForm((f) => ({ ...f, telephone: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm" placeholder="06 12 34 56 78" />
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" placeholder="06 12 34 56 78" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Email perso</label>
                     <input type="email" value={equipeForm.email} onChange={(e) => setEquipeForm((f) => ({ ...f, email: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm" placeholder="marie@email.com" />
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" placeholder="marie@email.com" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">
                       Mot de passe profil {!editingProfil && "*"}
                     </label>
                     <input type="password" value={equipeForm.pin} onChange={(e) => setEquipeForm((f) => ({ ...f, pin: e.target.value }))}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm"
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white"
                       placeholder={editingProfil ? "Laisser vide pour ne pas changer" : "Mot de passe obligatoire"} />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">Certifications</label>
                   <input type="text" value={equipeForm.certifications} onChange={(e) => setEquipeForm((f) => ({ ...f, certifications: e.target.value }))}
-                    className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm" placeholder="CAP Petite enfance, PSC1..." />
+                    className="w-full h-10 px-3 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm bg-white" placeholder="CAP Petite enfance, PSC1..." />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
                   <textarea value={equipeForm.notes} onChange={(e) => setEquipeForm((f) => ({ ...f, notes: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-rzpanda-primary outline-none text-sm resize-none" rows={2} placeholder="Infos complémentaires..." />
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm resize-none bg-white" rows={2} placeholder="Infos complémentaires..." />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleSaveEquipe} disabled={equipeSaving}
-                    className="h-10 px-5 rounded-lg bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center gap-2">
+                    className="h-10 px-5 rounded-lg bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 flex items-center gap-2">
                     {equipeSaving && <Loader2 size={14} className="animate-spin" />}
                     {editingProfil ? "Modifier" : "Créer le profil"}
                   </button>
-                  <button onClick={resetEquipeForm} className="h-10 px-4 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50">
+                  <button onClick={resetEquipeForm} className="h-10 px-4 rounded-lg border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 active:bg-gray-100">
                     Annuler
                   </button>
                 </div>
@@ -404,43 +404,46 @@ export default function ParametresPage() {
               <p className="text-sm text-gray-400 text-center py-4">Aucun profil créé.</p>
             ) : (
               <div className="space-y-2">
-                {equipeProfils.map((p) => (
-                  <div key={p.id} className={`flex items-center justify-between p-3 rounded-lg ${p.actif ? "bg-gray-50" : "bg-gray-100 opacity-60"}`}>
-                    <div className="flex items-center gap-3">
-                      <div className={`h-10 w-10 rounded-full flex items-center justify-center text-white text-sm font-bold ${p.actif ? "bg-rzpanda-primary" : "bg-gray-400"}`}>
-                        {p.prenom.charAt(0)}{p.nom.charAt(0)}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-800">{p.prenom} {p.nom}</span>
-                          {p.role === "ADMINISTRATEUR" && (
-                            <span className="text-[10px] font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Admin</span>
-                          )}
-                          {!p.actif && (
-                            <span className="text-[10px] font-medium bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full">Inactif</span>
-                          )}
+                {equipeProfils.map((p, idx) => {
+                  const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+                  return (
+                    <div key={p.id} className={`flex items-center justify-between p-3 rounded-lg transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-sm group animate-fade-in-up ${delayClass} ${p.actif ? "bg-gray-50 hover:bg-gray-100/50" : "bg-gray-100 opacity-60"}`}>
+                      <div className="flex items-center gap-3">
+                        <div className={`h-10 w-10 rounded-full flex items-center justify-center text-white text-sm font-bold transition-transform duration-300 group-hover:scale-105 ${p.actif ? "bg-rzpanda-primary" : "bg-gray-400"}`}>
+                          {p.prenom.charAt(0)}{p.nom.charAt(0)}
                         </div>
-                        <span className="text-xs text-gray-500">{p.poste || "—"}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-gray-800 group-hover:text-rzpanda-primary transition-colors duration-200">{p.prenom} {p.nom}</span>
+                            {p.role === "ADMINISTRATEUR" && (
+                              <span className="text-[10px] font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Admin</span>
+                            )}
+                            {!p.actif && (
+                              <span className="text-[10px] font-medium bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full">Inactif</span>
+                            )}
+                          </div>
+                          <span className="text-xs text-gray-500">{p.poste || "—"}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => handleEditProfil(p)} className="p-2 rounded-lg hover:bg-white text-gray-400 hover:text-rzpanda-primary transition-all duration-200 hover:scale-110 active:scale-90" title="Modifier">
+                          <Pencil size={14} />
+                        </button>
+                        <button onClick={() => handleDesactiverProfil(p.id, p.actif)}
+                          className={`p-2 rounded-lg hover:bg-white transition-all duration-200 hover:scale-110 active:scale-90 ${p.actif ? "text-gray-400 hover:text-red-500" : "text-gray-400 hover:text-green-500"}`}
+                          title={p.actif ? "Désactiver" : "Réactiver"}>
+                          {p.actif ? <UserX size={14} /> : <UserCheck size={14} />}
+                        </button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <button onClick={() => handleEditProfil(p)} className="p-2 rounded-lg hover:bg-white text-gray-400 hover:text-gray-600" title="Modifier">
-                        <Pencil size={14} />
-                      </button>
-                      <button onClick={() => handleDesactiverProfil(p.id, p.actif)}
-                        className={`p-2 rounded-lg hover:bg-white ${p.actif ? "text-gray-400 hover:text-red-500" : "text-gray-400 hover:text-green-500"}`}
-                        title={p.actif ? "Désactiver" : "Réactiver"}>
-                        {p.actif ? <UserX size={14} /> : <UserCheck size={14} />}
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
 
           {/* Seuils d'âge — groupes */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-225">
             <div>
               <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <Baby size={20} className="text-rzpanda-primary" />
@@ -453,33 +456,33 @@ export default function ParametresPage() {
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-xl bg-blue-50 border border-blue-100">
+                  <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 transition-all duration-300 hover:scale-105 hover:shadow-sm">
                     <p className="text-sm font-medium text-blue-800 mb-2">Bébés</p>
                     <p className="text-xs text-blue-600 mb-1">0 à <strong>{seuilBebes}</strong> mois</p>
                     <div className="flex items-center gap-2">
                       <input type="range" min={6} max={36} value={seuilBebes}
                         onChange={(e) => setSeuilBebes(Number(e.target.value))}
-                        className="flex-1 accent-blue-500" />
+                        className="flex-1 accent-blue-500 cursor-pointer" />
                       <span className="text-sm font-mono font-bold text-blue-700 w-8 text-right">{seuilBebes}</span>
                     </div>
                   </div>
-                  <div className="p-4 rounded-xl bg-amber-50 border border-amber-100">
+                  <div className="p-4 rounded-xl bg-amber-50 border border-amber-100 transition-all duration-300 hover:scale-105 hover:shadow-sm">
                     <p className="text-sm font-medium text-amber-800 mb-2">Moyens</p>
                     <p className="text-xs text-amber-600 mb-1">{seuilBebes} à <strong>{seuilMoyens}</strong> mois</p>
                     <div className="flex items-center gap-2">
                       <input type="range" min={seuilBebes + 1} max={48} value={seuilMoyens}
                         onChange={(e) => setSeuilMoyens(Number(e.target.value))}
-                        className="flex-1 accent-amber-500" />
+                        className="flex-1 accent-amber-500 cursor-pointer" />
                       <span className="text-sm font-mono font-bold text-amber-700 w-8 text-right">{seuilMoyens}</span>
                     </div>
                   </div>
-                  <div className="p-4 rounded-xl bg-green-50 border border-green-100">
+                  <div className="p-4 rounded-xl bg-green-50 border border-green-100 transition-all duration-300 hover:scale-105 hover:shadow-sm">
                     <p className="text-sm font-medium text-green-800 mb-2">Grands</p>
                     <p className="text-xs text-green-600">{seuilMoyens} mois et +</p>
                   </div>
                 </div>
                 <button onClick={handleSaveSeuils} disabled={seuilsSaving}
-                  className="h-11 px-5 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center gap-2">
+                  className="h-11 px-5 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 flex items-center gap-2">
                   {seuilsSaving && <Loader2 size={16} className="animate-spin" />}
                   Enregistrer les seuils
                 </button>
@@ -487,7 +490,7 @@ export default function ParametresPage() {
             )}
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-6">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-6 animate-fade-in-up delay-300">
             <div>
               <h2 className="text-lg font-semibold text-gray-800">Modules activés</h2>
               <p className="text-sm text-gray-500 mt-1">Choisissez les fonctionnalités adaptées à votre structure. Les données des modules désactivés sont conservées.</p>
@@ -496,7 +499,7 @@ export default function ParametresPage() {
             {/* Presets */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button onClick={() => selectPreset(PRESETS_MODULES.haccp_essentiel)}
-                className={`p-4 rounded-xl border-2 text-left transition-colors ${isPresetSelected(PRESETS_MODULES.haccp_essentiel) ? "border-rzpanda-primary bg-rzpanda-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
+                className={`p-4 rounded-xl border-2 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-sm active:scale-[0.98] ${isPresetSelected(PRESETS_MODULES.haccp_essentiel) ? "border-rzpanda-primary bg-rzpanda-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
                 <div className="flex items-center gap-3">
                   <Shield size={20} className="text-rzpanda-primary shrink-0" />
                   <div className="flex-1">
@@ -508,7 +511,7 @@ export default function ParametresPage() {
               </button>
 
               <button onClick={() => selectPreset(PRESETS_MODULES.complet)}
-                className={`p-4 rounded-xl border-2 text-left transition-colors ${isPresetSelected(PRESETS_MODULES.complet) ? "border-rzpanda-primary bg-rzpanda-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
+                className={`p-4 rounded-xl border-2 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-sm active:scale-[0.98] ${isPresetSelected(PRESETS_MODULES.complet) ? "border-rzpanda-primary bg-rzpanda-primary/5" : "border-gray-200 hover:border-gray-300"}`}>
                 <div className="flex items-center gap-3">
                   <Sparkles size={20} className="text-rzpanda-accent shrink-0" />
                   <div className="flex-1">
@@ -529,13 +532,13 @@ export default function ParametresPage() {
                   </p>
                   <div className="space-y-2">
                     {mods.map(([id, mod]) => (
-                      <div key={id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                      <div key={id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100/50 transition-colors duration-200">
                         <div>
                           <p className="text-sm font-medium text-gray-800">{mod.label}</p>
                           <p className="text-xs text-gray-500">{mod.description}</p>
                         </div>
                         <button onClick={() => toggle(id)} role="switch" aria-checked={modules.includes(id)}
-                          className={`relative h-6 w-11 rounded-full transition-colors ${modules.includes(id) ? "bg-rzpanda-primary" : "bg-gray-300"}`}>
+                          className={`relative h-6 w-11 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 ${modules.includes(id) ? "bg-rzpanda-primary" : "bg-gray-300"}`}>
                           <span className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform ${modules.includes(id) ? "translate-x-5" : ""}`} />
                         </button>
                       </div>
@@ -549,7 +552,7 @@ export default function ParametresPage() {
 
             {hasChanged && (
               <button onClick={handleSave} disabled={saving}
-                className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center justify-center gap-2">
+                className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2">
                 {saving && <Loader2 size={20} className="animate-spin" />}
                 Enregistrer les modifications
               </button>
@@ -557,7 +560,7 @@ export default function ParametresPage() {
           </div>
 
           {/* Maintenance — données aberrantes */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-3">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-3 animate-fade-in-up delay-300">
             <div>
               <h2 className="text-lg font-semibold text-gray-800">Maintenance</h2>
               <p className="text-sm text-gray-500 mt-1">
@@ -565,7 +568,7 @@ export default function ParametresPage() {
               </p>
             </div>
             <button onClick={handleNettoyer} disabled={cleaning}
-              className="h-11 px-5 rounded-xl border border-red-300 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50 flex items-center gap-2">
+              className="h-11 px-5 rounded-xl border border-red-300 text-red-600 text-sm font-medium transition-all duration-200 hover:bg-red-50 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 flex items-center gap-2">
               {cleaning ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
               Nettoyer les données aberrantes
             </button>

@@ -127,19 +127,19 @@ export default function TransmissionsPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Transmissions</h1>
         <p className="text-sm text-gray-500">{new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</p>
       </div>
 
       {/* Onglets */}
-      <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
+      <div className="flex gap-1 bg-gray-100 rounded-xl p-1 animate-fade-in-up delay-75">
         <button onClick={() => setTab("transmissions")}
-          className={`flex-1 flex items-center justify-center gap-2 h-10 rounded-lg text-sm font-medium transition-colors ${tab === "transmissions" ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}>
+          className={`flex-1 flex items-center justify-center gap-2 h-10 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${tab === "transmissions" ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}>
           <MessageSquare size={16} /> Messages
         </button>
         <button onClick={() => setTab("annuaire")}
-          className={`flex-1 flex items-center justify-center gap-2 h-10 rounded-lg text-sm font-medium transition-colors ${tab === "annuaire" ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}>
+          className={`flex-1 flex items-center justify-center gap-2 h-10 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${tab === "annuaire" ? "bg-white text-gray-800 shadow-sm" : "text-gray-500 hover:text-gray-700"}`}>
           <Users size={16} /> Annuaire ({profilsEquipe.length})
         </button>
       </div>
@@ -147,37 +147,38 @@ export default function TransmissionsPage() {
       {tab === "transmissions" ? (
         <>
           {/* Filters */}
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center animate-fade-in-up delay-150">
             <Filter size={16} className="text-gray-400" />
-            <button onClick={() => setFilter(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === null ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>Tous</button>
+            <button onClick={() => setFilter(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${filter === null ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>Tous</button>
             {Object.entries(TYPE_LABELS).map(([key, val]) => (
-              <button key={key} onClick={() => setFilter(filter === key ? null : key)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filter === key ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>{val.label}</button>
+              <button key={key} onClick={() => setFilter(filter === key ? null : key)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${filter === key ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>{val.label}</button>
             ))}
           </div>
 
           {/* Timeline */}
-          <div className="space-y-3">
+          <div className="space-y-3 animate-fade-in-up delay-225">
             {filtered.length === 0 ? (
-              <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
+              <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center animate-fade-in-up">
                 <MessageSquare size={64} className="mx-auto text-gray-200 mb-4" />
                 <p className="text-gray-500 font-medium">Aucune transmission aujourd&apos;hui</p>
                 <p className="text-gray-400 text-sm mt-1">Cliquez sur + pour en ajouter une.</p>
               </div>
             ) : (
-              filtered.map((t) => {
+              filtered.map((t, idx) => {
                 const typeInfo = TYPE_LABELS[t.type_transm] ?? TYPE_LABELS.GENERAL;
                 const Icon = typeInfo.icon;
                 const heure = new Date(t.date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+                const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
 
                 return (
-                  <div key={t.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div key={t.id} className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}>
                     <div className="flex items-start gap-3">
-                      <div className={`shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${typeInfo.color}`}>
+                      <div className={`shrink-0 h-9 w-9 rounded-full flex items-center justify-center ${typeInfo.color} transition-transform duration-300 group-hover:scale-110`}>
                         <Icon size={16} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-semibold text-gray-800">{t.auteur}</span>
+                          <span className="text-sm font-semibold text-gray-800 group-hover:text-rzpanda-primary transition-colors duration-200">{t.auteur}</span>
                           <span className="text-xs text-gray-400 font-mono">{heure}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full ${typeInfo.color}`}>{typeInfo.label}</span>
                         </div>
@@ -198,16 +199,16 @@ export default function TransmissionsPage() {
 
           {/* Floating action button */}
           <button onClick={() => setShowForm(true)}
-            className="fixed bottom-24 md:bottom-8 right-6 h-14 w-14 rounded-full bg-rzpanda-primary text-white shadow-lg hover:bg-rzpanda-primary/90 flex items-center justify-center z-40 transition-transform hover:scale-105"
+            className="fixed bottom-24 md:bottom-8 right-6 h-14 w-14 rounded-full bg-rzpanda-primary text-white shadow-lg flex items-center justify-center z-40 transition-all duration-300 hover:bg-rzpanda-primary/90 hover:scale-110 active:scale-90 hover:shadow-xl"
             aria-label="Nouvelle transmission">
             <Plus size={24} />
           </button>
         </>
       ) : (
         /* ═══ ANNUAIRE ═══ */
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in-up delay-150">
           {/* Search */}
-          <div className="relative">
+          <div className="relative animate-fade-in-up">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input type="text" placeholder="Rechercher un membre..." value={annuaireSearch} onChange={(e) => setAnnuaireSearch(e.target.value)}
               className="w-full h-10 pl-10 pr-4 rounded-xl border border-gray-300 focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none text-sm" />
@@ -215,37 +216,43 @@ export default function TransmissionsPage() {
 
           {/* Profils list */}
           {annuaireFiltered.length === 0 ? (
-            <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
+            <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center animate-fade-in-up">
               <Users size={48} className="mx-auto text-gray-200 mb-4" />
               <p className="text-gray-400 text-sm">Aucun membre trouvé.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {annuaireFiltered.map((p, idx) => (
-                <button key={p.id} onClick={() => { setSelectedMembre(p); setNotesTemp(p.notes || ""); setEditNotes(false); }}
-                  className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow text-left">
-                  <div className="flex items-center gap-3">
-                    <div className={`h-12 w-12 rounded-full ${COULEURS_ANNUAIRE[idx % COULEURS_ANNUAIRE.length]} flex items-center justify-center text-white text-sm font-bold`}>
-                      {p.prenom.charAt(0)}{p.nom.charAt(0)}
+              {annuaireFiltered.map((p, idx) => {
+                const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+                return (
+                  <button 
+                    key={p.id} 
+                    onClick={() => { setSelectedMembre(p); setNotesTemp(p.notes || ""); setEditNotes(false); }}
+                    className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass} text-left w-full`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`h-12 w-12 rounded-full ${COULEURS_ANNUAIRE[idx % COULEURS_ANNUAIRE.length]} flex items-center justify-center text-white text-sm font-bold transition-transform duration-300 group-hover:scale-105`}>
+                        {p.prenom.charAt(0)}{p.nom.charAt(0)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-800 truncate group-hover:text-rzpanda-primary transition-colors duration-200">{p.prenom} {p.nom}</p>
+                        <p className="text-xs text-gray-500">{p.poste || "—"}</p>
+                        {p.role === "ADMINISTRATEUR" && (
+                          <span className="inline-block mt-0.5 text-[10px] font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Admin</span>
+                        )}
+                      </div>
+                      {p.telephone && <Phone size={14} className="text-gray-300 shrink-0 transition-colors duration-200 group-hover:text-rzpanda-primary" />}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-800 truncate">{p.prenom} {p.nom}</p>
-                      <p className="text-xs text-gray-500">{p.poste || "—"}</p>
-                      {p.role === "ADMINISTRATEUR" && (
-                        <span className="inline-block mt-0.5 text-[10px] font-medium bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Admin</span>
-                      )}
-                    </div>
-                    {p.telephone && <Phone size={14} className="text-gray-300 shrink-0" />}
-                  </div>
-                </button>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           )}
 
           {/* Membre detail modal */}
           {selectedMembre && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4" onClick={() => setSelectedMembre(null)}>
-              <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-xl space-y-4" onClick={(e) => e.stopPropagation()}>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-300" onClick={() => setSelectedMembre(null)}>
+              <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-xl space-y-4 animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full bg-rzpanda-primary flex items-center justify-center text-white text-lg font-bold">
@@ -256,7 +263,7 @@ export default function TransmissionsPage() {
                       <p className="text-sm text-gray-500">{selectedMembre.poste || "—"}</p>
                     </div>
                   </div>
-                  <button onClick={() => setSelectedMembre(null)} className="p-2 rounded-lg hover:bg-gray-100"><X size={20} /></button>
+                  <button onClick={() => setSelectedMembre(null)} className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 active:scale-90"><X size={20} /></button>
                 </div>
 
                 <div className="space-y-2">
@@ -285,17 +292,17 @@ export default function TransmissionsPage() {
                       {editNotes ? (
                         <div className="space-y-2">
                           <textarea value={notesTemp} onChange={(e) => setNotesTemp(e.target.value)}
-                            className="w-full px-2 py-1.5 rounded-lg border border-gray-300 text-sm resize-none" rows={3} placeholder="Notes, horaires, contrat..." />
+                            className="w-full px-2 py-1.5 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary" rows={3} placeholder="Notes, horaires, contrat..." />
                           <div className="flex gap-2">
-                            <button onClick={handleSaveNotes} className="h-8 px-3 rounded-lg bg-rzpanda-primary text-white text-xs font-medium">Enregistrer</button>
-                            <button onClick={() => setEditNotes(false)} className="h-8 px-3 rounded-lg border border-gray-300 text-xs text-gray-600">Annuler</button>
+                            <button onClick={handleSaveNotes} className="h-8 px-3 rounded-lg bg-rzpanda-primary text-white text-xs font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 active:translate-y-0">Enregistrer</button>
+                            <button onClick={() => setEditNotes(false)} className="h-8 px-3 rounded-lg border border-gray-300 text-xs text-gray-600 transition-all duration-200 hover:bg-gray-50 active:bg-gray-100">Annuler</button>
                           </div>
                         </div>
                       ) : (
                         <div className="flex items-start justify-between">
                           <p className="text-sm text-gray-700">{selectedMembre.notes || <span className="text-gray-400 italic">Aucune note</span>}</p>
                           {isAdmin && (
-                            <button onClick={() => setEditNotes(true)} className="p-1 rounded hover:bg-gray-200 text-gray-400" title="Modifier les notes">
+                            <button onClick={() => setEditNotes(true)} className="p-1 rounded hover:bg-gray-200 text-gray-400 transition-all duration-200 hover:scale-110 active:scale-90" title="Modifier les notes">
                               <Pencil size={12} />
                             </button>
                           )}
@@ -311,7 +318,7 @@ export default function TransmissionsPage() {
                   setFormType("EQUIPE");
                   setFormDestinataire(selectedMembre.id);
                   setShowForm(true);
-                }} className="w-full h-11 rounded-xl border border-rzpanda-primary text-rzpanda-primary text-sm font-medium hover:bg-rzpanda-primary/5 flex items-center justify-center gap-2">
+                }} className="w-full h-11 rounded-xl border border-rzpanda-primary text-rzpanda-primary text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/5 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
                   <Send size={16} />
                   Envoyer une transmission à {selectedMembre.prenom}
                 </button>
@@ -323,11 +330,11 @@ export default function TransmissionsPage() {
 
       {/* Quick add form (slide-up) */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/30" onClick={() => setShowForm(false)}>
-          <div className="w-full max-w-lg bg-white rounded-t-2xl p-5 shadow-xl animate-in slide-in-from-bottom" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowForm(false)}>
+          <div className="w-full max-w-lg bg-white rounded-t-2xl p-5 shadow-xl animate-in slide-in-from-bottom duration-300" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Nouvelle transmission</h3>
-              <button onClick={() => setShowForm(false)} className="p-2 rounded-lg hover:bg-gray-100" aria-label="Fermer"><X size={20} /></button>
+              <button onClick={() => setShowForm(false)} className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-110 active:scale-90" aria-label="Fermer"><X size={20} /></button>
             </div>
 
             <div className="space-y-3">
@@ -337,7 +344,7 @@ export default function TransmissionsPage() {
                   const TypeIcon = val.icon;
                   return (
                     <button key={key} onClick={() => { setFormType(key); if (key !== "EQUIPE") setFormDestinataire(""); }}
-                      className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-sm font-medium border transition-colors ${formType === key ? "border-rzpanda-primary bg-rzpanda-primary/10 text-rzpanda-primary" : "border-gray-200 text-gray-500 hover:bg-gray-50"}`}>
+                      className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl text-sm font-medium border transition-all duration-200 hover:scale-105 active:scale-95 ${formType === key ? "border-rzpanda-primary bg-rzpanda-primary/10 text-rzpanda-primary" : "border-gray-200 text-gray-500 hover:bg-gray-50"}`}>
                       <TypeIcon size={16} />
                       {val.label}
                     </button>
@@ -347,7 +354,7 @@ export default function TransmissionsPage() {
 
               {/* Child selector */}
               {formType === "ENFANT" && (
-                <select value={formEnfant} onChange={(e) => setFormEnfant(e.target.value)} className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Enfant concerné">
+                <select value={formEnfant} onChange={(e) => setFormEnfant(e.target.value)} className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none bg-white" aria-label="Enfant concerné">
                   <option value="">Sélectionner un enfant</option>
                   {enfants.map((e) => <option key={e.id} value={e.id}>{e.prenom} {e.nom}</option>)}
                 </select>
@@ -355,7 +362,7 @@ export default function TransmissionsPage() {
 
               {/* Destinataire selector (équipe) */}
               {formType === "EQUIPE" && (
-                <select value={formDestinataire} onChange={(e) => setFormDestinataire(e.target.value)} className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Destinataire">
+                <select value={formDestinataire} onChange={(e) => setFormDestinataire(e.target.value)} className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none bg-white" aria-label="Destinataire">
                   <option value="">Toute l&apos;équipe</option>
                   {profilsEquipe.map((p) => <option key={p.id} value={p.id}>{p.prenom} {p.nom}</option>)}
                 </select>
@@ -363,10 +370,10 @@ export default function TransmissionsPage() {
 
               {/* Content */}
               <textarea value={formContenu} onChange={(e) => setFormContenu(e.target.value)} placeholder="Écrire la transmission..." rows={3}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/30 focus:border-rzpanda-primary" aria-label="Contenu de la transmission" />
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary" aria-label="Contenu de la transmission" />
 
               <button onClick={handleSubmit} disabled={submitting || !formContenu.trim()}
-                className="w-full h-12 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                className="w-full h-12 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2">
                 {submitting ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
                 Envoyer
               </button>

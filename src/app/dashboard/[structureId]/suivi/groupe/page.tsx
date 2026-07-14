@@ -68,9 +68,9 @@ export default function VueGroupePage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-up">
         <div className="flex items-center gap-4">
-          <Link href={`/dashboard/${structureId}/suivi`} className="text-gray-400 hover:text-rzpanda-primary">
+          <Link href={`/dashboard/${structureId}/suivi`} className="text-gray-400 hover:text-rzpanda-primary transition-all duration-200 hover:scale-110 active:scale-90">
             <ArrowLeft size={20} />
           </Link>
           <h1 className="text-2xl font-bold text-gray-800">Vue groupe</h1>
@@ -79,17 +79,17 @@ export default function VueGroupePage() {
       </div>
 
       {/* Group filter */}
-      <div className="flex gap-1.5">
+      <div className="flex gap-1.5 animate-fade-in-up delay-75">
         {["Tous", ...GROUPES_ENFANTS].map((g) => (
           <button key={g} onClick={() => setGroupeFiltre(g)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${groupeFiltre === g ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${groupeFiltre === g ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
             {g}
           </button>
         ))}
       </div>
 
       {/* Grid */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto animate-fade-in-up delay-150">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-200">
@@ -100,12 +100,13 @@ export default function VueGroupePage() {
             </tr>
           </thead>
           <tbody>
-            {filteredEnfants.map((enfant) => {
+            {filteredEnfants.map((enfant, idx) => {
               const c = counts[enfant.id] ?? { biberons: 0, repas: 0, changes: 0, siestes: 0, transmissions: 0 };
               const couleur = COULEURS_AVATAR[enfant.prenom.charCodeAt(0) % COULEURS_AVATAR.length];
+              const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
 
               return (
-                <tr key={enfant.id} className="border-b border-gray-100 hover:bg-gray-50">
+                <tr key={enfant.id} className={`border-b border-gray-100 transition-all duration-300 hover:bg-gray-50/50 animate-fade-in-up ${delayClass}`}>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <div className="h-8 w-8 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: couleur }}>
@@ -121,7 +122,7 @@ export default function VueGroupePage() {
                       <td key={col.key} className="text-center py-3 px-3">
                         <button
                           onClick={() => router.push(`/dashboard/${structureId}/suivi?enfant=${enfant.id}`)}
-                          className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-sm font-medium ${count > 0 ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-400"}`}>
+                          className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-lg text-sm font-medium transition-all duration-200 hover:scale-110 active:scale-90 ${count > 0 ? "bg-green-100 text-green-700 hover:bg-green-200" : "bg-gray-100 text-gray-400 hover:bg-gray-200"}`}>
                           {count > 0 ? (count > 1 ? `✓ ×${count}` : "✓") : "—"}
                         </button>
                       </td>

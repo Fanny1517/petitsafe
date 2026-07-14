@@ -139,11 +139,11 @@ export default function ProtocolesPage() {
   if (selected) {
     return (
       <div className="max-w-3xl mx-auto space-y-4">
-        <button onClick={() => setSelectedId(null)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary">
+        <button onClick={() => setSelectedId(null)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary transition-all duration-200 hover:-translate-x-0.5">
           <ArrowLeft size={16} /> Retour
         </button>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h1 className="text-xl font-bold text-gray-800">{selected.titre}</h1>
@@ -156,10 +156,10 @@ export default function ProtocolesPage() {
             </div>
             {isGestionnaire && (
               <div className="flex gap-2">
-                <button onClick={() => openEdit(selected)} className="p-2 rounded-lg text-gray-400 hover:text-rzpanda-primary hover:bg-rzpanda-primary/5" aria-label="Modifier">
+                <button onClick={() => openEdit(selected)} className="p-2 rounded-lg text-gray-400 hover:text-rzpanda-primary hover:bg-rzpanda-primary/5 transition-all duration-200 hover:scale-110 active:scale-90" aria-label="Modifier">
                   <Edit size={18} />
                 </button>
-                <button onClick={() => handleArchiver(selected.id)} className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50" aria-label="Archiver">
+                <button onClick={() => handleArchiver(selected.id)} className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200 hover:scale-110 active:scale-90" aria-label="Archiver">
                   <Archive size={18} />
                 </button>
               </div>
@@ -179,23 +179,23 @@ export default function ProtocolesPage() {
   if (showForm) {
     return (
       <div className="max-w-3xl mx-auto space-y-4">
-        <button onClick={() => setShowForm(false)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary">
+        <button onClick={() => setShowForm(false)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary transition-all duration-200 hover:-translate-x-0.5">
           <ArrowLeft size={16} /> Annuler
         </button>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
           <h2 className="text-lg font-bold text-gray-800">{editingId ? "Modifier le protocole" : "Nouveau protocole"}</h2>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
             <input value={formTitre} onChange={(e) => setFormTitre(e.target.value)} placeholder="Titre du protocole"
-              className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Titre du protocole" />
+              className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Titre du protocole" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
             <select value={formCategorie} onChange={(e) => setFormCategorie(e.target.value)}
-              className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Catégorie">
+              className="w-full h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none bg-white" aria-label="Catégorie">
               {CATEGORIES_PROTOCOLE.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
@@ -203,11 +203,11 @@ export default function ProtocolesPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Contenu (Markdown)</label>
             <textarea value={formContenu} onChange={(e) => setFormContenu(e.target.value)} placeholder="Écrivez le contenu du protocole…" rows={12}
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-sm resize-y font-mono focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/30 focus:border-rzpanda-primary" aria-label="Contenu du protocole" />
+              className="w-full px-3 py-2.5 rounded-xl border border-gray-300 text-sm resize-y font-mono focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary" aria-label="Contenu du protocole" />
           </div>
 
           <button onClick={handleSubmit} disabled={submitting}
-            className="w-full h-12 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center justify-center gap-2">
+            className="w-full h-12 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 flex items-center justify-center gap-2">
             {submitting ? <Loader2 size={18} className="animate-spin" /> : null}
             {editingId ? "Enregistrer les modifications" : "Créer le protocole"}
           </button>
@@ -219,16 +219,16 @@ export default function ProtocolesPage() {
   // ═══ LIST VIEW ═══
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2 animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Protocoles</h1>
         {isGestionnaire && (
           <div className="flex items-center gap-2">
             <button onClick={handleImportModeles} disabled={importing}
-              className="h-10 px-4 rounded-xl bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 flex items-center gap-2 disabled:opacity-50">
+              className="h-10 px-4 rounded-xl bg-gray-100 text-gray-700 text-sm font-medium transition-all duration-200 hover:bg-gray-200 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:hover:translate-y-0 flex items-center gap-2">
               {importing ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
               Importer les modèles
             </button>
-            <button onClick={openCreate} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 flex items-center gap-2">
+            <button onClick={openCreate} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none flex items-center gap-2">
               <Plus size={16} /> Nouveau
             </button>
           </div>
@@ -236,18 +236,18 @@ export default function ProtocolesPage() {
       </div>
 
       {/* Search */}
-      <div className="relative">
+      <div className="relative animate-fade-in-up delay-75">
         <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Rechercher un protocole…"
-          className="w-full h-12 pl-10 pr-3 rounded-xl border border-gray-300 text-sm" aria-label="Rechercher" />
+          className="w-full h-12 pl-10 pr-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Rechercher" />
       </div>
 
       {/* Category filters */}
-      <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setFilterCat(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterCat === null ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>Tous</button>
+      <div className="flex gap-2 flex-wrap animate-fade-in-up delay-75">
+        <button onClick={() => setFilterCat(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${filterCat === null ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/95" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>Tous</button>
         {CATEGORIES_PROTOCOLE.map((c) => (
           <button key={c} onClick={() => setFilterCat(filterCat === c ? null : c)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${filterCat === c ? "bg-rzpanda-primary text-white" : CATEGORIE_COLORS[c] ?? "bg-gray-100 text-gray-600"}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${filterCat === c ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/95" : (CATEGORIE_COLORS[c] ?? "bg-gray-100 text-gray-600") + " hover:opacity-90"}`}>
             {c}
           </button>
         ))}
@@ -255,35 +255,52 @@ export default function ProtocolesPage() {
 
       {/* Grouped list */}
       {Object.keys(grouped).length === 0 ? (
-        <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-100 text-center">
-          <FileText size={40} className="mx-auto text-gray-200 mb-3" />
-          <p className="text-gray-400 text-sm">Aucun protocole trouvé.</p>
-          {isGestionnaire && <p className="text-gray-300 text-xs mt-1">Créez votre premier protocole.</p>}
+        <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up delay-150">
+          <div className="p-3 rounded-full bg-cyan-50 text-cyan-600">
+            <FileText size={28} />
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-semibold text-gray-700">Aucun protocole trouvé</p>
+            <p className="text-xs text-gray-400">
+              {protocoles.length === 0 ? "Créez votre premier protocole ou importez les modèles existants." : "Essayez un autre filtre ou une autre recherche."}
+            </p>
+          </div>
+          {protocoles.length === 0 && isGestionnaire && (
+            <button 
+              onClick={openCreate}
+              className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-cyan-50/60 hover:border-cyan-300 hover:text-cyan-700 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <Plus size={16} /> Nouveau protocole
+            </button>
+          )}
         </div>
       ) : (
-        Object.entries(grouped).map(([cat, protos]) => (
-          <div key={cat}>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-1">{cat}</h3>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-50">
-              {protos.map((p) => (
-                <button key={p.id} onClick={() => setSelectedId(p.id)}
-                  className="w-full flex items-center gap-3 p-4 hover:bg-gray-50 text-left transition-colors">
-                  <div className="shrink-0 h-10 w-10 rounded-xl bg-rzpanda-primary/10 flex items-center justify-center">
-                    <FileText size={18} className="text-rzpanda-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">{p.titre}</p>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className={`text-xs px-1.5 py-0.5 rounded-full ${CATEGORIE_COLORS[p.categorie] ?? CATEGORIE_COLORS["Autre"]}`}>{p.categorie}</span>
-                      <span className="text-xs text-gray-400">v{p.version}</span>
+        Object.entries(grouped).map(([cat, protos], idx) => {
+          const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+          return (
+            <div key={cat} className={`animate-fade-in-up ${delayClass}`}>
+              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-1">{cat}</h3>
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-50">
+                {protos.map((p) => (
+                  <button key={p.id} onClick={() => setSelectedId(p.id)}
+                    className="group w-full flex items-center gap-3 p-4 hover:bg-gray-50 text-left transition-all duration-300 ease-out hover:pl-5">
+                    <div className="shrink-0 h-10 w-10 rounded-xl bg-rzpanda-primary/10 flex items-center justify-center">
+                      <FileText size={18} className="text-rzpanda-primary transition-transform duration-300 group-hover:scale-110" />
                     </div>
-                  </div>
-                  <ChevronRight size={16} className="text-gray-300 shrink-0" />
-                </button>
-              ))}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-800 truncate group-hover:text-rzpanda-primary transition-colors duration-200">{p.titre}</p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className={`text-xs px-1.5 py-0.5 rounded-full ${CATEGORIE_COLORS[p.categorie] ?? CATEGORIE_COLORS["Autre"]}`}>{p.categorie}</span>
+                        <span className="text-xs text-gray-400">v{p.version}</span>
+                      </div>
+                    </div>
+                    <ChevronRight size={16} className="text-gray-300 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        ))
+          );
+        })
       )}
     </div>
   );

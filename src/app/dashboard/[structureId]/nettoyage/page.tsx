@@ -182,11 +182,23 @@ export default function NettoyagePage() {
     const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in-up delay-150">
         <div className="flex items-center justify-between">
-          <button onClick={() => { if (histMois === 0) { setHistMois(11); setHistAnnee(histAnnee - 1); } else setHistMois(histMois - 1); }} className="p-2 hover:bg-gray-100 rounded-lg" aria-label="Mois précédent"><ChevronLeft size={20} /></button>
+          <button 
+            onClick={() => { if (histMois === 0) { setHistMois(11); setHistAnnee(histAnnee - 1); } else setHistMois(histMois - 1); }} 
+            className="p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:scale-110 active:scale-90" 
+            aria-label="Mois précédent"
+          >
+            <ChevronLeft size={20} />
+          </button>
           <h3 className="text-lg font-semibold">{monthNames[histMois]} {histAnnee}</h3>
-          <button onClick={() => { if (histMois === 11) { setHistMois(0); setHistAnnee(histAnnee + 1); } else setHistMois(histMois + 1); }} className="p-2 hover:bg-gray-100 rounded-lg" aria-label="Mois suivant"><ChevronRight size={20} /></button>
+          <button 
+            onClick={() => { if (histMois === 11) { setHistMois(0); setHistAnnee(histAnnee + 1); } else setHistMois(histMois + 1); }} 
+            className="p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:scale-110 active:scale-90" 
+            aria-label="Mois suivant"
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
 
         <div className="grid grid-cols-7 gap-1 text-center">
@@ -201,15 +213,20 @@ export default function NettoyagePage() {
             let color = "bg-gray-100 text-gray-400"; // no data
             if (dayData) {
               const pct = dayData.total === 0 ? 100 : Math.round((dayData.fait / dayData.total) * 100);
-              if (pct === 100) color = "bg-green-100 text-green-800";
-              else if (pct >= 50) color = "bg-orange-100 text-orange-800";
-              else color = "bg-red-100 text-red-800";
+              if (pct === 100) color = "bg-green-100 text-green-800 hover:bg-green-200";
+              else if (pct >= 50) color = "bg-orange-100 text-orange-800 hover:bg-orange-200";
+              else color = "bg-red-100 text-red-800 hover:bg-red-200";
+            } else {
+              color += " hover:bg-gray-200";
             }
 
             return (
-              <button key={day} onClick={() => setHistSelectedDay(histSelectedDay === dateStr ? null : dateStr)}
-                className={`p-2 rounded-lg text-sm font-medium transition-colors ${color} ${histSelectedDay === dateStr ? "ring-2 ring-rzpanda-primary" : ""}`}
-                aria-label={`${day} ${monthNames[histMois]} ${histAnnee}`}>
+              <button 
+                key={day} 
+                onClick={() => setHistSelectedDay(histSelectedDay === dateStr ? null : dateStr)}
+                className={`p-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${color} ${histSelectedDay === dateStr ? "ring-2 ring-rzpanda-primary" : ""}`}
+                aria-label={`${day} ${monthNames[histMois]} ${histAnnee}`}
+              >
                 {day}
               </button>
             );
@@ -217,7 +234,7 @@ export default function NettoyagePage() {
         </div>
 
         {histSelectedDay && histData[histSelectedDay] && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 space-y-2">
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 space-y-2 animate-fade-in-up">
             <h4 className="font-semibold text-sm text-gray-700">Détail du {new Date(histSelectedDay + "T00:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</h4>
             <p className="text-sm text-gray-500">{histData[histSelectedDay].fait} tâche{histData[histSelectedDay].fait > 1 ? "s" : ""} effectuée{histData[histSelectedDay].fait > 1 ? "s" : ""}</p>
             <div className="space-y-1">
@@ -237,79 +254,102 @@ export default function NettoyagePage() {
 
   // ═══ ADMIN VIEW ═══
   const renderAdmin = () => (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in-up delay-150">
       {/* Add zone */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-fade-in-up">
         <h3 className="font-semibold text-gray-800 mb-3">Ajouter une zone</h3>
         <div className="flex gap-2">
-          <input value={newZoneName} onChange={(e) => setNewZoneName(e.target.value)} placeholder="Nom de la zone" className="flex-1 h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Nom de la zone" />
-          <button onClick={handleAddZone} className="h-12 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90" aria-label="Ajouter la zone">
+          <input value={newZoneName} onChange={(e) => setNewZoneName(e.target.value)} placeholder="Nom de la zone" className="flex-1 h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Nom de la zone" />
+          <button 
+            onClick={handleAddZone} 
+            className="h-12 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none flex items-center justify-center" 
+            aria-label="Ajouter la zone"
+          >
             <Plus size={18} />
           </button>
         </div>
       </div>
 
       {/* Add task */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-fade-in-up delay-75">
         <h3 className="font-semibold text-gray-800 mb-3">Ajouter une tâche</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <select value={newTacheZoneId} onChange={(e) => setNewTacheZoneId(e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Zone">
+          <select value={newTacheZoneId} onChange={(e) => setNewTacheZoneId(e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none bg-white" aria-label="Zone">
             <option value="">Choisir une zone</option>
             {zones.map((z) => <option key={z.id} value={z.id}>{z.nom}</option>)}
           </select>
-          <input value={newTacheName} onChange={(e) => setNewTacheName(e.target.value)} placeholder="Nom de la tâche" className="h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Nom de la tâche" />
-          <select value={newTacheFreq} onChange={(e) => setNewTacheFreq(e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Fréquence">
+          <input value={newTacheName} onChange={(e) => setNewTacheName(e.target.value)} placeholder="Nom de la tâche" className="h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Nom de la tâche" />
+          <select value={newTacheFreq} onChange={(e) => setNewTacheFreq(e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none bg-white" aria-label="Fréquence">
             {Object.entries(FREQ_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
           </select>
-          <input value={newTacheMethode} onChange={(e) => setNewTacheMethode(e.target.value)} placeholder="Méthode" className="h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Méthode" />
-          <input value={newTacheProduit} onChange={(e) => setNewTacheProduit(e.target.value)} placeholder="Produit (optionnel)" className="h-12 px-3 rounded-xl border border-gray-300 text-sm" aria-label="Produit" />
-          <button onClick={handleAddTache} className="h-12 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90">Ajouter</button>
+          <input value={newTacheMethode} onChange={(e) => setNewTacheMethode(e.target.value)} placeholder="Méthode" className="h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Méthode" />
+          <input value={newTacheProduit} onChange={(e) => setNewTacheProduit(e.target.value)} placeholder="Produit (optionnel)" className="h-12 px-3 rounded-xl border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" aria-label="Produit" />
+          <button 
+            onClick={handleAddTache} 
+            className="h-12 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none flex items-center justify-center"
+          >
+            Ajouter
+          </button>
         </div>
       </div>
 
       {/* Zones & tâches list */}
-      {zones.map((zone) => (
-        <div key={zone.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              {zone.couleur_code && <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: zone.couleur_code }} aria-hidden="true" />}
-              <h3 className="font-semibold text-gray-800">{zone.nom}</h3>
-              <span className="text-xs text-gray-400">{zone.taches.length} tâche{zone.taches.length > 1 ? "s" : ""}</span>
-            </div>
-            <button onClick={() => handleDeleteZone(zone.id)} className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg" aria-label={`Supprimer la zone ${zone.nom}`}>
-              <Trash2 size={16} />
-            </button>
-          </div>
-          <div className="space-y-1">
-            {zone.taches.map((t) => (
-              <div key={t.id} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-gray-50">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-700">{t.nom}</p>
-                  <p className="text-xs text-gray-400">{FREQ_LABELS[t.frequence]} · {t.methode}{t.produit ? ` · ${t.produit}` : ""}</p>
-                </div>
-                <button onClick={() => handleDeleteTache(t.id)} className="p-1.5 text-red-400 hover:text-red-600" aria-label={`Supprimer ${t.nom}`}>
-                  <Trash2 size={14} />
-                </button>
+      {zones.map((zone, idx) => {
+        const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+        return (
+          <div 
+            key={zone.id} 
+            className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                {zone.couleur_code && <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: zone.couleur_code }} aria-hidden="true" />}
+                <h3 className="font-semibold text-gray-800">{zone.nom}</h3>
+                <span className="text-xs text-gray-400">{zone.taches.length} tâche{zone.taches.length > 1 ? "s" : ""}</span>
               </div>
-            ))}
+              <button 
+                onClick={() => handleDeleteZone(zone.id)} 
+                className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 hover:scale-110 active:scale-90" 
+                aria-label={`Supprimer la zone ${zone.nom}`}
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+            <div className="space-y-1">
+              {zone.taches.map((t) => (
+                <div key={t.id} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-gray-50/70 transition-colors duration-200">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-700">{t.nom}</p>
+                    <p className="text-xs text-gray-400">{FREQ_LABELS[t.frequence]} · {t.methode}{t.produit ? ` · ${t.produit}` : ""}</p>
+                  </div>
+                  <button 
+                    onClick={() => handleDeleteTache(t.id)} 
+                    className="p-1.5 text-red-400 hover:text-red-600 transition-all duration-200 hover:scale-110 active:scale-90" 
+                    aria-label={`Supprimer ${t.nom}`}
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 
   return (
     <div className="max-w-5xl mx-auto space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2 animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Plan de nettoyage</h1>
         <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
-          <button onClick={() => setView("jour")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${view === "jour" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500"}`}>Aujourd&apos;hui</button>
-          <button onClick={() => setView("historique")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${view === "historique" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500"}`}>
+          <button onClick={() => setView("jour")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${view === "jour" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500 hover:text-gray-700"}`}>Aujourd&apos;hui</button>
+          <button onClick={() => setView("historique")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${view === "historique" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500 hover:text-gray-700"}`}>
             <Calendar size={14} className="inline mr-1" />Historique
           </button>
           {isGestionnaire && (
-            <button onClick={() => setView("admin")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${view === "admin" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500"}`}>
+            <button onClick={() => setView("admin")} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${view === "admin" ? "bg-white shadow-sm text-rzpanda-primary" : "text-gray-500 hover:text-gray-700"}`}>
               <Settings2 size={14} className="inline mr-1" />Gérer
             </button>
           )}
@@ -317,7 +357,7 @@ export default function NettoyagePage() {
       </div>
 
       {/* Global progress */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-fade-in-up delay-75">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <PastilleStatut status={globalStatus} />
@@ -336,13 +376,13 @@ export default function NettoyagePage() {
       {view === "jour" && (
         <>
           {/* Zone tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+          <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-1 px-1 animate-fade-in-up delay-150">
             {zones.map((zone, i) => {
               const progress = getZoneProgress(zone);
               const status = progress.pct === 100 ? "conforme" : progress.pct >= 50 ? "attention" : "alerte";
               return (
                 <button key={zone.id} onClick={() => setActiveZone(i)}
-                  className={`shrink-0 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors border ${activeZone === i ? "bg-rzpanda-primary/10 border-rzpanda-primary/30 text-rzpanda-primary" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
+                  className={`shrink-0 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none ${activeZone === i ? "bg-rzpanda-primary/10 border-rzpanda-primary/30 text-rzpanda-primary" : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"}`}>
                   <div className="flex items-center gap-2">
                     {zone.couleur_code && <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: zone.couleur_code }} aria-hidden="true" />}
                     <span>{zone.nom}</span>
@@ -356,21 +396,34 @@ export default function NettoyagePage() {
 
           {/* Zone task list */}
           {currentZone && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-50">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-50 animate-fade-in-up delay-225">
               {tachesDuJour.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-gray-400 text-sm">Aucune tâche prévue pour aujourd&apos;hui dans cette zone.</p>
                 </div>
               ) : (
-                tachesDuJour.map((tache) => {
+                tachesDuJour.map((tache, idx) => {
                   const isValidated = validatedIds.has(tache.id);
                   const validation = validations.find((v) => v.tache_id === tache.id);
+                  const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
 
                   return (
-                    <div key={tache.id} className={`flex items-center gap-3 p-4 ${isValidated ? "bg-green-50/50" : ""}`}>
-                      <button onClick={() => !isValidated && handleValider(tache.id)} disabled={isValidated}
-                        className={`shrink-0 h-7 w-7 rounded-lg border-2 flex items-center justify-center transition-colors ${isValidated ? "bg-rzpanda-primary border-rzpanda-primary text-white" : "border-gray-300 hover:border-rzpanda-primary hover:bg-rzpanda-primary/5"}`}
-                        aria-label={isValidated ? `${tache.nom} — validée` : `Valider ${tache.nom}`}>
+                    <div 
+                      key={tache.id} 
+                      className={`flex items-center gap-3 p-4 transition-all duration-300 ${
+                        isValidated ? "bg-green-50/50" : "hover:bg-gray-50/40"
+                      } animate-fade-in-up ${delayClass}`}
+                    >
+                      <button 
+                        onClick={() => !isValidated && handleValider(tache.id)} 
+                        disabled={isValidated}
+                        className={`shrink-0 h-7 w-7 rounded-lg border-2 flex items-center justify-center transition-all duration-200 ${
+                          isValidated 
+                            ? "bg-rzpanda-primary border-rzpanda-primary text-white" 
+                            : "border-gray-300 hover:border-rzpanda-primary hover:bg-rzpanda-primary/5 hover:scale-105 active:scale-95"
+                        }`}
+                        aria-label={isValidated ? `${tache.nom} — validée` : `Valider ${tache.nom}`}
+                      >
                         {isValidated && <CheckCircle2 size={16} />}
                       </button>
                       <div className="flex-1 min-w-0">
@@ -395,9 +448,12 @@ export default function NettoyagePage() {
                             </p>
                           </div>
                           {isProfilAdmin && (
-                            <button onClick={() => handleAnnulerValidation(validation.id)}
-                              className="h-6 w-6 rounded-full hover:bg-red-100 text-gray-300 hover:text-red-500 flex items-center justify-center transition-colors"
-                              title="Annuler l'émargement" aria-label="Annuler l'émargement">
+                            <button 
+                              onClick={() => handleAnnulerValidation(validation.id)}
+                              className="h-6 w-6 rounded-full hover:bg-red-100 text-gray-300 hover:text-red-500 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
+                              title="Annuler l'émargement" 
+                              aria-label="Annuler l'émargement"
+                            >
                               <X size={12} />
                             </button>
                           )}

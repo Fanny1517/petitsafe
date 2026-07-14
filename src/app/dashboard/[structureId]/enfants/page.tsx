@@ -12,7 +12,7 @@ import { BadgeAllergie } from "@/components/shared/badge-allergie";
 import { BadgeRegime } from "@/components/shared/badge-regime";
 import { BoutonAction } from "@/components/shared/bouton-action";
 import { GROUPES_ENFANTS } from "@/lib/constants";
-import { Plus, Search, Upload, Loader2, AlertTriangle, ShieldAlert } from "lucide-react";
+import { Plus, Search, Upload, Loader2, AlertTriangle, ShieldAlert, Baby } from "lucide-react";
 import { ImportCSVModal } from "@/components/enfants/import-csv-modal";
 import { useProfil } from "@/hooks/use-profil";
 
@@ -82,12 +82,12 @@ export default function EnfantsPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Enfants</h1>
         {isAdmin && (
           <div className="flex gap-2">
             <button onClick={() => setShowImport(true)}
-              className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              className="h-12 min-h-[48px] px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none flex items-center gap-2">
               <Upload size={16} /> Importer un CSV
             </button>
             <BoutonAction label="Ajouter un enfant" icon={Plus} size="md"
@@ -97,7 +97,7 @@ export default function EnfantsPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up delay-75">
         <div className="relative flex-1">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input type="text" placeholder="Rechercher un enfant..." value={search} onChange={(e) => setSearch(e.target.value)}
@@ -106,7 +106,7 @@ export default function EnfantsPage() {
         <div className="flex gap-1.5">
           {["Tous", ...GROUPES_ENFANTS].map((g) => (
             <button key={g} onClick={() => setGroupeFiltre(g)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${groupeFiltre === g ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${groupeFiltre === g ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
               {g}
             </button>
           ))}
@@ -115,52 +115,69 @@ export default function EnfantsPage() {
 
       {/* Grid */}
       {filtres.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-gray-400 text-lg mb-2">{enfants.length === 0 ? "Aucun enfant" : "Aucun résultat"}</p>
-          <p className="text-gray-300 text-sm">
-            {enfants.length === 0 ? "Ajoutez votre premier enfant ou importez un CSV depuis votre logiciel existant." : "Essayez un autre filtre ou une autre recherche."}
-          </p>
+        <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up delay-150">
+          <div className="p-3 rounded-full bg-orange-50 text-orange-600">
+            <Baby size={28} />
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-semibold text-gray-700">{enfants.length === 0 ? "Aucun enfant" : "Aucun résultat"}</p>
+            <p className="text-xs text-gray-400">
+              {enfants.length === 0 ? "Ajoutez votre premier enfant ou importez un CSV depuis votre logiciel existant." : "Essayez un autre filtre ou une autre recherche."}
+            </p>
+          </div>
+          {enfants.length === 0 && isAdmin && (
+            <button 
+              onClick={() => router.push(`/dashboard/${structureId}/enfants/nouveau`)}
+              className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-orange-50/60 hover:border-orange-300 hover:text-orange-700 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <Plus size={16} /> Ajouter un enfant
+            </button>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtres.map((enfant) => {
+          {filtres.map((enfant, idx) => {
             const age = calculerAge(new Date(enfant.date_naissance), maintenant);
             const couleur = COULEURS_AVATAR[enfant.prenom.charCodeAt(0) % COULEURS_AVATAR.length];
             const initiale = enfant.prenom.charAt(0).toUpperCase();
             const groupeEffectif = getGroupeEffectif(enfant);
             const bascule = !enfant.groupe_force ? joursAvantBascule(new Date(enfant.date_naissance), seuils.seuil_bebes_max, seuils.seuil_moyens_max, maintenant) : null;
+            const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
 
             return (
-              <button key={enfant.id} onClick={() => router.push(`/dashboard/${structureId}/enfants/${enfant.id}`)}
-                className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow text-left w-full">
+              <button
+                key={enfant.id}
+                onClick={() => router.push(`/dashboard/${structureId}/enfants/${enfant.id}`)}
+                className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass} text-left w-full`}
+              >
                 <div className="flex items-start gap-3">
                   {enfant.photo_url ? (
-                    <img src={enfant.photo_url} alt={enfant.prenom} className="h-12 w-12 rounded-full object-cover shrink-0" />
+                    <img src={enfant.photo_url} alt={enfant.prenom} className="h-12 w-12 rounded-full object-cover shrink-0 transition-transform duration-300 group-hover:scale-105" />
                   ) : (
-                    <div className="h-12 w-12 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0" style={{ backgroundColor: couleur }}>
+                    <div className="h-12 w-12 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0 transition-transform duration-300 group-hover:scale-105" style={{ backgroundColor: couleur }}>
                       {initiale}
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-gray-800 truncate">{enfant.prenom} {enfant.nom}</p>
+                    <p className="font-semibold text-gray-800 truncate group-hover:text-rzpanda-primary transition-colors duration-200">{enfant.prenom} {enfant.nom}</p>
                     <p className="text-sm text-gray-500">
                       {age} · {groupeEffectif}
                       {enfant.groupe_force && <span className="ml-1 text-[10px] text-amber-600">(forcé)</span>}
                     </p>
                     {bascule && bascule.jours <= 30 && (
-                      <p className="text-[10px] text-blue-600 mt-0.5">
+                      <p className="text-[10px] text-blue-600 mt-0.5 animate-pulse">
                         Bascule {bascule.prochainGroupe} dans {bascule.jours} jour{bascule.jours > 1 ? "s" : ""}
                       </p>
                     )}
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0 mt-1">
                     {enfantsAvecPai.has(enfant.id) && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full" aria-label="PAI">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full animate-bounce" aria-label="PAI">
                         <ShieldAlert size={10} /> PAI
                       </span>
                     )}
                     {enfant.allergies.length > 0 && (
-                      <AlertTriangle size={18} className="text-red-500" aria-label="Allergies" />
+                      <AlertTriangle size={18} className="text-red-500 animate-pulse" aria-label="Allergies" />
                     )}
                   </div>
                 </div>

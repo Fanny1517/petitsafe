@@ -27,7 +27,9 @@ export function useAuth() {
     const getUser = async () => {
       try {
         const { data: { user }, error: authError } = await supabase.auth.getUser();
-        if (authError) console.error("[useAuth] getUser error:", authError);
+        if (authError && authError.name !== "AuthSessionMissingError") {
+          console.error("[useAuth] getUser error:", authError);
+        }
         setUser(user);
         if (user) {
           const { data, error } = await supabase

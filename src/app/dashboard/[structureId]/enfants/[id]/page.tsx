@@ -131,20 +131,20 @@ export default function FicheEnfantPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Back + actions */}
-      <div className="flex items-center justify-between">
-        <button onClick={() => router.push(`/dashboard/${structureId}/enfants`)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary">
+      <div className="flex items-center justify-between animate-fade-in-up">
+        <button onClick={() => router.push(`/dashboard/${structureId}/enfants`)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary transition-all duration-200 hover:-translate-x-0.5">
           <ArrowLeft size={16} /> Retour
         </button>
         {isAdmin && (
           <div className="flex gap-2">
             <button onClick={() => router.push(`/dashboard/${structureId}/enfants/${enfantId}/modifier`)}
-              className="h-9 px-3 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              className="h-9 px-3 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm">
               <Edit size={14} /> Modifier
             </button>
-            <button onClick={handleArchive} className="h-9 px-3 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+            <button onClick={handleArchive} className="h-9 px-3 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm">
               <Edit size={14} /> Archiver
             </button>
-            <button onClick={handleDelete} className="h-9 px-3 rounded-lg border border-red-300 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+            <button onClick={handleDelete} className="h-9 px-3 rounded-lg border border-red-300 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm">
               <Trash2 size={14} /> Supprimer
             </button>
           </div>
@@ -152,11 +152,11 @@ export default function FicheEnfantPage() {
       </div>
 
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 animate-fade-in-up delay-75">
         {enfant.photo_url ? (
-          <img src={enfant.photo_url} alt={enfant.prenom} className="h-16 w-16 rounded-full object-cover" />
+          <img src={enfant.photo_url} alt={enfant.prenom} className="h-16 w-16 rounded-full object-cover transition-transform duration-300 hover:scale-105" />
         ) : (
-          <div className="h-16 w-16 rounded-full flex items-center justify-center text-white font-bold text-2xl" style={{ backgroundColor: couleur }}>
+          <div className="h-16 w-16 rounded-full flex items-center justify-center text-white font-bold text-2xl transition-transform duration-300 hover:scale-105" style={{ backgroundColor: couleur }}>
             {enfant.prenom.charAt(0)}
           </div>
         )}
@@ -168,8 +168,8 @@ export default function FicheEnfantPage() {
 
       {/* PAI badge */}
       {paiActif && (
-        <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200">
-          <ShieldAlert size={18} className="text-amber-600 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200 animate-fade-in-up delay-75">
+          <ShieldAlert size={18} className="text-amber-600 shrink-0 mt-0.5 animate-bounce" />
           <div className="flex-1">
             <p className="text-sm font-semibold text-amber-800">PAI actif</p>
             <p className="text-xs text-amber-700">
@@ -178,7 +178,7 @@ export default function FicheEnfantPage() {
           </div>
           <button
             onClick={() => setActiveTab(4)}
-            className="text-xs font-medium text-amber-700 hover:underline shrink-0"
+            className="text-xs font-medium text-amber-700 hover:underline shrink-0 transition-transform duration-200 hover:scale-105 active:scale-95"
           >
             Voir le PAI →
           </button>
@@ -186,11 +186,13 @@ export default function FicheEnfantPage() {
       )}
 
       {/* Allergie & régime banners */}
-      {enfant.allergies.length > 0 && <BadgeAllergie enfant={enfant} />}
-      {enfant.regimes.length > 0 && <BadgeRegime enfant={enfant} />}
+      <div className="animate-fade-in-up delay-75 space-y-2">
+        {enfant.allergies.length > 0 && <BadgeAllergie enfant={enfant} />}
+        {enfant.regimes.length > 0 && <BadgeRegime enfant={enfant} />}
+      </div>
 
       {/* Portail parents */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-fade-in-up delay-150">
         <div className="flex items-center gap-2 mb-3">
           <Link2 size={16} className="text-rzpanda-primary" />
           <h3 className="text-sm font-semibold text-gray-700">Portail Parents</h3>
@@ -200,21 +202,21 @@ export default function FicheEnfantPage() {
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <input value={portalUrl} readOnly className="flex-1 h-10 px-3 rounded-lg border border-gray-200 bg-gray-50 text-xs text-gray-600 truncate" />
-              <button onClick={handleCopyLink} className="h-10 px-3 rounded-lg bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90 flex items-center gap-1.5 shrink-0">
+              <button onClick={handleCopyLink} className="h-10 px-3 rounded-lg bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90 flex items-center gap-1.5 shrink-0 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm">
                 <Copy size={14} /> <span className="text-sm">Copier</span>
               </button>
             </div>
             <div className="flex items-center justify-between">
               <p className="text-xs text-gray-400">Partagez ce lien aux parents pour qu&apos;ils consultent les activités.</p>
               <button onClick={handleRegenererLien} disabled={portalLoading}
-                className="text-xs text-gray-400 hover:text-red-500 flex items-center gap-1">
+                className="text-xs text-gray-400 hover:text-red-500 flex items-center gap-1 transition-all duration-200 hover:scale-105 active:scale-95">
                 <RefreshCw size={12} /> Régénérer
               </button>
             </div>
           </div>
         ) : (
           <button onClick={handleGenererLien} disabled={portalLoading}
-            className="w-full h-10 rounded-lg bg-rzpanda-primary/10 text-rzpanda-primary text-sm font-medium hover:bg-rzpanda-primary/20 flex items-center justify-center gap-2 disabled:opacity-50">
+            className="w-full h-10 rounded-lg bg-rzpanda-primary/10 text-rzpanda-primary text-sm font-medium hover:bg-rzpanda-primary/20 flex items-center justify-center gap-2 disabled:opacity-50 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm">
             {portalLoading ? <Loader2 size={16} className="animate-spin" /> : <Link2 size={16} />}
             Générer le lien portail parents
           </button>
@@ -222,17 +224,17 @@ export default function FicheEnfantPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-gray-200">
+      <div className="flex gap-1 border-b border-gray-200 animate-fade-in-up delay-150">
         {TABS.map((tab, i) => (
           <button key={tab} onClick={() => setActiveTab(i)}
-            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${activeTab === i ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-all duration-200 hover:text-gray-700 hover:scale-105 active:scale-95 ${activeTab === i ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500 hover:text-gray-700"}`}>
             {tab}
           </button>
         ))}
       </div>
 
       {/* Tab content */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up delay-225">
         {activeTab === 0 && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
