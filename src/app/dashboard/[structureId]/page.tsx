@@ -107,143 +107,191 @@ export default function DashboardPage() {
       {/* ═══ KPI CARDS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Enfants présents */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+        <Link
+          href={`/dashboard/${structureId}/enfants`}
+          className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-orange-500 hover:bg-orange-50/80 hover:border-orange-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up"
+        >
           <div className="flex items-center gap-2 mb-3">
-            <Users size={20} className="text-rzpanda-primary" />
-            <span className="text-sm font-medium text-gray-600">Enfants inscrits</span>
+            <Users size={20} className="text-orange-50/40 text-white transition-all duration-300 group-hover:text-orange-500 group-hover:scale-110" />
+            <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Enfants inscrits</span>
           </div>
-          <span className="text-2xl font-bold text-gray-800">{data.enfantsCount}</span>
-          <Link href={`/dashboard/${structureId}/enfants`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-            Voir la liste <ArrowRight size={12} className="inline" />
-          </Link>
-        </div>
+          <span className="text-2xl font-bold text-white transition-colors duration-300 group-hover:text-gray-800">{data.enfantsCount}</span>
+          <div>
+            <span
+              className="block mt-2 text-xs text-white bg-orange-50/40 group-hover:bg-white group-hover:text-orange-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+            >
+              Voir la liste <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+            </span>
+          </div>
+        </Link>
 
         {/* Nettoyage du jour */}
         {isActif("nettoyage") && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <Link
+            href={`/dashboard/${structureId}/nettoyage`}
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-purple-500 hover:bg-purple-50/80 hover:border-purple-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-75"
+          >
             <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={20} className="text-rzpanda-secondary" />
-              <span className="text-sm font-medium text-gray-600">Nettoyage du jour</span>
+              <Sparkles size={20} className="text-purple-50/40 text-white transition-all duration-500 group-hover:text-purple-500 group-hover:scale-110 group-hover:rotate-12" />
+              <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Nettoyage du jour</span>
             </div>
             {data.nettoyage && data.nettoyage.total > 0 ? (
               <>
                 <div className="flex items-center gap-2 mb-2">
                   <PastilleStatut status={data.nettoyage.pct > 80 ? "conforme" : data.nettoyage.pct >= 50 ? "attention" : "alerte"} />
-                  <span className="text-sm font-semibold">{data.nettoyage.fait}/{data.nettoyage.total} tâches — {data.nettoyage.pct}%</span>
+                  <span className="text-sm font-semibold text-white transition-colors duration-300 group-hover:text-gray-700">{data.nettoyage.fait}/{data.nettoyage.total} tâches — {data.nettoyage.pct}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-purple-700/30 group-hover:bg-gray-200 rounded-full h-2 transition-colors duration-300">
                   <div
-                    className={`h-2 rounded-full transition-all ${data.nettoyage.pct > 80 ? "bg-rzpanda-primary" : data.nettoyage.pct >= 50 ? "bg-orange-400" : "bg-red-500"}`}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      data.nettoyage.pct > 80 
+                        ? "bg-white group-hover:bg-purple-500" 
+                        : data.nettoyage.pct >= 50 
+                          ? "bg-orange-200 group-hover:bg-orange-400" 
+                          : "bg-red-300 group-hover:bg-red-500"
+                    }`}
                     style={{ width: `${data.nettoyage.pct}%` }}
                   />
                 </div>
               </>
             ) : (
-              <p className="text-sm text-gray-400">Aucune tâche planifiée aujourd&apos;hui.</p>
+              <p className="text-sm text-purple-100 transition-colors duration-300 group-hover:text-gray-400">Aucune tâche planifiée aujourd&apos;hui.</p>
             )}
-            <Link href={`/dashboard/${structureId}/nettoyage`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-              Voir le plan <ArrowRight size={12} className="inline" />
-            </Link>
-          </div>
+            <div>
+              <span 
+                className="block mt-2 text-xs text-white bg-purple-50/40 group-hover:bg-white group-hover:text-purple-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+              >
+                Voir le plan <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
         )}
 
         {/* Prochaines DLC */}
         {(isActif("tracabilite") || isActif("stocks")) && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <Link
+            href={`/dashboard/${structureId}/stock`}
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-amber-500 hover:bg-amber-50/80 hover:border-amber-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-150"
+          >
             <div className="flex items-center gap-2 mb-3">
-              <Package size={20} className="text-rzpanda-accent" />
-              <span className="text-sm font-medium text-gray-600">Prochaines DLC</span>
+              <Package size={20} className="text-amber-50/40 text-white transition-all duration-300 group-hover:text-amber-500 group-hover:scale-110" />
+              <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Prochaines DLC</span>
             </div>
             {data.prochainesDlc.length === 0 ? (
-              <p className="text-sm text-gray-400">Aucune DLC a surveiller</p>
+              <p className="text-sm text-amber-100 transition-colors duration-300 group-hover:text-gray-400">Aucune DLC à surveiller</p>
             ) : (
               <div className="space-y-1.5">
                 {data.prochainesDlc.map((p) => (
                   <div key={p.id} className="flex items-center gap-2 text-sm">
-                    <span className={`inline-block h-2 w-2 rounded-full shrink-0 ${p.joursRestants <= 0 ? "bg-red-500" : p.joursRestants <= 3 ? "bg-orange-400" : "bg-rzpanda-primary"}`} />
-                    <span className="text-gray-700 truncate">{p.nom_produit}</span>
-                    <span className={`ml-auto text-xs font-medium shrink-0 ${p.joursRestants <= 0 ? "text-red-600" : p.joursRestants <= 3 ? "text-orange-600" : "text-gray-400"}`}>
+                    <span className={`inline-block h-2 w-2 rounded-full shrink-0 transition-colors duration-300 ${p.joursRestants <= 0 ? "bg-red-300 group-hover:bg-red-500" : p.joursRestants <= 3 ? "bg-orange-200 group-hover:bg-orange-400" : "bg-white group-hover:bg-amber-500"}`} />
+                    <span className="text-white transition-colors duration-300 group-hover:text-gray-700 truncate">{p.nom_produit}</span>
+                    <span className={`ml-auto text-xs font-medium shrink-0 transition-colors duration-300 ${p.joursRestants <= 0 ? "text-red-200 group-hover:text-red-600 font-semibold" : p.joursRestants <= 3 ? "text-orange-100 group-hover:text-orange-600 font-semibold" : "text-amber-100 group-hover:text-gray-400"}`}>
                       {p.joursRestants <= 0 ? "Expirée" : `J-${p.joursRestants}`}
                     </span>
                   </div>
                 ))}
               </div>
             )}
-            <Link href={`/dashboard/${structureId}/stock`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-              Voir le stock <ArrowRight size={12} className="inline" />
-            </Link>
-          </div>
+            <div>
+              <span 
+                className="block mt-2 text-xs text-white bg-amber-50/40 group-hover:bg-white group-hover:text-amber-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+              >
+                Voir le stock <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
         )}
 
         {/* Biberons en attente */}
         {isActif("biberonnerie") && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <Link
+            href={`/dashboard/${structureId}/biberonnerie`}
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-225"
+          >
             <div className="flex items-center gap-2 mb-3">
-              <Baby size={20} className="text-purple-500" />
-              <span className="text-sm font-medium text-gray-600">Biberons en attente</span>
+              <Baby size={20} className="text-pink-50/40 text-white transition-transform duration-300 group-hover:text-pink-500 group-hover:scale-110 group-hover:rotate-6" />
+              <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Biberons en attente</span>
             </div>
-            <span className="text-2xl font-bold text-gray-800">{data.biberonsEnAttente.count}</span>
+            <span className="text-2xl font-bold text-white transition-colors duration-300 group-hover:text-gray-800">{data.biberonsEnAttente.count}</span>
             {data.biberonsEnAttente.plusAncienPrep && (
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-pink-100 transition-colors duration-300 group-hover:text-gray-400 mt-1">
                 Plus ancien : {new Date(data.biberonsEnAttente.plusAncienPrep).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
                 {" "}({Math.round((Date.now() - new Date(data.biberonsEnAttente.plusAncienPrep).getTime()) / 60000)} min)
               </p>
             )}
-            <Link href={`/dashboard/${structureId}/biberonnerie`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-              Voir les biberons <ArrowRight size={12} className="inline" />
-            </Link>
-          </div>
+            <div>
+              <span 
+                className="block mt-2 text-xs text-white bg-pink-50/40 group-hover:bg-white group-hover:text-pink-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+              >
+                Voir les biberons <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
         )}
 
         {/* Alertes DLC lait */}
         {isActif("biberonnerie") && data.alertesLait.length > 0 && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <Link
+            href={`/dashboard/${structureId}/biberonnerie`}
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-300"
+          >
             <div className="flex items-center gap-2 mb-3">
-              <AlertTriangle size={20} className="text-orange-500" />
-              <span className="text-sm font-medium text-gray-600">Alertes lait</span>
+              <AlertTriangle size={20} className="text-pink-50/40 text-white transition-all duration-300 group-hover:text-pink-500 group-hover:scale-110 group-hover:rotate-6" />
+              <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Alertes lait</span>
             </div>
             <div className="space-y-2">
               {data.alertesLait.map((a, i) => (
-                <div key={i} className={`flex items-start gap-2 p-2 rounded-lg text-sm ${a.niveau === "rouge" ? "bg-red-50 text-red-700" : "bg-orange-50 text-orange-700"}`}>
-                  <span className={`inline-block h-2 w-2 rounded-full shrink-0 mt-1.5 ${a.niveau === "rouge" ? "bg-red-500" : "bg-orange-400"}`} />
+                <div key={i} className={`flex items-start gap-2 p-2 rounded-lg text-sm transition-all duration-300 ${a.niveau === "rouge" ? "bg-red-950/25 text-red-100 group-hover:bg-red-50 group-hover:text-red-700" : "bg-pink-950/25 text-pink-100 group-hover:bg-pink-50 group-hover:text-pink-700"}`}>
+                  <span className={`inline-block h-2 w-2 rounded-full shrink-0 mt-1.5 transition-colors duration-300 ${a.niveau === "rouge" ? "bg-red-300 group-hover:bg-red-500" : "bg-pink-300 group-hover:bg-pink-400"}`} />
                   <span><strong>{a.enfantPrenom}</strong> — {a.message}</span>
                 </div>
               ))}
             </div>
-            <Link href={`/dashboard/${structureId}/biberonnerie`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-              Voir la biberonnerie <ArrowRight size={12} className="inline" />
-            </Link>
-          </div>
+            <div>
+              <span 
+                className="block mt-2 text-xs text-white bg-pink-50/40 group-hover:bg-white group-hover:text-pink-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+              >
+                Voir la biberonnerie <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
         )}
 
         {/* Températures du jour */}
         {isActif("temperatures") && (
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <Link
+            href={`/dashboard/${structureId}/temperatures`}
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-blue-500 hover:bg-blue-50/80 hover:border-blue-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-375"
+          >
             <div className="flex items-center gap-2 mb-3">
-              <Thermometer size={20} className="text-rzpanda-primary" />
-              <span className="text-sm font-medium text-gray-600">Températures du jour</span>
+              <Thermometer size={20} className="text-blue-50/40 text-white transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 group-hover:-translate-y-0.5" />
+              <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Températures du jour</span>
             </div>
-            <span className="text-sm font-semibold text-gray-800">{data.temperatures.relevesAujourdhui} relevé{data.temperatures.relevesAujourdhui > 1 ? "s" : ""}</span>
+            <span className="text-sm font-semibold text-white transition-colors duration-300 group-hover:text-gray-800">{data.temperatures.relevesAujourdhui} relevé{data.temperatures.relevesAujourdhui > 1 ? "s" : ""}</span>
             {data.temperatures.dernier && (
               <div className="flex items-center gap-2 mt-1">
                 <PastilleStatut status={data.temperatures.dernier.conforme ? "conforme" : "alerte"} />
-                <span className="text-sm font-mono">{data.temperatures.dernier.temperature}°C</span>
-                <span className="text-xs text-gray-400">{data.temperatures.dernier.equipement}</span>
-                <span className="text-xs text-gray-400 ml-auto">
+                <span className="text-sm font-mono text-white transition-colors duration-300 group-hover:text-gray-800">{data.temperatures.dernier.temperature}°C</span>
+                <span className="text-xs text-blue-100 transition-colors duration-300 group-hover:text-gray-400">{data.temperatures.dernier.equipement}</span>
+                <span className="text-xs text-blue-100 transition-colors duration-300 group-hover:text-gray-400 ml-auto">
                   {new Date(data.temperatures.dernier.heure).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
                 </span>
               </div>
             )}
-            <Link href={`/dashboard/${structureId}/temperatures`} className="text-xs text-rzpanda-primary hover:underline block mt-2">
-              Voir les relevés <ArrowRight size={12} className="inline" />
-            </Link>
-          </div>
+            <div>
+              <span 
+                className="block mt-2 text-xs text-white bg-blue-50/40 group-hover:bg-white group-hover:text-blue-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
+              >
+                Voir les relevés <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
         )}
       </div>
 
       {/* ═══ ALERTES SANTÉ — médicaments, lait maternel, PAI ═══ */}
       {alertesSante.length > 0 && (
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 animate-fade-in-up delay-450">
           <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-4">
             <ShieldAlert size={20} className="text-amber-500" />
             Alertes santé & médicaments
@@ -258,9 +306,10 @@ export default function DashboardPage() {
                 <Link
                   key={a.id}
                   href={a.href}
-                  className={`flex items-start gap-3 p-3 rounded-lg border ${
-                    a.niveau === "rouge" ? "bg-red-50 border-red-200" : "bg-orange-50 border-orange-200"
-                  } hover:opacity-80 transition-opacity`}
+                  className={`flex items-start gap-3 p-3 rounded-lg border ${a.niveau === "rouge"
+                    ? "bg-red-50 border-red-200 hover:border-red-300"
+                    : "bg-orange-50 border-orange-200 hover:border-orange-300"
+                    } transition-all duration-300 hover:-translate-x-0.5 hover:shadow-sm`}
                 >
                   <Icon size={18} className={`shrink-0 mt-0.5 ${a.niveau === "rouge" ? "text-red-600" : "text-orange-600"}`} />
                   <div className="flex-1 min-w-0">
@@ -275,7 +324,7 @@ export default function DashboardPage() {
       )}
 
       {/* ═══ ACTIVITÉ RÉCENTE ═══ */}
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 animate-fade-in-up delay-520">
         <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-4">
           <Clock size={20} className="text-gray-400" />
           Activité récente

@@ -90,14 +90,14 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <button onClick={() => router.back()} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary">
+      <button onClick={() => router.back()} className="flex items-center gap-2 text-sm text-gray-500 hover:text-rzpanda-primary transition-all duration-200 hover:-translate-x-0.5 animate-fade-in-up">
         <ArrowLeft size={16} /> Retour
       </button>
 
-      <h1 className="text-2xl font-bold text-gray-800">{mode === "create" ? "Ajouter un enfant" : "Modifier l'enfant"}</h1>
+      <h1 className="text-2xl font-bold text-gray-800 animate-fade-in-up">{mode === "create" ? "Ajouter un enfant" : "Modifier l'enfant"}</h1>
 
       {/* Infos de base */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-75">
         <h2 className="font-semibold text-gray-700">Informations</h2>
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -140,23 +140,23 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
       </div>
 
       {/* Allergies */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-150">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-700">Allergies</h2>
-          <button onClick={addAllergie} className="text-sm text-rzpanda-primary hover:underline flex items-center gap-1"><Plus size={14} /> Ajouter</button>
+          <button onClick={addAllergie} className="text-sm text-rzpanda-primary hover:underline flex items-center gap-1 transition-all duration-200 hover:scale-105 active:scale-95"><Plus size={14} /> Ajouter</button>
         </div>
         {allergies.length === 0 && <p className="text-sm text-gray-400">Aucune allergie.</p>}
         {allergies.map((a, i) => (
-          <div key={i} className="flex gap-3 items-start">
+          <div key={i} className="flex gap-3 items-start animate-fade-in-up">
             <div className="flex-1">
               <input type="text" value={a.allergene} onChange={(e) => updateAllergie(i, "allergene", e.target.value)} placeholder="Ex: Protéines de lait de vache" className={inputClass} />
             </div>
-            <select value={a.severite} onChange={(e) => updateAllergie(i, "severite", e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm bg-white">
+            <select value={a.severite} onChange={(e) => updateAllergie(i, "severite", e.target.value)} className="h-12 px-3 rounded-xl border border-gray-300 text-sm bg-white focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none">
               <option value="LEGERE">Légère</option>
               <option value="MODEREE">Modérée</option>
               <option value="SEVERE">Sévère</option>
             </select>
-            <button onClick={() => removeAllergie(i)} className="h-12 w-12 rounded-xl border border-red-200 text-red-400 hover:bg-red-50 flex items-center justify-center shrink-0" aria-label="Supprimer">
+            <button onClick={() => removeAllergie(i)} className="h-12 w-12 rounded-xl border border-red-200 text-red-400 hover:bg-red-50 flex items-center justify-center shrink-0 transition-all duration-200 hover:scale-110 active:scale-90" aria-label="Supprimer">
               <Trash2 size={16} />
             </button>
           </div>
@@ -164,23 +164,23 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
       </div>
 
       {/* Régimes alimentaires */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-225">
         <h2 className="font-semibold text-gray-700">Régimes alimentaires</h2>
         <div className="flex flex-wrap gap-2">
           {REGIMES_ALIMENTAIRES.map((r) => (
             <button key={r} type="button" onClick={() => toggleRegime(r)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${regimes.includes(r) ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${regimes.includes(r) ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
               {r}
             </button>
           ))}
         </div>
         {/* Custom regimes (non-predefined) */}
         {regimes.filter((r) => !(REGIMES_ALIMENTAIRES as readonly string[]).includes(r)).length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 animate-fade-in-up">
             {regimes.filter((r) => !(REGIMES_ALIMENTAIRES as readonly string[]).includes(r)).map((r) => (
               <span key={r} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-blue-500 text-white">
                 {r}
-                <button type="button" onClick={() => removeRegime(r)} className="hover:bg-blue-600 rounded-full p-0.5"><X size={12} /></button>
+                <button type="button" onClick={() => removeRegime(r)} className="hover:bg-blue-600 rounded-full p-0.5 transition-transform duration-200 hover:scale-110 active:scale-90"><X size={12} /></button>
               </span>
             ))}
           </div>
@@ -190,7 +190,7 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
             onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addRegimeAutre(); } }}
             placeholder="Autre régime..." className={inputClass} />
           <button type="button" onClick={addRegimeAutre}
-            className="h-12 px-4 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm font-medium shrink-0 flex items-center gap-1">
+            className="h-12 px-4 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm font-medium shrink-0 flex items-center gap-1 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0">
             <Plus size={14} /> Ajouter
           </button>
         </div>
@@ -198,14 +198,14 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
       </div>
 
       {/* Contacts urgence */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-300">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-700">Contacts d&apos;urgence</h2>
-          <button onClick={addContact} className="text-sm text-rzpanda-primary hover:underline flex items-center gap-1"><Plus size={14} /> Ajouter</button>
+          <button onClick={addContact} className="text-sm text-rzpanda-primary hover:underline flex items-center gap-1 transition-all duration-200 hover:scale-105 active:scale-95"><Plus size={14} /> Ajouter</button>
         </div>
         {contacts.length === 0 && <p className="text-sm text-gray-400">Aucun contact.</p>}
         {contacts.map((c, i) => (
-          <div key={i} className="p-4 rounded-lg bg-gray-50 space-y-3">
+          <div key={i} className="p-4 rounded-lg bg-gray-50 space-y-3 animate-fade-in-up">
             <div className="grid grid-cols-3 gap-3">
               <input type="text" value={c.nom} onChange={(e) => updateContact(i, "nom", e.target.value)} placeholder="Nom" className={inputClass} />
               <input type="text" value={c.lien} onChange={(e) => updateContact(i, "lien", e.target.value)} placeholder="Lien (Mère, Père...)" className={inputClass} />
@@ -216,7 +216,7 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
                 <input type="checkbox" checked={c.est_autorise_recuperer} onChange={(e) => updateContact(i, "est_autorise_recuperer", e.target.checked)} className="h-4 w-4 rounded border-gray-300 text-rzpanda-primary" />
                 Autorisé à récupérer l&apos;enfant
               </label>
-              <button onClick={() => removeContact(i)} className="text-red-400 hover:text-red-600 text-sm flex items-center gap-1"><Trash2 size={14} /> Supprimer</button>
+              <button onClick={() => removeContact(i)} className="text-red-400 hover:text-red-600 text-sm flex items-center gap-1 transition-all duration-200 hover:scale-105 active:scale-95"><Trash2 size={14} /> Supprimer</button>
             </div>
           </div>
         ))}
@@ -224,7 +224,8 @@ export function EnfantForm({ mode, initial }: EnfantFormProps) {
 
       {/* Submit */}
       <button onClick={handleSubmit} disabled={loading}
-        className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center justify-center gap-2">
+        style={{ animationDelay: "375ms" }}
+        className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2 animate-fade-in-up">
         {loading && <Loader2 size={20} className="animate-spin" />}
         {mode === "create" ? "Ajouter l'enfant" : "Enregistrer les modifications"}
       </button>

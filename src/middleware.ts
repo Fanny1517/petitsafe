@@ -22,8 +22,27 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const { pathname } = request.nextUrl;
 
-  const publicRoutes = ["/", "/blog", "/login", "/register", "/forgot-password", "/test", "/mentions-legales", "/cgu", "/confidentialite"];
-  const isPublicRoute = publicRoutes.includes(pathname) || pathname.startsWith("/blog/") || pathname.startsWith("/api/") || pathname.startsWith("/portail/");
+  const publicRoutes = [
+    "/",
+    "/blog",
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/test",
+    "/mentions-legales",
+    "/cgu",
+    "/confidentialite",
+    "/a-propos",
+    "/contact",
+    "/roadmap",
+    "/guides"
+  ];
+  const isPublicRoute =
+    publicRoutes.includes(pathname) ||
+    pathname.startsWith("/blog/") ||
+    pathname.startsWith("/guides/") ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/portail/");
 
   if (isPublicRoute) return supabaseResponse;
 

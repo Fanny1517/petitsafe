@@ -89,19 +89,19 @@ export default function BiberonneriePage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+      <div className="flex items-center justify-between flex-wrap gap-2 animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Biberonnerie</h1>
         <div className="flex items-center gap-2">
           <Link href={`/dashboard/${structureId}/biberonnerie/boites`}
-            className="h-10 px-3 rounded-xl border border-gray-300 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+            className="h-10 px-3 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-0.5 active:translate-y-0">
             <Box size={16} /> Boîtes de lait
           </Link>
           <Link href={`/dashboard/${structureId}/biberonnerie/lait-maternel`}
-            className="h-10 px-3 rounded-xl border border-pink-200 text-sm text-pink-600 hover:bg-pink-50 flex items-center gap-2">
+            className="h-10 px-3 rounded-xl border border-pink-200 text-sm text-pink-600 flex items-center gap-2 transition-all duration-200 hover:bg-pink-50 hover:border-pink-300 hover:-translate-y-0.5 active:translate-y-0">
             <Milk size={16} /> Lait maternel
           </Link>
           <Link href={`/dashboard/${structureId}/biberonnerie/nouveau`}
-            className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-primary/90 flex items-center gap-2">
+            className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none">
             <Plus size={16} /> Nouveau biberon
           </Link>
         </div>
@@ -109,10 +109,10 @@ export default function BiberonneriePage() {
 
       {/* Alertes DLC lait */}
       {alertesLait.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-2 animate-fade-in-up delay-75">
           {alertesLait.map((alerte) => (
             <div key={alerte.id}
-              className={`flex items-start gap-2 p-3 rounded-lg border ${alerte.niveau === "rouge" ? "bg-red-50 border-red-200" : "bg-orange-50 border-orange-200"}`}>
+              className={`flex items-start gap-2 p-3 rounded-lg border transition-all duration-300 hover:-translate-x-0.5 hover:shadow-sm ${alerte.niveau === "rouge" ? "bg-red-50 border-red-200 hover:border-red-300" : "bg-orange-50 border-orange-200 hover:border-orange-300"}`}>
               <AlertTriangle size={16} className={`shrink-0 mt-0.5 ${alerte.niveau === "rouge" ? "text-red-500" : "text-orange-500"}`} />
               <p className={`text-sm font-medium ${alerte.niveau === "rouge" ? "text-red-700" : "text-orange-700"}`}>
                 {alerte.detail}
@@ -123,22 +123,31 @@ export default function BiberonneriePage() {
       )}
 
       {/* ANSES reminder */}
-      <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-50 border border-blue-100">
+      <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-50 border border-blue-100 animate-fade-in-up delay-150">
         <Info size={16} className="text-blue-500 shrink-0 mt-0.5" />
         <p className="text-xs text-blue-700">
           Rappel ANSES : Ne jamais réchauffer au micro-ondes. Ne jamais réchauffer plus d&apos;une fois. T° max 37°C. Jeter tout biberon partiellement consommé. Boîte ouverte = 30 jours max.
         </p>
       </div>
-
       {/* Biberons du jour */}
       {biberons.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
-          <p className="text-gray-400 text-lg mb-2">Aucun biberon aujourd&apos;hui</p>
-          <p className="text-gray-300 text-sm">Préparez le premier biberon de la journée.</p>
+        <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up delay-225">
+          <div className="p-3 rounded-full bg-pink-50 text-pink-600">
+            <Milk size={28} />
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-gray-500">Aucun biberon aujourd&apos;hui</p>
+            <p className="text-xs text-gray-400">Préparez le premier biberon de la journée.</p>
+          </div>
+          <Link href={`/dashboard/${structureId}/biberonnerie/nouveau`}
+            className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-pink-50/60 hover:border-pink-300 hover:text-pink-700 hover:-translate-y-0.5 active:translate-y-0"
+          >
+            <Plus size={16} /> Nouveau biberon
+          </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {biberons.map((bib) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-in-up delay-225">
+          {biberons.map((bib, idx) => {
             const statut = !bib.heure_service ? getStatutBiberon(new Date(bib.heure_preparation), now) : "ok";
             const heurePrep = new Date(bib.heure_preparation).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
             const minutesEcoulees = Math.round((now.getTime() - new Date(bib.heure_preparation).getTime()) / 60000);
@@ -152,8 +161,10 @@ export default function BiberonneriePage() {
             else if (isNettoye) { borderColor = "border-green-300"; bgColor = "bg-green-50"; }
             else if (isServi) { borderColor = "border-blue-200"; }
 
+            const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+
             return (
-              <div key={bib.id} className={`rounded-xl p-4 shadow-sm border-2 ${borderColor} ${bgColor} space-y-3`}>
+              <div key={bib.id} className={`group rounded-xl p-4 shadow-sm border-2 ${borderColor} ${bgColor} space-y-3 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}>
                 {/* Header */}
                 <div className="flex items-center justify-between">
                   <div>
@@ -205,13 +216,13 @@ export default function BiberonneriePage() {
                 <div className="flex gap-2">
                   {!isServi && (
                     <button onClick={() => { setShowServiModal(bib.id); setQuantiteBue(null); }}
-                      className="flex-1 h-10 rounded-lg bg-blue-500 text-white text-sm font-medium hover:bg-blue-600">
+                      className="flex-1 h-10 rounded-lg bg-blue-500 text-white text-sm font-medium transition-all duration-200 hover:bg-blue-600 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none">
                       Marquer servi
                     </button>
                   )}
                   {isServi && !isNettoye && (
                     <button onClick={() => handleNettoye(bib.id)}
-                      className="flex-1 h-10 rounded-lg bg-rzpanda-primary text-white text-sm font-medium hover:bg-rzpanda-secondary">
+                      className="flex-1 h-10 rounded-lg bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none">
                       Marquer nettoyé
                     </button>
                   )}
@@ -224,22 +235,22 @@ export default function BiberonneriePage() {
 
       {/* Modal servi — quantité bue */}
       {showServiModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={() => setShowServiModal(null)}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-sm space-y-4" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 animate-in fade-in" onClick={() => setShowServiModal(null)}>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-xl transition-all duration-300 animate-in zoom-in-95" onClick={(e) => e.stopPropagation()}>
             <h3 className="font-semibold text-gray-800">Quantité bue (ml)</h3>
             <div className="flex flex-wrap gap-2">
               {QUANTITES_BIBERON_ML.map((q) => (
                 <button key={q} onClick={() => setQuantiteBue(q)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium ${quantiteBue === q ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${quantiteBue === q ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
                   {q}ml
                 </button>
               ))}
             </div>
             <input type="number" value={quantiteBue ?? ""} onChange={(e) => setQuantiteBue(Number(e.target.value) || null)}
-              placeholder="Autre quantité" className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm" />
+              placeholder="Autre quantité" className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" />
             <div className="flex gap-3">
-              <button onClick={() => setShowServiModal(null)} className="flex-1 h-10 rounded-lg border border-gray-300 text-sm text-gray-600">Annuler</button>
-              <button onClick={() => handleServi(showServiModal)} className="flex-1 h-10 rounded-lg bg-rzpanda-primary text-white text-sm font-medium">Confirmer</button>
+              <button onClick={() => setShowServiModal(null)} className="flex-1 h-10 rounded-lg border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 active:bg-gray-100">Annuler</button>
+              <button onClick={() => handleServi(showServiModal)} className="flex-1 h-10 rounded-lg bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 active:bg-rzpanda-primary/80">Confirmer</button>
             </div>
           </div>
         </div>

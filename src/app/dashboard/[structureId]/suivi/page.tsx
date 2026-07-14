@@ -189,7 +189,7 @@ export default function SuiviPage() {
     const labels: Record<string, string> = { TOUT: "✅ Tout", BIEN: "👍 Bien", PEU: "😐 Peu", RIEN: "❌ Rien" };
     return (
       <button onClick={() => onChange(value)}
-        className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${current === value ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+        className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${current === value ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/95" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
         {labels[value]}
       </button>
     );
@@ -197,20 +197,20 @@ export default function SuiviPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between animate-fade-in-up">
         <h1 className="text-2xl font-bold text-gray-800">Suivi du jour</h1>
-        <Link href={`/dashboard/${structureId}/suivi/groupe`} className="text-sm text-rzpanda-primary hover:underline">
+        <Link href={`/dashboard/${structureId}/suivi/groupe`} className="text-sm text-rzpanda-primary hover:underline transition-all duration-200 hover:-translate-y-0.5 inline-block">
           Vue groupe →
         </Link>
       </div>
 
       {/* Child selector */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 overflow-x-auto pb-2 animate-fade-in-up delay-75">
         {enfants.map((e) => {
           const couleur = COULEURS_AVATAR[e.prenom.charCodeAt(0) % COULEURS_AVATAR.length];
           return (
             <button key={e.id} onClick={() => { setSelectedId(e.id); setActiveForm(null); }}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl shrink-0 transition-colors ${selectedId === e.id ? "bg-rzpanda-primary text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}>
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl shrink-0 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none ${selectedId === e.id ? "bg-rzpanda-primary text-white" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"}`}>
               <div className="h-8 w-8 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0" style={{ backgroundColor: selectedId === e.id ? "rgba(255,255,255,0.3)" : couleur }}>
                 {e.prenom.charAt(0)}
               </div>
@@ -221,48 +221,68 @@ export default function SuiviPage() {
         })}
       </div>
 
-      {!selected && <p className="text-center text-gray-400 py-10">Sélectionnez un enfant pour commencer.</p>}
+      {!selected && <p className="text-center text-gray-400 py-10 animate-fade-in-up delay-150">Sélectionnez un enfant pour commencer.</p>}
 
       {selected && (
         <>
           {/* Allergie & régime banners */}
-          {selected.allergies.length > 0 && <BadgeAllergie enfant={selected} />}
-          {selected.regimes.length > 0 && <BadgeRegime enfant={selected} />}
+          <div className="space-y-2 animate-fade-in-up delay-150">
+            {selected.allergies.length > 0 && <BadgeAllergie enfant={selected} />}
+            {selected.regimes.length > 0 && <BadgeRegime enfant={selected} />}
+          </div>
 
           {/* Action buttons */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 animate-fade-in-up delay-150">
             {isActif("biberonnerie") && (
-              <button onClick={() => router.push(`/dashboard/${structureId}/biberonnerie/nouveau?enfant=${selected.id}`)}
-                className="h-20 rounded-xl text-white font-semibold flex flex-col items-center justify-center gap-1" style={{ backgroundColor: "#3498DB" }}>
+              <button 
+                onClick={() => router.push(`/dashboard/${structureId}/biberonnerie/nouveau?enfant=${selected.id}`)}
+                className="h-20 rounded-xl text-white font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm" 
+                style={{ backgroundColor: "#3498DB" }}
+              >
                 <Baby size={24} /><span className="text-sm">Biberon</span>
               </button>
             )}
             {isActif("repas") && (
-              <button onClick={() => setActiveForm("repas")}
-                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 ${activeForm === "repas" ? "ring-2 ring-offset-2 ring-[#E67E22]" : ""}`} style={{ backgroundColor: "#E67E22", color: "white" }}>
+              <button 
+                onClick={() => setActiveForm("repas")}
+                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm ${activeForm === "repas" ? "ring-2 ring-offset-2 ring-[#E67E22]" : ""}`} 
+                style={{ backgroundColor: "#E67E22", color: "white" }}
+              >
                 <UtensilsCrossed size={24} /><span className="text-sm">Repas</span>
               </button>
             )}
             {isActif("changes") && (
-              <button onClick={() => setActiveForm("change")}
-                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 ${activeForm === "change" ? "ring-2 ring-offset-2 ring-[#2ECC71]" : ""}`} style={{ backgroundColor: "#2ECC71", color: "white" }}>
+              <button 
+                onClick={() => setActiveForm("change")}
+                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm ${activeForm === "change" ? "ring-2 ring-offset-2 ring-[#2ECC71]" : ""}`} 
+                style={{ backgroundColor: "#2ECC71", color: "white" }}
+              >
                 <Droplets size={24} /><span className="text-sm">Change</span>
               </button>
             )}
             {isActif("siestes") && (
-              <button onClick={() => setActiveForm("sieste")}
-                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 ${activeForm === "sieste" ? "ring-2 ring-offset-2 ring-[#8E44AD]" : ""}`} style={{ backgroundColor: "#8E44AD", color: "white" }}>
+              <button 
+                onClick={() => setActiveForm("sieste")}
+                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm ${activeForm === "sieste" ? "ring-2 ring-offset-2 ring-[#8E44AD]" : ""}`} 
+                style={{ backgroundColor: "#8E44AD", color: "white" }}
+              >
                 <Moon size={24} /><span className="text-sm">{siesteEnCours ? `${siesteTimer}min` : "Sieste"}</span>
               </button>
             )}
             {isActif("transmissions") && (
-              <button onClick={() => setActiveForm("transmission")}
-                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 ${activeForm === "transmission" ? "ring-2 ring-offset-2 ring-[#95A5A6]" : ""}`} style={{ backgroundColor: "#95A5A6", color: "white" }}>
+              <button 
+                onClick={() => setActiveForm("transmission")}
+                className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm ${activeForm === "transmission" ? "ring-2 ring-offset-2 ring-[#95A5A6]" : ""}`} 
+                style={{ backgroundColor: "#95A5A6", color: "white" }}
+              >
                 <MessageSquare size={24} /><span className="text-sm">Transmission</span>
               </button>
             )}
-            <button onClick={() => { setActiveForm("incident"); setIncHeure(new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })); }}
-              className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 ${activeForm === "incident" ? "ring-2 ring-offset-2 ring-[#E74C3C]" : ""}`} style={{ backgroundColor: "#E74C3C", color: "white" }}>
+            <button 
+              onClick={() => { setActiveForm("incident"); setIncHeure(new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })); }}
+              className={`h-20 rounded-xl font-semibold flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:scale-105 active:scale-95 active:translate-y-0 active:shadow-sm ${activeForm === "incident" ? "ring-2 ring-offset-2 ring-[#E74C3C]" : ""}`} 
+              style={{ backgroundColor: "#E74C3C", color: "white" }}
+            >
               <AlertTriangle size={24} /><span className="text-sm">Incident</span>
             </button>
           </div>
@@ -271,12 +291,12 @@ export default function SuiviPage() {
 
           {/* CHANGE — 1 tap */}
           {activeForm === "change" && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Change — {selected.prenom}</h3>
               <div className="grid grid-cols-3 gap-3">
                 {[{ value: "MOUILLEE", label: "Mouillée 💧" }, { value: "SELLE", label: "Selle 💩" }, { value: "LES_DEUX", label: "Les deux" }].map((t) => (
                   <button key={t.value} onClick={() => handleChange(t.value)}
-                    className="h-16 rounded-xl bg-green-50 border-2 border-green-200 text-green-800 font-semibold hover:bg-green-100 active:bg-green-200 transition-colors text-sm">
+                    className="h-16 rounded-xl bg-green-50 border-2 border-green-200 text-green-800 font-semibold hover:bg-green-100 hover:scale-105 active:scale-95 transition-all duration-200 text-sm">
                     {t.label}
                   </button>
                 ))}
@@ -286,7 +306,7 @@ export default function SuiviPage() {
 
           {/* REPAS */}
           {activeForm === "repas" && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Repas — {selected.prenom}</h3>
               {selected.allergies.length > 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">
@@ -298,7 +318,7 @@ export default function SuiviPage() {
                   const labels: Record<string, string> = { PETIT_DEJ: "Petit-déj", DEJEUNER: "Déjeuner", GOUTER: "Goûter", DINER: "Dîner" };
                   return (
                     <button key={t} onClick={() => setTypeRepas(t)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium ${typeRepas === t ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${typeRepas === t ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/95" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
                       {labels[t]}
                     </button>
                   );
@@ -313,7 +333,7 @@ export default function SuiviPage() {
                   <div key={comp} className="space-y-2">
                     <label className="text-sm font-medium text-gray-600">{comp}</label>
                     <input type="text" value={val} onChange={(e) => setVal(e.target.value)} placeholder={`Nom du ${comp.toLowerCase()}`}
-                      className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none" />
+                      className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" />
                     <div className="flex gap-2">
                       {["TOUT", "BIEN", "PEU", "RIEN"].map((q) => <QteButton key={q} value={q} current={qte} onChange={setQte} />)}
                     </div>
@@ -321,17 +341,17 @@ export default function SuiviPage() {
                 );
               })}
               <input type="text" value={observations} onChange={(e) => setObservations(e.target.value)} placeholder="Observations (optionnel)"
-                className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none" />
-              <button onClick={handleRepas} className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium">Enregistrer le repas</button>
+                className="w-full h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" />
+              <button onClick={handleRepas} className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none">Enregistrer le repas</button>
             </div>
           )}
 
           {/* SIESTE */}
           {activeForm === "sieste" && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 text-center">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 text-center animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Sieste — {selected.prenom}</h3>
               <button onClick={handleSiesteToggle}
-                className={`w-full h-16 rounded-xl font-semibold text-white text-lg ${siesteEnCours ? "bg-yellow-500 hover:bg-yellow-600" : "bg-purple-600 hover:bg-purple-700"}`}>
+                className={`w-full h-16 rounded-xl font-semibold text-white text-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none ${siesteEnCours ? "bg-yellow-500 hover:bg-yellow-600" : "bg-purple-600 hover:bg-purple-700"}`}>
                 {siesteEnCours ? `Fin sieste ☀️ (en cours depuis ${siesteTimer}min)` : "Début sieste 😴"}
               </button>
             </div>
@@ -339,25 +359,25 @@ export default function SuiviPage() {
 
           {/* TRANSMISSION */}
           {activeForm === "transmission" && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Transmission</h3>
               <div className="flex gap-2">
                 {[{ v: "ENFANT", l: "Par enfant" }, { v: "GENERAL", l: "Général" }, { v: "EQUIPE", l: "Équipe" }].map((t) => (
                   <button key={t.v} onClick={() => setTransType(t.v)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium ${transType === t.v ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${transType === t.v ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/95" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
                     {t.l}
                   </button>
                 ))}
               </div>
               <textarea value={transContenu} onChange={(e) => setTransContenu(e.target.value)} placeholder="Votre message..."
-                className="w-full h-24 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none resize-none" />
-              <button onClick={handleTransmission} className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium">Enregistrer</button>
+                className="w-full h-24 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none resize-none" />
+              <button onClick={handleTransmission} className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none">Enregistrer</button>
             </div>
           )}
 
           {/* INCIDENT */}
           {activeForm === "incident" && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-red-200 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-red-200 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-red-700 flex items-center gap-2">
                 <AlertTriangle size={18} /> Signaler un incident — {selected.prenom}
               </h3>
@@ -371,7 +391,7 @@ export default function SuiviPage() {
                     { v: "PLEURS_PROLONGES", l: "Pleurs prolongés" }, { v: "FIEVRE", l: "Fièvre" }, { v: "AUTRE", l: "Autre" },
                   ].map((t) => (
                     <button key={t.v} onClick={() => setIncType(t.v)}
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${incType === t.v ? "bg-red-600 text-white" : "bg-red-50 text-red-700 hover:bg-red-100"}`}>
+                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 active:scale-95 ${incType === t.v ? "bg-red-600 text-white hover:bg-red-700" : "bg-red-50 text-red-700 hover:bg-red-100"}`}>
                       {t.l}
                     </button>
                   ))}
@@ -382,7 +402,7 @@ export default function SuiviPage() {
               <div>
                 <label className="text-sm font-medium text-gray-600 block mb-1.5">Heure de l&apos;incident</label>
                 <input type="time" value={incHeure} onChange={(e) => setIncHeure(e.target.value)}
-                  className="h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none" />
+                  className="h-10 px-3 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none" />
               </div>
 
               {/* Gravité */}
@@ -395,7 +415,7 @@ export default function SuiviPage() {
                     { v: "GRAVE", l: "Grave", c: "bg-red-100 text-red-800 border-red-300", ac: "bg-red-600 text-white" },
                   ].map((g) => (
                     <button key={g.v} onClick={() => setIncGravite(g.v)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${incGravite === g.v ? g.ac : g.c}`}>
+                      className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:scale-105 active:scale-95 ${incGravite === g.v ? g.ac : g.c}`}>
                       {g.l}
                     </button>
                   ))}
@@ -407,7 +427,7 @@ export default function SuiviPage() {
                 <label className="text-sm font-medium text-gray-600 block mb-1.5">Description</label>
                 <textarea value={incDescription} onChange={(e) => setIncDescription(e.target.value)}
                   placeholder="Décrivez ce qui s'est passé..."
-                  className="w-full h-20 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none resize-none" />
+                  className="w-full h-20 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none resize-none" />
               </div>
 
               {/* Action prise */}
@@ -415,7 +435,7 @@ export default function SuiviPage() {
                 <label className="text-sm font-medium text-gray-600 block mb-1.5">Action prise</label>
                 <textarea value={incAction} onChange={(e) => setIncAction(e.target.value)}
                   placeholder="Soins apportés, appel parents, glaçage..."
-                  className="w-full h-20 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary outline-none resize-none" />
+                  className="w-full h-20 px-3 py-2 rounded-lg border border-gray-300 text-sm focus:border-rzpanda-primary focus:ring-2 focus:ring-rzpanda-primary/20 outline-none resize-none" />
               </div>
 
               {/* Parents prévenus */}
@@ -426,14 +446,14 @@ export default function SuiviPage() {
               </label>
 
               <button onClick={handleIncident}
-                className="w-full h-12 rounded-xl bg-red-600 text-white font-medium hover:bg-red-700 flex items-center justify-center gap-2">
+                className="w-full h-12 rounded-xl bg-red-600 text-white font-medium transition-all duration-200 hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none flex items-center justify-center gap-2">
                 <AlertTriangle size={18} /> Enregistrer l&apos;incident
               </button>
             </div>
           )}
 
           {/* ═══ HISTORIQUE DU JOUR ═══ */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 animate-fade-in-up delay-300">
             <div className="flex items-center gap-2 mb-4">
               <Clock size={18} className="text-gray-400" />
               <h3 className="font-semibold text-gray-700">Historique du jour</h3>
@@ -446,7 +466,7 @@ export default function SuiviPage() {
                 {/* Vertical line */}
                 <div className="absolute left-[9px] top-2 bottom-2 w-0.5 bg-gray-200" />
                 <div className="space-y-4">
-                  {historique.map((item) => {
+                  {historique.map((item, idx) => {
                     const config: Record<string, { icon: string; color: string; bg: string }> = {
                       biberon: { icon: "🍼", color: "bg-blue-500", bg: "bg-blue-50" },
                       repas: { icon: "🍽️", color: "bg-orange-500", bg: "bg-orange-50" },
@@ -457,11 +477,12 @@ export default function SuiviPage() {
                     };
                     const c = config[item.type];
                     const labels: Record<string, string> = { biberon: "Biberon", repas: "Repas", change: "Change", sieste: "Sieste", transmission: "Transmission", incident: "Incident" };
+                    const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
                     return (
-                      <div key={item.id} className="relative flex items-start gap-3">
+                      <div key={item.id} className={`group relative flex items-start gap-3 transition-all duration-300 ease-out hover:-translate-y-0.5 animate-fade-in-up ${delayClass}`}>
                         {/* Dot on line */}
-                        <div className={`absolute -left-6 top-1.5 h-[14px] w-[14px] rounded-full border-2 border-white ${c.color} shadow-sm`} />
-                        <div className={`flex-1 rounded-lg p-3 ${c.bg}`}>
+                        <div className={`absolute -left-6 top-1.5 h-[14px] w-[14px] rounded-full border-2 border-white ${c.color} shadow-sm transition-transform duration-300 group-hover:scale-125`} />
+                        <div className={`flex-1 rounded-lg p-3 ${c.bg} transition-all duration-300 group-hover:shadow-sm`}>
                           <div className="flex items-center gap-2">
                             <span className="text-base">{c.icon}</span>
                             <span className="text-sm font-semibold text-gray-700">{labels[item.type]}</span>

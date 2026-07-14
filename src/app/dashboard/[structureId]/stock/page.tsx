@@ -112,21 +112,26 @@ export default function StockPage() {
   return (
     <AdminGuard>
     <div className="max-w-5xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Réceptions &amp; Stock</h1>
+      <h1 className="text-2xl font-bold text-gray-800 animate-fade-in-up">Réceptions &amp; Stock</h1>
 
-      <div className="flex gap-1 border-b border-gray-200">
+      <div className="flex gap-1 border-b border-gray-200 animate-fade-in-up delay-75">
         {[{ k: "receptions", l: "Réceptions" }, { k: "alimentaire", l: "Stock alimentaire" }, { k: "consommables", l: "Consommables" }].map((t) => (
-          <button key={t.k} onClick={() => setTab(t.k as typeof tab)} className={`px-4 py-2.5 text-sm font-medium border-b-2 ${tab === t.k ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500"}`}>{t.l}</button>
+          <button key={t.k} onClick={() => setTab(t.k as typeof tab)} className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-all duration-200 ${tab === t.k ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>{t.l}</button>
         ))}
       </div>
 
       {/* ═══ RÉCEPTIONS ═══ */}
       {tab === "receptions" && (
-        <div className="space-y-4">
-          <button onClick={() => setShowForm(true)} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2"><Plus size={16} /> Nouvelle réception</button>
+        <div className="space-y-4 animate-fade-in-up delay-150">
+          <button 
+            onClick={() => setShowForm(true)} 
+            className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+          >
+            <Plus size={16} /> Nouvelle réception
+          </button>
 
           {showForm && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Nouvelle réception</h3>
               <input type="text" value={fNom} onChange={(e) => setFNom(e.target.value)} placeholder="Nom du produit" className={inputClass} />
               <div className="relative">
@@ -164,29 +169,62 @@ export default function StockPage() {
                 <input type="text" value={fMotif} onChange={(e) => setFMotif(e.target.value)} placeholder="Motif de non-conformité (obligatoire)" className={`${inputClass} border-red-300`} />
               )}
               <div className="flex gap-3">
-                <button onClick={() => setShowForm(false)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600">Annuler</button>
-                <button onClick={handleReception} className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium">Enregistrer</button>
+                <button 
+                  onClick={() => setShowForm(false)} 
+                  className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handleReception} 
+                  className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+                >
+                  Enregistrer
+                </button>
               </div>
             </div>
           )}
 
           {receptions.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100"><p className="text-gray-400">Aucune réception enregistrée</p></div>
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up">
+              <div className="p-3 rounded-full bg-amber-50 text-amber-600">
+                <Package size={28} />
+              </div>
+              <p className="text-sm text-gray-400">Aucune réception enregistrée aujourd&apos;hui</p>
+              <button 
+                onClick={() => setShowForm(true)} 
+                className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-amber-50/60 hover:border-amber-300 hover:text-amber-700 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Plus size={16} /> Nouvelle réception
+              </button>
+            </div>
           ) : (
             <div className="space-y-2">
-              {receptions.slice(0, 20).map((r) => (
-                <div key={r.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
-                  <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-800">{r.nom_produit}</p>
-                    <p className="text-xs text-gray-500">{r.fournisseur} · Lot {r.numero_lot} · DLC {new Date(r.dlc).toLocaleDateString("fr-FR")}</p>
+              {receptions.slice(0, 20).map((r, idx) => {
+                const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+                return (
+                  <div 
+                    key={r.id} 
+                    className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}
+                  >
+                    <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-800">{r.nom_produit}</p>
+                      <p className="text-xs text-gray-500">{r.fournisseur} · Lot {r.numero_lot} · DLC {new Date(r.dlc).toLocaleDateString("fr-FR")}</p>
+                    </div>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${r.statut === "EN_STOCK" ? "bg-blue-100 text-blue-700" : r.statut === "UTILISE" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                      {r.statut === "EN_STOCK" ? "En stock" : r.statut === "UTILISE" ? "Utilisé" : "Jeté"}
+                    </span>
+                    <button 
+                      onClick={() => handleSupprimerReception(r.id)} 
+                      className="h-9 w-9 rounded-lg border border-red-200 text-red-600 flex items-center justify-center transition-all duration-200 hover:scale-105 hover:bg-red-50 hover:text-red-700 active:scale-95" 
+                      aria-label="Supprimer la réception"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </div>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${r.statut === "EN_STOCK" ? "bg-blue-100 text-blue-700" : r.statut === "UTILISE" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
-                    {r.statut === "EN_STOCK" ? "En stock" : r.statut === "UTILISE" ? "Utilisé" : "Jeté"}
-                  </span>
-                  <button onClick={() => handleSupprimerReception(r.id)} className="h-9 w-9 rounded-lg border border-red-200 text-red-600 flex items-center justify-center hover:bg-red-50" aria-label="Supprimer la réception"><Trash2 size={14} /></button>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -194,21 +232,31 @@ export default function StockPage() {
 
       {/* ═══ STOCK ALIMENTAIRE ═══ */}
       {tab === "alimentaire" && (
-        <div className="space-y-3">
+        <div className="space-y-3 animate-fade-in-up delay-150">
           {enStock.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100">
-              <Package size={36} className="text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500 font-medium">Aucun produit en stock</p>
-              <p className="text-gray-400 text-sm mt-1">Les produits apparaissent ici après une réception.</p>
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up">
+              <div className="p-3 rounded-full bg-amber-50 text-amber-600">
+                <Package size={28} />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-gray-500">Aucun produit en stock</p>
+                <p className="text-xs text-gray-400">Les produits apparaissent ici après une réception.</p>
+              </div>
             </div>
           ) : (
-            enStock.sort((a, b) => new Date(a.dlc).getTime() - new Date(b.dlc).getTime()).map((r) => {
+            enStock.sort((a, b) => new Date(a.dlc).getTime() - new Date(b.dlc).getTime()).map((r, idx) => {
               const alerte = getAlerteDLC(new Date(r.dlc), now);
               const badgeClass = alerte === "critique" ? "bg-red-600 text-white" : alerte === "alerte" ? "bg-red-100 text-red-700" : alerte === "warning" ? "bg-orange-100 text-orange-700" : "";
               const badgeText = alerte === "critique" ? "DLC DÉPASSÉE — À JETER" : alerte === "alerte" ? "DLC AUJOURD'HUI" : alerte === "warning" ? "DLC J-2" : "";
+              const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
 
               return (
-                <div key={r.id} className={`bg-white rounded-xl p-4 shadow-sm border ${alerte === "critique" ? "border-red-300 bg-red-50" : alerte === "alerte" ? "border-red-200" : "border-gray-100"}`}>
+                <div 
+                  key={r.id} 
+                  className={`group bg-white rounded-xl p-4 shadow-sm border transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass} ${
+                    alerte === "critique" ? "border-red-300 bg-red-50" : alerte === "alerte" ? "border-red-200" : "border-gray-100"
+                  }`}
+                >
                   <div className="flex items-center gap-3">
                     <div className="flex-1">
                       <p className="font-medium text-gray-800">{r.nom_produit}</p>
@@ -217,8 +265,18 @@ export default function StockPage() {
                     {badgeText && <span className={`text-xs font-semibold px-2 py-1 rounded-full ${badgeClass}`}>{badgeText}</span>}
                   </div>
                   <div className="flex gap-2 mt-3">
-                    <button onClick={() => handleMarquer(r.id, "UTILISE")} className="h-9 px-3 rounded-lg bg-rzpanda-primary text-white text-xs font-medium">Marqué utilisé</button>
-                    <button onClick={() => handleMarquer(r.id, "JETE")} className="h-9 px-3 rounded-lg bg-red-500 text-white text-xs font-medium">Marqué jeté</button>
+                    <button 
+                      onClick={() => handleMarquer(r.id, "UTILISE")} 
+                      className="h-9 px-3 rounded-lg bg-rzpanda-primary text-white text-xs font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0"
+                    >
+                      Marqué utilisé
+                    </button>
+                    <button 
+                      onClick={() => handleMarquer(r.id, "JETE")} 
+                      className="h-9 px-3 rounded-lg bg-red-500 text-white text-xs font-medium transition-all duration-200 hover:bg-red-600 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0"
+                    >
+                      Marqué jeté
+                    </button>
                   </div>
                 </div>
               );
@@ -229,11 +287,16 @@ export default function StockPage() {
 
       {/* ═══ CONSOMMABLES ═══ */}
       {tab === "consommables" && (
-        <div className="space-y-4">
-          <button onClick={() => setShowStockForm(true)} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2"><Plus size={16} /> Ajouter un produit</button>
+        <div className="space-y-4 animate-fade-in-up delay-150">
+          <button 
+            onClick={() => setShowStockForm(true)} 
+            className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+          >
+            <Plus size={16} /> Ajouter un produit
+          </button>
 
           {showStockForm && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Ajouter un produit</h3>
               <input type="text" value={sNom} onChange={(e) => setSNom(e.target.value)} placeholder="Nom du produit" className={inputClass} />
               <div className="grid grid-cols-2 gap-3">
@@ -247,36 +310,79 @@ export default function StockPage() {
                 <div><label className="text-sm text-gray-600">Seuil alerte</label><input type="number" value={sSeuil} onChange={(e) => setSSeuil(Number(e.target.value))} className={inputClass} /></div>
               </div>
               <div className="flex gap-3">
-                <button onClick={() => setShowStockForm(false)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600">Annuler</button>
-                <button onClick={handleAddStock} className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium">Ajouter</button>
+                <button 
+                  onClick={() => setShowStockForm(false)} 
+                  className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handleAddStock} 
+                  className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+                >
+                  Ajouter
+                </button>
               </div>
             </div>
           )}
 
           {stocks.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100"><p className="text-gray-400">Aucun stock configuré</p></div>
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up">
+              <div className="p-3 rounded-full bg-amber-50 text-amber-600">
+                <Package size={28} />
+              </div>
+              <p className="text-sm text-gray-400">Aucun consommable configuré</p>
+              <button 
+                onClick={() => setShowStockForm(true)} 
+                className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-amber-50/60 hover:border-amber-300 hover:text-amber-700 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Plus size={16} /> Ajouter un produit
+              </button>
+            </div>
           ) : (
             CATEGORIES.map((cat) => {
               const catStocks = stocks.filter((s) => s.categorie === cat.v);
               if (catStocks.length === 0) return null;
               return (
-                <div key={cat.v}>
-                  <h3 className="text-sm font-semibold text-gray-500 uppercase mb-2">{cat.l}</h3>
+                <div key={cat.v} className="space-y-2 animate-fade-in-up">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase mb-2 mt-4">{cat.l}</h3>
                   <div className="space-y-2">
-                    {catStocks.map((s) => {
+                    {catStocks.map((s, idx) => {
                       const statut = s.quantite <= 0 ? "alerte" : s.quantite <= s.seuil_alerte ? "attention" : "conforme";
+                      const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
                       return (
-                        <div key={s.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+                        <div 
+                          key={s.id} 
+                          className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}
+                        >
                           <PastilleStatut status={statut} />
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-gray-800">{s.produit_nom}</p>
                             <p className="text-xs text-gray-500">{s.quantite} {s.unite} (seuil: {s.seuil_alerte})</p>
                           </div>
                           <div className="flex items-center gap-1">
-                            <button onClick={() => handleAjuster(s.id, -1)} className="h-10 w-10 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50" aria-label="Retirer 1"><Minus size={16} /></button>
+                            <button 
+                              onClick={() => handleAjuster(s.id, -1)} 
+                              className="h-10 w-10 rounded-lg border border-gray-300 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:scale-105 active:scale-95" 
+                              aria-label="Retirer 1"
+                            >
+                              <Minus size={16} />
+                            </button>
                             <span className="w-10 text-center font-mono font-bold">{s.quantite}</span>
-                            <button onClick={() => handleAjuster(s.id, 1)} className="h-10 w-10 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50" aria-label="Ajouter 1"><Plus size={16} /></button>
-                            <button onClick={() => handleSupprimerStock(s.id)} className="h-10 w-10 ml-1 rounded-lg border border-red-200 text-red-600 flex items-center justify-center hover:bg-red-50" aria-label="Supprimer le produit"><Trash2 size={16} /></button>
+                            <button 
+                              onClick={() => handleAjuster(s.id, 1)} 
+                              className="h-10 w-10 rounded-lg border border-gray-300 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:scale-105 active:scale-95" 
+                              aria-label="Ajouter 1"
+                            >
+                              <Plus size={16} />
+                            </button>
+                            <button 
+                              onClick={() => handleSupprimerStock(s.id)} 
+                              className="h-10 w-10 ml-1 rounded-lg border border-red-200 text-red-600 flex items-center justify-center transition-all duration-200 hover:bg-red-50 hover:scale-105 hover:text-red-700 active:scale-95" 
+                              aria-label="Supprimer le produit"
+                            >
+                              <Trash2 size={16} />
+                            </button>
                           </div>
                         </div>
                       );

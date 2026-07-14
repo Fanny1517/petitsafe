@@ -90,3 +90,48 @@
 .legal-content .meta {
   @apply mb-6 text-xs text-gray-500;
 }
+
+/* Animations d'entrée et de survol premium */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-75 {
+  animation-delay: 75ms;
+}
+.delay-150 {
+  animation-delay: 150ms;
+}
+.delay-225 {
+  animation-delay: 225ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-375 {
+  animation-delay: 375ms;
+}
+.delay-450 {
+  animation-delay: 450ms;
+}
+.delay-520 {
+  animation-delay: 520ms;
+}
+
+.bg-rzpanda-bg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 251 252 / var(--tw-bg-opacity, 1));
+}
+

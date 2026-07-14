@@ -293,10 +293,13 @@ export function getTachesJour<T extends TacheNettoyageMinimal>(
 /**
  * Vérifie si un module est actif pour une structure.
  */
-export function isModuleActif(modulesActifs: string[], moduleId: ModuleId): boolean {
+/* export function isModuleActif(modulesActifs: string[], moduleId: ModuleId): boolean {
   return modulesActifs.includes(moduleId);
 }
-
+ */export function isModuleActif(modulesActifs: string[], moduleId: ModuleId): boolean {
+  if (!Array.isArray(modulesActifs)) return false; // ✅ garde-fou
+  return modulesActifs.includes(moduleId);
+}
 /**
  * Regroupe les modules actifs par catégorie (haccp, suivi, gestion).
  */
@@ -308,7 +311,10 @@ export function getModulesParCategorie(
     suivi: [],
     gestion: [],
   };
-
+  // ligne 311 - AJOUTE ÇA
+  if (!Array.isArray(modulesActifs)) {
+    return { haccp: [], suivi: [], gestion: [] } 
+  }
   for (const moduleId of modulesActifs) {
     const module = MODULES_DISPONIBLES[moduleId as ModuleId];
     if (module) {

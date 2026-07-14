@@ -55,9 +55,9 @@ export function BoutonAction({
       aria-label={ariaLabel ?? label}
       className={cn(
         "inline-flex items-center justify-center rounded-xl font-medium",
-        "transition-colors duration-150",
+        "transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 hover:shadow-sm active:shadow-none",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rzpanda-primary focus-visible:ring-offset-2",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none",
         "min-h-[48px]", // accessibilité tactile
         TAILLES[size],
         VARIANTES[variant],

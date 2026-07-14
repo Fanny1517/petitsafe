@@ -177,43 +177,92 @@ export default function TemperaturesPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Températures</h1>
+      <h1 className="text-2xl font-bold text-gray-800 animate-fade-in-up">Températures</h1>
 
       {/* Tabs */}
-      <div className="flex gap-1 border-b border-gray-200">
-        <button onClick={() => setTab("enceintes")} className={`px-4 py-2.5 text-sm font-medium border-b-2 ${tab === "enceintes" ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500"}`}>Enceintes froides</button>
-        <button onClick={() => setTab("plats")} className={`px-4 py-2.5 text-sm font-medium border-b-2 ${tab === "plats" ? "border-rzpanda-primary text-rzpanda-primary" : "border-transparent text-gray-500"}`}>Plats témoins</button>
+      <div className="flex gap-1 border-b border-gray-200 animate-fade-in-up delay-75">
+        <button 
+          onClick={() => setTab("enceintes")} 
+          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-all duration-200 ${
+            tab === "enceintes" 
+              ? "border-rzpanda-primary text-rzpanda-primary" 
+              : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+          }`}
+        >
+          Enceintes froides
+        </button>
+        <button 
+          onClick={() => setTab("plats")} 
+          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-all duration-200 ${
+            tab === "plats" 
+              ? "border-rzpanda-primary text-rzpanda-primary" 
+              : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+          }`}
+        >
+          Plats témoins
+        </button>
       </div>
 
       {/* Date nav */}
-      <div className="flex items-center gap-4">
-        <button onClick={() => changeDate(-1)} className="p-2 rounded-lg hover:bg-gray-100" aria-label="Jour précédent"><ChevronLeft size={20} /></button>
+      <div className="flex items-center gap-4 animate-fade-in-up delay-150">
+        <button 
+          onClick={() => changeDate(-1)} 
+          className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 active:scale-95" 
+          aria-label="Jour précédent"
+        >
+          <ChevronLeft size={20} />
+        </button>
         <span className="text-sm font-medium text-gray-700">{new Date(date).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</span>
-        <button onClick={() => changeDate(1)} className="p-2 rounded-lg hover:bg-gray-100" aria-label="Jour suivant"><ChevronRight size={20} /></button>
+        <button 
+          onClick={() => changeDate(1)} 
+          className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 hover:scale-105 active:scale-95" 
+          aria-label="Jour suivant"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
 
       {/* ═══ ENCEINTES FROIDES ═══ */}
       {tab === "enceintes" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in-up delay-225">
           {/* Equipment cards */}
           {equipements.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100">
-              <Thermometer size={32} className="text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-400 mb-2">Aucun équipement configuré</p>
-              <button onClick={() => setShowAddEquip(true)} className="text-sm text-rzpanda-primary hover:underline">+ Ajouter un frigo ou congélateur</button>
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up">
+              <div className="p-3 rounded-full bg-blue-50 text-blue-600">
+                <Thermometer size={28} />
+              </div>
+              <p className="text-sm text-gray-400">Aucun équipement configuré</p>
+              <button 
+                onClick={() => setShowAddEquip(true)} 
+                className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-blue-50/60 hover:border-blue-300 hover:text-blue-700 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Plus size={16} /> Ajouter un frigo ou congélateur
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {equipements.map((eq) => {
+              {equipements.map((eq, idx) => {
                 const dernierReleve = releves.find((r) => r.equipement_id === eq.id);
                 const statut = dernierReleve ? getConformiteTemperature(dernierReleve.temperature, eq.type) : null;
+                const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
                 return (
-                  <div key={eq.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                  <div 
+                    key={eq.id} 
+                    className={`group bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${delayClass}`}
+                  >
                     <div className="flex items-center justify-between mb-2">
                       <p className="font-semibold text-gray-800">{eq.nom}</p>
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-gray-400">{eq.type === "REFRIGERATEUR" ? "Frigo" : "Congélateur"}</span>
-                        {profil?.role === "ADMINISTRATEUR" && <button onClick={() => handleSupprimerEquip(eq.id, eq.nom)} className="h-7 w-7 rounded-lg text-red-500 hover:bg-red-50 flex items-center justify-center" aria-label="Supprimer l'équipement"><Trash2 size={14} /></button>}
+                        {profil?.role === "ADMINISTRATEUR" && (
+                          <button 
+                            onClick={() => handleSupprimerEquip(eq.id, eq.nom)} 
+                            className="h-7 w-7 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center" 
+                            aria-label="Supprimer l'équipement"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        )}
                       </div>
                     </div>
                     {dernierReleve ? (
@@ -225,7 +274,12 @@ export default function TemperaturesPage() {
                     ) : (
                       <p className="text-sm text-gray-400">Aucun relevé aujourd&apos;hui</p>
                     )}
-                    <button onClick={() => loadGraph(eq.id)} className="text-xs text-rzpanda-primary hover:underline mt-2 block">Voir l&apos;historique</button>
+                    <button 
+                      onClick={() => loadGraph(eq.id)} 
+                      className="text-xs text-rzpanda-primary hover:underline hover:text-rzpanda-secondary transition-colors duration-200 mt-2 block"
+                    >
+                      Voir l&apos;historique
+                    </button>
                   </div>
                 );
               })}
@@ -234,13 +288,25 @@ export default function TemperaturesPage() {
 
           {/* Actions */}
           <div className="flex gap-2">
-            <button onClick={() => setShowForm(true)} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2"><Plus size={16} /> Nouveau relevé</button>
-            {profil?.role === "ADMINISTRATEUR" && <button onClick={() => setShowAddEquip(true)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2"><Plus size={16} /> Ajouter un équipement</button>}
+            <button 
+              onClick={() => setShowForm(true)} 
+              className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+            >
+              <Plus size={16} /> Nouveau relevé
+            </button>
+            {profil?.role === "ADMINISTRATEUR" && (
+              <button 
+                onClick={() => setShowAddEquip(true)} 
+                className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Plus size={16} /> Ajouter un équipement
+              </button>
+            )}
           </div>
 
           {/* Form relevé */}
           {showForm && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Nouveau relevé de température</h3>
               <select value={formEquipId} onChange={(e) => setFormEquipId(e.target.value)} className={`${inputClass} bg-white`}>
                 <option value="">Sélectionnez un équipement...</option>
@@ -290,24 +356,62 @@ export default function TemperaturesPage() {
                 </div>
               )}
               <div className="flex gap-3">
-                <button onClick={() => setShowForm(false)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600">Annuler</button>
-                <button onClick={handleSubmitReleve} className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium">Enregistrer</button>
+                <button 
+                  onClick={() => setShowForm(false)} 
+                  className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handleSubmitReleve} 
+                  className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+                >
+                  Enregistrer
+                </button>
               </div>
             </div>
           )}
 
           {/* Add equipment modal */}
           {showAddEquip && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Ajouter un équipement</h3>
               <input type="text" value={newEquipNom} onChange={(e) => setNewEquipNom(e.target.value)} placeholder="Ex: Frigo cuisine" className={inputClass} />
               <div className="flex gap-2">
-                <button onClick={() => setNewEquipType("REFRIGERATEUR")} className={`flex-1 h-10 rounded-lg text-sm font-medium ${newEquipType === "REFRIGERATEUR" ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>Réfrigérateur</button>
-                <button onClick={() => setNewEquipType("CONGELATEUR")} className={`flex-1 h-10 rounded-lg text-sm font-medium ${newEquipType === "CONGELATEUR" ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>Congélateur</button>
+                <button 
+                  onClick={() => setNewEquipType("REFRIGERATEUR")} 
+                  className={`flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    newEquipType === "REFRIGERATEUR" 
+                      ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90" 
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  Réfrigérateur
+                </button>
+                <button 
+                  onClick={() => setNewEquipType("CONGELATEUR")} 
+                  className={`flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    newEquipType === "CONGELATEUR" 
+                      ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90" 
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  Congélateur
+                </button>
               </div>
               <div className="flex gap-3">
-                <button onClick={() => setShowAddEquip(false)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600">Annuler</button>
-                <button onClick={handleAddEquip} className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium">Ajouter</button>
+                <button 
+                  onClick={() => setShowAddEquip(false)} 
+                  className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handleAddEquip} 
+                  className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+                >
+                  Ajouter
+                </button>
               </div>
             </div>
           )}
@@ -317,7 +421,12 @@ export default function TemperaturesPage() {
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-700">Historique — {graphEquip?.nom} (7 jours)</h3>
-                <button onClick={() => setGraphEquipId(null)} className="text-xs text-gray-400 hover:text-gray-600">Fermer</button>
+                <button 
+                  onClick={() => setGraphEquipId(null)} 
+                  className="text-xs text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                >
+                  Fermer
+                </button>
               </div>
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={graphData}>
@@ -339,16 +448,30 @@ export default function TemperaturesPage() {
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h3 className="font-semibold text-gray-700 mb-3">Relevés du jour</h3>
               <div className="space-y-2">
-                {releves.map((r) => (
-                  <div key={r.id} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-                    <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
-                    <span className="font-mono font-bold">{r.temperature}°C</span>
-                    <span className="text-sm text-gray-600">{r.equipement.nom}</span>
-                    {r.action_corrective && <span className="text-xs text-red-500">⚠️ {r.action_corrective}</span>}
-                    <span className="text-xs text-gray-400 ml-auto">{new Date(r.heure).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</span>
-                    {profil?.role === "ADMINISTRATEUR" && <button onClick={() => handleSupprimerReleve(r.id)} className="h-7 w-7 rounded-lg text-red-500 hover:bg-red-100 flex items-center justify-center" aria-label="Supprimer le relevé"><Trash2 size={14} /></button>}
-                  </div>
-                ))}
+                {releves.map((r, rIdx) => {
+                  const rDelay = rIdx === 0 ? "" : rIdx === 1 ? "delay-75" : rIdx === 2 ? "delay-150" : rIdx === 3 ? "delay-225" : "delay-300";
+                  return (
+                    <div 
+                      key={r.id} 
+                      className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 transition-all duration-200 hover:bg-gray-100 hover:shadow-sm animate-fade-in-up ${rDelay}`}
+                    >
+                      <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
+                      <span className="font-mono font-bold">{r.temperature}°C</span>
+                      <span className="text-sm text-gray-600">{r.equipement.nom}</span>
+                      {r.action_corrective && <span className="text-xs text-red-500">⚠️ {r.action_corrective}</span>}
+                      <span className="text-xs text-gray-400 ml-auto">{new Date(r.heure).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</span>
+                      {profil?.role === "ADMINISTRATEUR" && (
+                        <button 
+                          onClick={() => handleSupprimerReleve(r.id)} 
+                          className="h-7 w-7 rounded-lg text-red-500 hover:bg-red-100 hover:text-red-600 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center" 
+                          aria-label="Supprimer le relevé"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -357,16 +480,39 @@ export default function TemperaturesPage() {
 
       {/* ═══ PLATS TÉMOINS ═══ */}
       {tab === "plats" && (
-        <div className="space-y-4">
-          <button onClick={() => setShowFormPlat(true)} className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2"><Plus size={16} /> Nouveau relevé plat</button>
+        <div className="space-y-4 animate-fade-in-up delay-225">
+          <button 
+            onClick={() => setShowFormPlat(true)} 
+            className="h-10 px-4 rounded-xl bg-rzpanda-primary text-white text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+          >
+            <Plus size={16} /> Nouveau relevé plat
+          </button>
 
           {showFormPlat && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up">
               <h3 className="font-semibold text-gray-700">Relevé plat témoin</h3>
               <input type="text" value={platNom} onChange={(e) => setPlatNom(e.target.value)} placeholder="Nom du plat" className={inputClass} />
               <div className="flex gap-2">
-                <button onClick={() => setPlatType("CHAUD")} className={`flex-1 h-10 rounded-lg text-sm font-medium ${platType === "CHAUD" ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>Plat chaud</button>
-                <button onClick={() => setPlatType("FROID")} className={`flex-1 h-10 rounded-lg text-sm font-medium ${platType === "FROID" ? "bg-rzpanda-primary text-white" : "bg-gray-100 text-gray-600"}`}>Plat froid</button>
+                <button 
+                  onClick={() => setPlatType("CHAUD")} 
+                  className={`flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    platType === "CHAUD" 
+                      ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90" 
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  Plat chaud
+                </button>
+                <button 
+                  onClick={() => setPlatType("FROID")} 
+                  className={`flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    platType === "FROID" 
+                      ? "bg-rzpanda-primary text-white hover:bg-rzpanda-primary/90" 
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  Plat froid
+                </button>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -386,32 +532,57 @@ export default function TemperaturesPage() {
               )}
               {platConformite === "alerte" && (
                 <textarea value={platAction} onChange={(e) => setPlatAction(e.target.value)} placeholder="Action corrective obligatoire..."
-                  className="w-full h-20 px-3 py-2 rounded-lg border border-red-300 text-sm outline-none resize-none" />
+                  className="w-full h-20 px-3 py-2 rounded-lg border border-red-300 text-sm outline-none resize-none focus:border-red-500" />
               )}
               <div className="flex gap-3">
-                <button onClick={() => setShowFormPlat(false)} className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600">Annuler</button>
-                <button onClick={handleSubmitPlat} className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium">Enregistrer</button>
+                <button 
+                  onClick={() => setShowFormPlat(false)} 
+                  className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 active:bg-gray-100"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handleSubmitPlat} 
+                  className="h-10 px-6 rounded-xl bg-rzpanda-primary text-white text-sm font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none"
+                >
+                  Enregistrer
+                </button>
               </div>
             </div>
           )}
 
           {relevesPlat.length === 0 ? (
-            <div className="text-center py-10 bg-white rounded-xl shadow-sm border border-gray-100">
-              <p className="text-gray-400">Aucun relevé plat aujourd&apos;hui</p>
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 flex flex-col items-center justify-center text-center space-y-4 animate-fade-in-up">
+              <div className="p-3 rounded-full bg-blue-50 text-blue-600">
+                <Thermometer size={28} />
+              </div>
+              <p className="text-sm text-gray-400">Aucun relevé plat aujourd&apos;hui</p>
+              <button 
+                onClick={() => setShowFormPlat(true)} 
+                className="h-10 px-4 rounded-xl border border-gray-300 text-sm text-gray-600 flex items-center gap-2 transition-all duration-200 hover:bg-blue-50/60 hover:border-blue-300 hover:text-blue-700 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <Plus size={16} /> Nouveau relevé plat
+              </button>
             </div>
           ) : (
             <div className="space-y-3">
-              {relevesPlat.map((r) => (
-                <div key={r.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-                  <div className="flex items-center gap-3">
-                    <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
-                    <span className="font-semibold text-gray-800">{r.nom_plat}</span>
-                    <span className="text-xs text-gray-400">{r.type_plat === "FROID" ? "Froid" : "Chaud"}</span>
+              {relevesPlat.map((r, rpIdx) => {
+                const rpDelay = rpIdx === 0 ? "" : rpIdx === 1 ? "delay-75" : rpIdx === 2 ? "delay-150" : rpIdx === 3 ? "delay-225" : "delay-300";
+                return (
+                  <div 
+                    key={r.id} 
+                    className={`bg-white rounded-xl p-4 shadow-sm border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md animate-fade-in-up ${rpDelay}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <PastilleStatut status={r.conforme ? "conforme" : "alerte"} />
+                      <span className="font-semibold text-gray-800">{r.nom_plat}</span>
+                      <span className="text-xs text-gray-400">{r.type_plat === "FROID" ? "Froid" : "Chaud"}</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">Avant : {r.temperature_avant}°C → Après : {r.temperature_apres}°C</p>
+                    {r.action_corrective && <p className="text-xs text-red-500 mt-1">⚠️ {r.action_corrective}</p>}
                   </div>
-                  <p className="text-sm text-gray-500 mt-1">Avant : {r.temperature_avant}°C → Après : {r.temperature_apres}°C</p>
-                  {r.action_corrective && <p className="text-xs text-red-500 mt-1">⚠️ {r.action_corrective}</p>}
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

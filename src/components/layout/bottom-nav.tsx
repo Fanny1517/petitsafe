@@ -24,12 +24,34 @@ export function BottomNav({ structureId, modulesActifs }: BottomNavProps) {
   const [showMore, setShowMore] = useState(false);
   const basePath = `/dashboard/${structureId}`;
 
+type ColorTheme = "blue" | "pink" | "purple" | "orange" | "emerald" | "amber" | "teal" | "cyan" | "violet" | "indigo" | "gray";
+
+const COLOR_CLASSES: Record<ColorTheme, {
+  activeText: string;
+  activeIcon: string;
+  activeBg: string;
+  inactiveHoverBg: string;
+  inactiveHoverIcon: string;
+}> = {
+  indigo: { activeText: "text-indigo-600", activeIcon: "text-indigo-600", activeBg: "bg-indigo-50 text-indigo-700", inactiveHoverBg: "hover:bg-indigo-50/60 hover:text-indigo-700", inactiveHoverIcon: "group-hover:text-indigo-500" },
+  blue: { activeText: "text-blue-600", activeIcon: "text-blue-600", activeBg: "bg-blue-50 text-blue-700", inactiveHoverBg: "hover:bg-blue-50/60 hover:text-blue-700", inactiveHoverIcon: "group-hover:text-blue-500" },
+  pink: { activeText: "text-pink-600", activeIcon: "text-pink-600", activeBg: "bg-pink-50 text-pink-700", inactiveHoverBg: "hover:bg-pink-50/60 hover:text-pink-700", inactiveHoverIcon: "group-hover:text-pink-500" },
+  purple: { activeText: "text-purple-600", activeIcon: "text-purple-600", activeBg: "bg-purple-50 text-purple-700", inactiveHoverBg: "hover:bg-purple-50/60 hover:text-purple-700", inactiveHoverIcon: "group-hover:text-purple-500" },
+  orange: { activeText: "text-orange-600", activeIcon: "text-orange-600", activeBg: "bg-orange-50 text-orange-700", inactiveHoverBg: "hover:bg-orange-50/60 hover:text-orange-700", inactiveHoverIcon: "group-hover:text-orange-500" },
+  emerald: { activeText: "text-emerald-600", activeIcon: "text-emerald-600", activeBg: "bg-emerald-50 text-emerald-700", inactiveHoverBg: "hover:bg-emerald-50/60 hover:text-emerald-700", inactiveHoverIcon: "group-hover:text-emerald-500" },
+  amber: { activeText: "text-amber-600", activeIcon: "text-amber-600", activeBg: "bg-amber-50 text-amber-700", inactiveHoverBg: "hover:bg-amber-50/60 hover:text-amber-700", inactiveHoverIcon: "group-hover:text-amber-500" },
+  teal: { activeText: "text-teal-600", activeIcon: "text-teal-600", activeBg: "bg-teal-50 text-teal-700", inactiveHoverBg: "hover:bg-teal-50/60 hover:text-teal-700", inactiveHoverIcon: "group-hover:text-teal-500" },
+  cyan: { activeText: "text-cyan-600", activeIcon: "text-cyan-600", activeBg: "bg-cyan-50 text-cyan-700", inactiveHoverBg: "hover:bg-cyan-50/60 hover:text-cyan-700", inactiveHoverIcon: "group-hover:text-cyan-500" },
+  violet: { activeText: "text-violet-600", activeIcon: "text-violet-600", activeBg: "bg-violet-50 text-violet-700", inactiveHoverBg: "hover:bg-violet-50/60 hover:text-violet-700", inactiveHoverIcon: "group-hover:text-violet-500" },
+  gray: { activeText: "text-gray-700", activeIcon: "text-gray-700", activeBg: "bg-gray-100 text-gray-900", inactiveHoverBg: "hover:bg-gray-50 hover:text-gray-900", inactiveHoverIcon: "group-hover:text-gray-600" }
+};
+
   // Build dynamic main items: dashboard + up to 3 active HACCP modules
-  const haccpItems: { label: string; icon: typeof LayoutDashboard; href: string; moduleId: ModuleId }[] = [
-    { label: "Temp.", icon: Thermometer, href: "/temperatures", moduleId: "temperatures" },
-    { label: "Biberon", icon: Baby, href: "/biberonnerie", moduleId: "biberonnerie" },
-    { label: "Nettoyage", icon: Sparkles, href: "/nettoyage", moduleId: "nettoyage" },
-    { label: "Stock", icon: Package, href: "/stock", moduleId: "tracabilite" },
+  const haccpItems: { label: string; icon: typeof LayoutDashboard; href: string; moduleId: ModuleId; color: ColorTheme }[] = [
+    { label: "Temp.", icon: Thermometer, href: "/temperatures", moduleId: "temperatures", color: "blue" },
+    { label: "Biberon", icon: Baby, href: "/biberonnerie", moduleId: "biberonnerie", color: "pink" },
+    { label: "Nettoyage", icon: Sparkles, href: "/nettoyage", moduleId: "nettoyage", color: "purple" },
+    { label: "Stock", icon: Package, href: "/stock", moduleId: "tracabilite", color: "amber" },
   ];
   const activeHaccpItems = haccpItems.filter((item) => {
     if (item.moduleId === "tracabilite" && !isAdmin) return false;
@@ -37,17 +59,17 @@ export function BottomNav({ structureId, modulesActifs }: BottomNavProps) {
   }).slice(0, 3);
 
   const mainItems = [
-    { label: "Dashboard", icon: LayoutDashboard, href: "" },
+    { label: "Dashboard", icon: LayoutDashboard, href: "", color: "indigo" as ColorTheme },
     ...activeHaccpItems,
   ];
 
   const moreItems = [
-    { label: "Enfants", icon: Baby, href: "/enfants" },
-    ...(isActif("repas") || isActif("changes") || isActif("siestes") ? [{ label: "Suivi", icon: ClipboardList, href: "/suivi" }] : []),
-    ...(isActif("transmissions") ? [{ label: "Transmissions", icon: MessageSquare, href: "/transmissions" }] : []),
-    ...(isActif("protocoles") ? [{ label: "Protocoles", icon: FileText, href: "/protocoles" }] : []),
-    ...(isAdmin ? [{ label: "Exports", icon: FileDown, href: "/exports" }] : []),
-    ...(isAdmin ? [{ label: "Paramètres", icon: Settings, href: "/parametres" }] : []),
+    { label: "Enfants", icon: Baby, href: "/enfants", color: "orange" as ColorTheme },
+    ...(isActif("repas") || isActif("changes") || isActif("siestes") ? [{ label: "Suivi", icon: ClipboardList, href: "/suivi", color: "emerald" as ColorTheme }] : []),
+    ...(isActif("transmissions") ? [{ label: "Transmissions", icon: MessageSquare, href: "/transmissions", color: "teal" as ColorTheme }] : []),
+    ...(isActif("protocoles") ? [{ label: "Protocoles", icon: FileText, href: "/protocoles", color: "cyan" as ColorTheme }] : []),
+    ...(isAdmin ? [{ label: "Exports", icon: FileDown, href: "/exports", color: "violet" as ColorTheme }] : []),
+    ...(isAdmin ? [{ label: "Paramètres", icon: Settings, href: "/parametres", color: "gray" as ColorTheme }] : []),
   ];
 
   const handleLogout = async () => {
@@ -65,12 +87,23 @@ export function BottomNav({ structureId, modulesActifs }: BottomNavProps) {
               <span className="font-semibold text-gray-700">Menu</span>
               <button onClick={() => setShowMore(false)} aria-label="Fermer"><X size={20} className="text-gray-400" /></button>
             </div>
-            {moreItems.map((item) => (
-              <Link key={item.href} href={basePath + item.href} onClick={() => setShowMore(false)}
-                className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-gray-600 hover:bg-gray-50">
-                <item.icon size={20} /><span>{item.label}</span>
-              </Link>
-            ))}
+            {moreItems.map((item) => {
+              const fullHref = basePath + item.href;
+              const isActive = pathname.startsWith(fullHref);
+              const theme = COLOR_CLASSES[item.color || "indigo"];
+              return (
+                <Link key={item.href} href={fullHref} onClick={() => setShowMore(false)}
+                  className={cn(
+                    "group flex items-center gap-3 px-3 py-3 rounded-xl text-sm transition-all duration-200",
+                    isActive 
+                      ? cn(theme.activeBg, "font-medium") 
+                      : cn("text-gray-600", theme.inactiveHoverBg)
+                  )}>
+                  <item.icon size={20} className={cn("transition-colors duration-200", isActive ? theme.activeIcon : cn("text-gray-400", theme.inactiveHoverIcon))} />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
             <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm text-red-500 hover:bg-red-50 w-full">
               <LogOut size={20} /><span>Déconnexion</span>
             </button>
@@ -82,10 +115,13 @@ export function BottomNav({ structureId, modulesActifs }: BottomNavProps) {
           {mainItems.map((item) => {
             const fullHref = basePath + item.href;
             const isActive = item.href === "" ? (pathname === basePath || pathname === basePath + "/") : pathname.startsWith(fullHref);
+            const theme = COLOR_CLASSES[item.color || "indigo"];
             return (
               <Link key={item.href} href={fullHref}
-                className={cn("flex flex-col items-center justify-center gap-0.5 min-w-[64px] py-1", isActive ? "text-rzpanda-primary" : "text-gray-400")}>
-                <item.icon size={22} />
+                className={cn("flex flex-col items-center justify-center gap-0.5 min-w-[64px] py-1 transition-colors duration-200", 
+                  isActive ? theme.activeText : "text-gray-400 hover:text-gray-600"
+                )}>
+                <item.icon size={22} className="transition-colors duration-200" />
                 <span className="text-[10px] font-medium">{item.label}</span>
               </Link>
             );

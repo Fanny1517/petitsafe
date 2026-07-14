@@ -129,13 +129,13 @@ export default function ExportsPage() {
   return (
     <AdminGuard>
     <div className="max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2 animate-fade-in-up">
         <FileDown size={24} className="text-rzpanda-primary" />
         Exports PDF
       </h1>
 
       {/* Formulaire de génération */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-5">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-5 animate-fade-in-up delay-75">
         <h2 className="text-lg font-semibold text-gray-800">Générer un export</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -146,7 +146,7 @@ export default function ExportsPage() {
             <select
               id="type_export"
               {...register("type_export")}
-              className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/30 focus:border-rzpanda-primary"
+              className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary bg-white"
             >
               <option value="DDPP">DDPP — Contrôle sanitaire (HACCP)</option>
               <option value="PMI">PMI — Petite enfance (suivi enfants)</option>
@@ -165,7 +165,7 @@ export default function ExportsPage() {
                 id="periode_debut"
                 type="date"
                 {...register("periode_debut")}
-                className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/30 focus:border-rzpanda-primary"
+                className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary bg-white"
               />
               {errors.periode_debut && <p className="text-sm text-red-500 mt-1">{errors.periode_debut.message}</p>}
             </div>
@@ -178,7 +178,7 @@ export default function ExportsPage() {
                 id="periode_fin"
                 type="date"
                 {...register("periode_fin")}
-                className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/30 focus:border-rzpanda-primary"
+                className="w-full h-12 rounded-xl border border-gray-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-rzpanda-primary/20 focus:border-rzpanda-primary bg-white"
               />
               {errors.periode_fin && <p className="text-sm text-red-500 mt-1">{errors.periode_fin.message}</p>}
             </div>
@@ -187,7 +187,7 @@ export default function ExportsPage() {
           <button
             type="submit"
             disabled={generating}
-            className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium hover:bg-rzpanda-primary/90 disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-xl bg-rzpanda-primary text-white font-medium transition-all duration-200 hover:bg-rzpanda-primary/90 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:shadow-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2"
           >
             {generating ? (
               <>
@@ -205,7 +205,7 @@ export default function ExportsPage() {
       </div>
 
       {/* Historique */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4 animate-fade-in-up delay-150">
         <h2 className="text-lg font-semibold text-gray-800">Historique des exports</h2>
 
         {loadingHist ? (
@@ -213,30 +213,33 @@ export default function ExportsPage() {
             <Loader2 size={24} className="animate-spin text-gray-400" />
           </div>
         ) : historique.length === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-8 animate-fade-in-up">
             <FileText size={40} className="mx-auto text-gray-300 mb-3" />
             <p className="text-sm text-gray-400">Aucun export généré pour le moment.</p>
           </div>
         ) : (
           <div className="space-y-2">
-            {historique.map((exp) => (
-              <div key={exp.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rzpanda-primary/10 text-rzpanda-primary">
-                      {exp.type_export}
-                    </span>
-                    <span className="text-sm font-medium text-gray-700">
-                      {formatDate(exp.periode_debut)} → {formatDate(exp.periode_fin)}
-                    </span>
+            {historique.map((exp, idx) => {
+              const delayClass = idx === 0 ? "" : idx === 1 ? "delay-75" : idx === 2 ? "delay-150" : idx === 3 ? "delay-225" : "delay-300";
+              return (
+                <div key={exp.id} className={`flex items-center justify-between p-3 rounded-lg bg-gray-50 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-sm group animate-fade-in-up ${delayClass}`}>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-rzpanda-primary/10 text-rzpanda-primary">
+                        {exp.type_export}
+                      </span>
+                      <span className="text-sm font-medium text-gray-700 group-hover:text-rzpanda-primary transition-colors duration-200">
+                        {formatDate(exp.periode_debut)} → {formatDate(exp.periode_fin)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Par {exp.genere_par} le {formatDate(exp.created_at)}
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-400 mt-1">
-                    Par {exp.genere_par} le {formatDate(exp.created_at)}
-                  </p>
+                  <Download size={18} className="text-gray-400 shrink-0 transition-all duration-200 group-hover:scale-110 group-hover:text-rzpanda-primary" />
                 </div>
-                <Download size={18} className="text-gray-400 shrink-0" />
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
