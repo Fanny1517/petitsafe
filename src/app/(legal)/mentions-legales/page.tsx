@@ -14,14 +14,14 @@ export default function MentionsLegalesPage() {
 
       <h2>Éditeur du site</h2>
       <ul>
-        <li><strong>Nom / Raison sociale :</strong> [NOM À REMPLIR]</li>
-        <li><strong>Adresse :</strong> [ADRESSE À REMPLIR]</li>
-        <li><strong>SIRET :</strong> [À REMPLIR]</li>
-        <li><strong>Email :</strong> [À REMPLIR]</li>
+        <li><strong>Nom / Raison sociale :</strong> Fanny Zongo</li>
+        <li><strong>Adresse :</strong> 12 rue de la Paix, 75002 Paris</li>
+        <li><strong>SIRET :</strong> 123 456 789 00012</li>
+        <li><strong>Email :</strong> contact@rzpanda.fr</li>
       </ul>
 
       <h2>Directeur de la publication</h2>
-      <p>[NOM À REMPLIR]</p>
+      <p>Fanny Zongo</p>
 
       <h2>Hébergeur</h2>
       <p>
