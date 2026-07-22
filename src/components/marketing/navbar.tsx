@@ -114,6 +114,12 @@ export function Navbar() {
           >
             FAQ
           </Link>
+          <Link
+            href="/guides"
+            className="text-sm font-medium text-gray-600 transition hover:text-blue-600"
+          >
+            Guides
+          </Link>
         </nav>
 
         {/* Desktop Actions */}
@@ -182,6 +188,13 @@ export function Navbar() {
               className="text-base font-semibold text-gray-800 transition hover:text-blue-600 py-2 border-b border-gray-50"
             >
               FAQ
+            </Link>
+            <Link
+              href="/guides"
+              onClick={() => setIsOpen(false)}
+              className="text-base font-semibold text-gray-800 transition hover:text-blue-600 py-2 border-b border-gray-50"
+            >
+              Guides
             </Link>
             {!loading && user ? (
               <Link
