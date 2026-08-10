@@ -1,4 +1,4 @@
-# PetitSafe
+# RZPan'Da
 
 Application de gestion HACCP et de suivi quotidien pour structures de la petite enfance (crèches, micro-crèches, MAM, assistantes maternelles).
 

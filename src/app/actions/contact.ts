@@ -42,7 +42,7 @@ export async function envoyerMessageContact(formData: {
     const adminHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 12px;">
         <h2 style="color: #1e3a8a; margin-top: 0;">Nouveau message de contact reçu</h2>
-        <p style="margin-bottom: 15px;">Un nouveau message a été soumis via le formulaire de contact de PetitSafe.</p>
+        <p style="margin-bottom: 15px;">Un nouveau message a été soumis via le formulaire de contact de RZPan'Da.</p>
         
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <tr>
@@ -70,7 +70,7 @@ export async function envoyerMessageContact(formData: {
     const clientHtml = `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e5e7eb; border-radius: 12px;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color: #3b82f6; margin: 0; font-size: 24px;">PetitSafe</h1>
+          <h1 style="color: #3b82f6; margin: 0; font-size: 24px;">RZPan'Da</h1>
         </div>
         
         <p>Bonjour <strong>${nom}</strong>,</p>
@@ -86,17 +86,17 @@ export async function envoyerMessageContact(formData: {
     `;
 
     const adminMailOptions = {
-      from: `"PetitSafe Formulaire" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
-      to: process.env.SMTP_USER || "info@rzpanda.com",
+      from: `"RZPan'Da Formulaire" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
+      to: process.env.ADMIN_EMAIL || "info@rzpanda.com",
       replyTo: email,
-      subject: `[Contact PetitSafe] ${sujet} - de ${nom}`,
+      subject: `[Contact RZPan'Da] ${sujet} - de ${nom}`,
       html: adminHtml,
     };
 
     const clientMailOptions = {
-      from: `"L'équipe PetitSafe" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
+      from: `"L'équipe RZPan'Da" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
       to: email,
-      subject: "Accusé de réception - Votre message à PetitSafe",
+      subject: "Accusé de réception - Votre message à RZPan'Da",
       html: clientHtml,
     };
 
