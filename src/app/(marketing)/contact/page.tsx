@@ -12,6 +12,7 @@ export default function ContactPage() {
   const [email, setEmail] = useState("");
   const [sujet, setSujet] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState(""); // Champ honeypot anti-spam
   const [isPending, setIsPending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -24,7 +25,7 @@ export default function ContactPage() {
 
     setIsPending(true);
     try {
-      const res = await envoyerMessageContact({ nom, email, sujet, message });
+      const res = await envoyerMessageContact({ nom, email, sujet, message, website });
       if (res.success) {
         setIsSuccess(true);
         toast.success("Votre message a été envoyé avec succès !");
@@ -32,6 +33,7 @@ export default function ContactPage() {
         setEmail("");
         setSujet("");
         setMessage("");
+        setWebsite("");
       } else {
         toast.error(res.error || "Une erreur est survenue lors de l'envoi.");
       }
@@ -83,8 +85,8 @@ export default function ContactPage() {
                     </span>
                     <div>
                       <h3 className="text-sm font-bold text-gray-900">Email</h3>
-                      <a href="mailto:contact@rzpanda.com" className="text-sm text-blue-600 hover:underline mt-1 block">
-                        contact@rzpanda.com
+                      <a href="mailto:info@rzpanda.com" className="text-sm text-blue-600 hover:underline mt-1 block">
+                        info@rzpanda.com
                       </a>
                     </div>
                   </div>
@@ -205,6 +207,20 @@ export default function ContactPage() {
                           onChange={(e) => setMessage(e.target.value)}
                           placeholder="Bonjour, je souhaiterais en savoir plus sur les tarifs réseaux de micro-crèches..."
                           className="w-full p-4 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none text-sm transition bg-white text-gray-800 placeholder:text-gray-400"
+                        />
+                      </div>
+
+                      {/* Honeypot Field (Piège anti-spam invisible pour les humains) */}
+                      <div className="hidden" aria-hidden="true">
+                        <label htmlFor="website">Ne pas remplir ce champ si vous êtes un humain</label>
+                        <input
+                          id="website"
+                          type="text"
+                          name="website"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          value={website}
+                          onChange={(e) => setWebsite(e.target.value)}
                         />
                       </div>
 
