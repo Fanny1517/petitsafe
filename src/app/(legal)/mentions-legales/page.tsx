@@ -14,10 +14,10 @@ export default function MentionsLegalesPage() {
 
       <h2>Éditeur du site</h2>
       <ul>
-        <li><strong>Nom / Raison sociale :</strong> Fanny Zongo</li>
-        <li><strong>Adresse :</strong> 12 rue de la Paix, 75002 Paris</li>
+        <li><strong>Nom / Raison sociale :</strong> RZPan'Da</li>
+        <li><strong>Adresse :</strong> 13 Douazel 35230 St erblon France</li>
         <li><strong>SIRET :</strong> 123 456 789 00012</li>
-        <li><strong>Email :</strong> contact@rzpanda.fr</li>
+        <li><strong>Email :</strong> contact@rzpanda.com</li>
       </ul>
 
       <h2>Directeur de la publication</h2>

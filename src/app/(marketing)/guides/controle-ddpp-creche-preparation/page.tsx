@@ -85,7 +85,7 @@ export default function GuideDDPPPage() {
                 1. Relevés de température
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Obligateurs dans le cadre du HACCP, les relevés de température doivent être effectués quotidiennement sur vos équipements réfrigérés (entre 0 °C et 4 °C) et sur vos plats chauds avant service (minimum 63 °C). Chaque relevé doit être daté, signé par l'auxiliaire responsable et conservé 3 ans. En cas de dépassement, une action corrective doit être immédiatement tracée.
+                Obligatoires dans le cadre du HACCP, les relevés de température doivent être effectués quotidiennement sur vos équipements réfrigérés (entre 0 °C et 4 °C) et sur vos plats chauds avant service (minimum 63 °C). Chaque relevé doit être daté, signé par l'auxiliaire responsable et conservé 3 ans. En cas de dépassement, une action corrective doit être immédiatement tracée.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
@@ -133,7 +133,7 @@ export default function GuideDDPPPage() {
               <h2 className="mt-12 text-2xl font-extrabold text-gray-900 tracking-tight border-b border-gray-100 pb-2">
                 Les 3 erreurs qui coûtent cher
               </h2>
-              
+
               <h3 className="mt-8 text-lg font-bold text-red-600">
                 Erreur n°1 — Ne pas archiver les relevés de température.
               </h3>
