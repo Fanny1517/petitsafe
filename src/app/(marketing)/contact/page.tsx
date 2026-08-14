@@ -85,8 +85,8 @@ export default function ContactPage() {
                     </span>
                     <div>
                       <h3 className="text-sm font-bold text-gray-900">Email</h3>
-                      <a href="mailto:info@rzpanda.com" className="text-sm text-blue-600 hover:underline mt-1 block">
-                        info@rzpanda.com
+                      <a href="mailto:contact@rzpanda.com" className="text-sm text-blue-600 hover:underline mt-1 block">
+                        contact@rzpanda.com
                       </a>
                     </div>
                   </div>
