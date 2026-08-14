@@ -5,4 +5,5 @@ export const contactSchema = z.object({
   email: z.string().trim().email("Adresse email invalide"),
   sujet: z.string().trim().min(3, "Le sujet doit contenir au moins 3 caractères"),
   message: z.string().trim().min(10, "Le message doit contenir au moins 10 caractères"),
+  website: z.string().optional(),
 });

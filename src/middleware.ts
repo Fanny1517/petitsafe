@@ -20,7 +20,19 @@ export async function middleware(request: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+
+  // Gestion du paramètre 'code' (ex: réinitialisation de mot de passe via PKCE)
+  const code = searchParams.get("code");
+  if (code) {
+    await supabase.auth.exchangeCodeForSession(code);
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.searchParams.delete("code");
+    if (pathname === "/" || pathname === "/forgot-password" || pathname === "/login") {
+      redirectUrl.pathname = "/reset-password";
+    }
+    return NextResponse.redirect(redirectUrl, { headers: supabaseResponse.headers });
+  }
 
   const publicRoutes = [
     "/",
@@ -28,6 +40,7 @@ export async function middleware(request: NextRequest) {
     "/login",
     "/register",
     "/forgot-password",
+    "/reset-password",
     "/test",
     "/mentions-legales",
     "/cgu",
