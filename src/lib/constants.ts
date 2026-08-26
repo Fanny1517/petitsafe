@@ -90,6 +90,7 @@ export const MODULES_DISPONIBLES = {
   changes:       { label: "Changes",        icon: "Baby",            categorie: "suivi"   as const, description: "Suivi changes" },
   siestes:       { label: "Siestes",        icon: "Moon",            categorie: "suivi"   as const, description: "Suivi siestes" },
   transmissions: { label: "Transmissions",  icon: "MessageSquare",   categorie: "suivi"   as const, description: "Notes et transmissions" },
+  presences:     { label: "Présences",      icon: "CalendarCheck",   categorie: "gestion" as const, description: "Pointage et registre des présences" },
   stocks:        { label: "Stocks",         icon: "Boxes",           categorie: "gestion" as const, description: "Gestion des stocks consommables" },
   protocoles:    { label: "Protocoles",     icon: "FileText",        categorie: "gestion" as const, description: "Documents et protocoles internes" },
 } as const;
@@ -100,5 +101,5 @@ export type CategorieModule = "haccp" | "suivi" | "gestion";
 /** Presets de modules — raccourcis pour l'inscription et les paramètres */
 export const PRESETS_MODULES = {
   haccp_essentiel: ["temperatures", "tracabilite", "nettoyage", "biberonnerie"] as ModuleId[],
-  complet: ["temperatures", "tracabilite", "nettoyage", "biberonnerie", "repas", "changes", "siestes", "transmissions", "stocks", "protocoles"] as ModuleId[],
+  complet: ["temperatures", "tracabilite", "nettoyage", "biberonnerie", "repas", "changes", "siestes", "transmissions", "presences", "stocks", "protocoles"] as ModuleId[],
 } as const;

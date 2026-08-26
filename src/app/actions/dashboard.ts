@@ -13,6 +13,7 @@ export interface AlerteLaitDashboard {
 
 export interface DashboardData {
   enfantsCount: number;
+  presences: { presents: number; total: number; absents: number; taux: number } | null;
   nettoyage: { fait: number; total: number; pct: number } | null;
   prochainesDlc: { id: string; nom_produit: string; dlc: string; joursRestants: number }[];
   alertesLait: AlerteLaitDashboard[];
@@ -38,6 +39,19 @@ export async function getDashboardData(
     const enfantsCount = await prisma.enfant.count({
       where: { structure_id: structureId, actif: true },
     });
+
+    // 1b. Présences du jour
+    let presences: DashboardData["presences"] = null;
+    if (isActif("presences") || enfantsCount > 0) {
+      const presencesToday = await prisma.presence.findMany({
+        where: { structure_id: structureId, date: { gte: todayStart, lte: todayEnd } },
+        select: { est_present: true, statut: true },
+      });
+      const presents = presencesToday.filter((p) => p.est_present).length;
+      const absents = presencesToday.filter((p) => p.statut === "ABSENT" || p.statut === "ABSENT_JUSTIFIE").length;
+      const taux = enfantsCount > 0 ? Math.round((presents / enfantsCount) * 100) : 0;
+      presences = { presents, total: enfantsCount, absents, taux };
+    }
 
     // 2. Nettoyage
     let nettoyage: DashboardData["nettoyage"] = null;
@@ -204,7 +218,7 @@ export async function getDashboardData(
 
     return {
       success: true,
-      data: { enfantsCount, nettoyage, prochainesDlc, alertesLait, biberonsEnAttente, temperatures, activiteRecente },
+      data: { enfantsCount, presences, nettoyage, prochainesDlc, alertesLait, biberonsEnAttente, temperatures, activiteRecente },
     };
   } catch (e) {
     return authErrorToResult(e) as { success: true; data: DashboardData } | { success: false; error: string };

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronDown, RefreshCw, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, LogOut, Menu, X } from "lucide-react";
+import { ChevronDown, RefreshCw, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, LogOut, Menu, X, CalendarCheck } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { NotificationsBell } from "./notifications-bell";
@@ -170,6 +170,7 @@ const SECTIONS: { title: string; items: MenuItem[] }[] = [
     title: "Suivi Enfants",
     items: [
       { label: "Enfants", icon: Baby, href: "/enfants", alwaysVisible: true, color: "orange" },
+      { label: "Présences", icon: CalendarCheck, href: "/presences", alwaysVisible: true, color: "emerald" },
       { label: "Suivi du jour", icon: ClipboardList, href: "/suivi", condition: (isActif) => isActif("repas") || isActif("changes") || isActif("siestes"), color: "emerald" },
       { label: "Transmissions", icon: MessageSquare, href: "/transmissions", moduleId: "transmissions", color: "teal" },
     ],

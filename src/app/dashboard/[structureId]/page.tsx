@@ -14,7 +14,7 @@ import { getAlertes, type AlerteItem } from "@/app/actions/alertes";
 import Link from "next/link";
 import {
   Thermometer, Sparkles, Package, Baby, AlertTriangle, Clock,
-  Users, ArrowRight, MessageSquare, Pill, Milk, ShieldAlert,
+  Users, ArrowRight, MessageSquare, Pill, Milk, ShieldAlert, CalendarCheck
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -65,6 +65,7 @@ export default function DashboardPage() {
   useRealtimeSubscription("Biberon", isActif("biberonnerie") ? structureId : null, { onInsert: () => fetchData() });
   useRealtimeSubscription("ReceptionMarchandise", isActif("tracabilite") ? structureId : null, { onInsert: () => fetchData() });
   useRealtimeSubscription("ValidationNettoyage", isActif("nettoyage") ? structureId : null, { onInsert: () => fetchData() });
+  useRealtimeSubscription("Presence", structureId, { onInsert: () => fetchData(), onUpdate: () => fetchData() });
 
   if (loading) {
     return (
@@ -95,6 +96,7 @@ export default function DashboardPage() {
     nettoyage: Sparkles,
     biberonnerie: Baby,
     temperatures: Thermometer,
+    presences: CalendarCheck,
   };
 
   return (
@@ -106,7 +108,7 @@ export default function DashboardPage() {
 
       {/* ═══ KPI CARDS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Enfants présents */}
+        {/* Enfants inscrits */}
         <Link
           href={`/dashboard/${structureId}/enfants`}
           className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-orange-500 hover:bg-orange-50/80 hover:border-orange-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up"
@@ -117,10 +119,45 @@ export default function DashboardPage() {
           </div>
           <span className="text-2xl font-bold text-white transition-colors duration-300 group-hover:text-gray-800">{data.enfantsCount}</span>
           <div>
-            <span
+            <span 
               className="block mt-2 text-xs text-white bg-orange-50/40 group-hover:bg-white group-hover:text-orange-600 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg mt-2 font-medium transition-all duration-300"
             >
               Voir la liste <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
+            </span>
+          </div>
+        </Link>
+
+        {/* Présences du jour : Compteur en direct */}
+        <Link
+          href={`/dashboard/${structureId}/presences`}
+          className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-emerald-600 hover:bg-emerald-50/80 hover:border-emerald-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-75"
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <CalendarCheck size={20} className="text-emerald-50/40 text-white transition-all duration-300 group-hover:text-emerald-600 group-hover:scale-110" />
+            <span className="text-sm font-medium text-white transition-colors duration-300 group-hover:text-gray-600">Présences aujourd&apos;hui</span>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-bold text-white transition-colors duration-300 group-hover:text-emerald-700">
+              {data.presences?.presents ?? 0}
+            </span>
+            <span className="text-sm font-medium text-emerald-100 transition-colors duration-300 group-hover:text-gray-500">
+              / {data.enfantsCount} ({data.presences?.taux ?? 0}%)
+            </span>
+          </div>
+          {data.presences && data.presences.absents > 0 ? (
+            <p className="text-xs text-emerald-100 transition-colors duration-300 group-hover:text-rose-600 font-medium mt-1">
+              {data.presences.absents} absent{data.presences.absents > 1 ? "s" : ""}
+            </p>
+          ) : (
+            <p className="text-xs text-emerald-100 transition-colors duration-300 group-hover:text-gray-400 mt-1">
+              Tous présents ou attendus
+            </p>
+          )}
+          <div>
+            <span
+              className="block mt-2 text-xs text-white bg-emerald-50/40 group-hover:bg-white group-hover:text-emerald-700 hover:underline inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-medium transition-all duration-300"
+            >
+              Faire l&apos;appel <ArrowRight size={12} className="inline transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </div>
         </Link>
@@ -129,7 +166,7 @@ export default function DashboardPage() {
         {isActif("nettoyage") && (
           <Link
             href={`/dashboard/${structureId}/nettoyage`}
-            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-purple-500 hover:bg-purple-50/80 hover:border-purple-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-75"
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-purple-500 hover:bg-purple-50/80 hover:border-purple-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-150"
           >
             <div className="flex items-center gap-2 mb-3">
               <Sparkles size={20} className="text-purple-50/40 text-white transition-all duration-500 group-hover:text-purple-500 group-hover:scale-110 group-hover:rotate-12" />
@@ -171,7 +208,7 @@ export default function DashboardPage() {
         {(isActif("tracabilite") || isActif("stocks")) && (
           <Link
             href={`/dashboard/${structureId}/stock`}
-            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-amber-500 hover:bg-amber-50/80 hover:border-amber-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-150"
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-amber-500 hover:bg-amber-50/80 hover:border-amber-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-225"
           >
             <div className="flex items-center gap-2 mb-3">
               <Package size={20} className="text-amber-50/40 text-white transition-all duration-300 group-hover:text-amber-500 group-hover:scale-110" />
@@ -206,7 +243,7 @@ export default function DashboardPage() {
         {isActif("biberonnerie") && (
           <Link
             href={`/dashboard/${structureId}/biberonnerie`}
-            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-225"
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-300"
           >
             <div className="flex items-center gap-2 mb-3">
               <Baby size={20} className="text-pink-50/40 text-white transition-transform duration-300 group-hover:text-pink-500 group-hover:scale-110 group-hover:rotate-6" />
@@ -233,7 +270,7 @@ export default function DashboardPage() {
         {isActif("biberonnerie") && data.alertesLait.length > 0 && (
           <Link
             href={`/dashboard/${structureId}/biberonnerie`}
-            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-300"
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-pink-500 hover:bg-pink-50/80 hover:border-pink-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-375"
           >
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle size={20} className="text-pink-50/40 text-white transition-all duration-300 group-hover:text-pink-500 group-hover:scale-110 group-hover:rotate-6" />
@@ -261,7 +298,7 @@ export default function DashboardPage() {
         {isActif("temperatures") && (
           <Link
             href={`/dashboard/${structureId}/temperatures`}
-            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-blue-500 hover:bg-blue-50/80 hover:border-blue-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-375"
+            className="group block rounded-xl p-4 shadow-sm border border-transparent transition-all duration-300 ease-out bg-blue-500 hover:bg-blue-50/80 hover:border-blue-200/60 hover:-translate-y-1 hover:shadow-md animate-fade-in-up delay-450"
           >
             <div className="flex items-center gap-2 mb-3">
               <Thermometer size={20} className="text-blue-50/40 text-white transition-all duration-300 group-hover:text-blue-500 group-hover:scale-110 group-hover:-translate-y-0.5" />

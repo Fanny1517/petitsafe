@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Menu, X, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, Moon } from 'lucide-react';
+import { ChevronDown, Menu, X, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, Moon, CalendarCheck } from 'lucide-react';
 import { useModules } from "@/hooks/use-modules";
 import { useProfil } from "@/hooks/use-profil";
 import type { ModuleId } from "@/lib/constants";
@@ -19,7 +19,7 @@ interface NavbarProps {
 
 const ICONS: Record<string, any> = {
     Thermometer, Baby, Package, Sparkles, ClipboardList,
-    MessageSquare, FileText, FileDown, Moon, LayoutDashboard, Settings,
+    MessageSquare, FileText, FileDown, Moon, LayoutDashboard, Settings, CalendarCheck,
 };
 
 interface MenuItem {
@@ -54,6 +54,7 @@ const SECTIONS: { title: string; category?: string; items: MenuItem[] }[] = [
         category: "suivi",
         items: [
             { label: "Enfants", icon: Baby, href: "/enfants", alwaysVisible: true },
+            { label: "Présences", icon: CalendarCheck, href: "/presences", alwaysVisible: true },
             { label: "Suivi du jour", icon: ClipboardList, href: "/suivi", condition: (isActif) => isActif("repas") || isActif("changes") || isActif("siestes") },
             { label: "Transmissions", icon: MessageSquare, href: "/transmissions", moduleId: "transmissions" },
         ],

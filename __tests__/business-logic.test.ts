@@ -332,7 +332,7 @@ describe("getModulesParCategorie", () => {
     const result = getModulesParCategorie(PRESETS_MODULES.complet);
     expect(result.haccp).toHaveLength(4);
     expect(result.suivi).toHaveLength(4);
-    expect(result.gestion).toHaveLength(2);
+    expect(result.gestion).toHaveLength(3);
   });
 
   it("tableau vide → tout vide", () => {

@@ -168,6 +168,14 @@ enum AuditAction {
   LOGIN_FAILED
 }
 
+enum StatutPresence {
+  ATTENDU
+  PRESENT
+  ABSENT
+  ABSENT_JUSTIFIE
+  CONGE
+}
+
 // ═══ MULTI-TENANT ═══
 
 model Structure {
@@ -208,6 +216,7 @@ model Structure {
   laits_maternels            LaitMaternel[]
   administrations_medicament AdministrationMedicament[]
   pais                       PAI[]
+  presences                  Presence[]
   audit_logs                 AuditLog[]
 }
 
@@ -255,6 +264,7 @@ model Profil {
   releves_plat               RelevePlat[]
   administrations_medicament AdministrationMedicament[] @relation("ProfilAdministrateur")
   cosignatures_medicament    AdministrationMedicament[] @relation("ProfilTemoin")
+  releves_presence           Presence[]
 
   @@index([structure_id])
   @@index([structure_id, actif])
@@ -289,6 +299,7 @@ model Enfant {
   laits_maternels            LaitMaternel[]
   administrations_medicament AdministrationMedicament[]
   pai                        PAI?
+  presences                  Presence[]
 
   @@index([structure_id])
   @@index([structure_id, actif])
@@ -811,4 +822,32 @@ model AuditLog {
   @@index([structure_id, created_at])
   @@index([profil_id, created_at])
   @@index([entity, entity_id])
+}
+
+// ═══ PRÉSENCES & POINTAGES ═══
+
+model Presence {
+  id                 String          @id @default(uuid())
+  structure_id       String
+  enfant_id          String
+  date               DateTime        // Date du jour (minuit UTC)
+  statut             StatutPresence  @default(ATTENDU)
+  est_present        Boolean         @default(false)
+  heure_arrivee      DateTime?
+  heure_depart       DateTime?
+  motif_absence      String?
+  certificat_fourni  Boolean         @default(false)
+  observations       String?
+  releve_par_id      String?
+  releve_par_nom     String?
+  created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt
+
+  structure  Structure @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+  enfant     Enfant    @relation(fields: [enfant_id], references: [id], onDelete: Cascade)
+  releve_par Profil?   @relation(fields: [releve_par_id], references: [id], onDelete: SetNull)
+
+  @@unique([structure_id, enfant_id, date])
+  @@index([structure_id, date])
+  @@index([enfant_id, date])
 }

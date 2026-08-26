@@ -44,6 +44,7 @@ const MODELS = [
   "transmission",
   "administrationMedicament",
   "pAI",
+  "presence",
   "demandeDemo",
   "auditLog",
 ] as const;
