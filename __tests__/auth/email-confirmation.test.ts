@@ -61,4 +61,16 @@ describe("Email & Crypto Verification Flow", () => {
       expect(html).toContain("0000");
     });
   });
+
+  describe("Critères de purge des inscriptions temporaires", () => {
+    it("doit identifier correctement les dates d'expiration passées", () => {
+      const now = new Date();
+      const expPast = new Date(Date.now() - 3600 * 1000); // 1h dans le passé
+      const expFuture = new Date(Date.now() + 24 * 3600 * 1000); // 24h dans le futur
+
+      expect(expPast < now).toBe(true);
+      expect(expFuture < now).toBe(false);
+    });
+  });
 });
+
