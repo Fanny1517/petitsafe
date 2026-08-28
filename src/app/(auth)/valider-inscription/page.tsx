@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { validerInscription, type ValidationResult } from "@/app/actions/valider-inscription";
@@ -14,6 +14,7 @@ function ValiderInscriptionContent() {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [countdown, setCountdown] = useState(5);
+  const executedRef = useRef(false);
 
   useEffect(() => {
     if (!token) {
@@ -25,31 +26,24 @@ function ValiderInscriptionContent() {
       return;
     }
 
-    let isMounted = true;
+    if (executedRef.current) return;
+    executedRef.current = true;
 
     async function executeValidation() {
       try {
         const res = await validerInscription(token!);
-        if (isMounted) {
-          setResult(res);
-          setLoading(false);
-        }
+        setResult(res);
       } catch (err) {
-        if (isMounted) {
-          setResult({
-            success: false,
-            error: err instanceof Error ? err.message : "Erreur inattendue lors de la validation.",
-          });
-          setLoading(false);
-        }
+        setResult({
+          success: false,
+          error: err instanceof Error ? err.message : "Erreur inattendue lors de la validation.",
+        });
+      } finally {
+        setLoading(false);
       }
     }
 
     executeValidation();
-
-    return () => {
-      isMounted = false;
-    };
   }, [token]);
 
   // Compte à rebours de redirection automatique en cas de succès
