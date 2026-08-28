@@ -158,20 +158,24 @@ export async function modifierProfil(
   try {
     const target = await prisma.profil.findUnique({
       where: { id: profilId },
-      select: { id: true, structure_id: true, role: true, prenom: true, nom: true },
+      select: { id: true, structure_id: true, role: true, prenom: true, nom: true, actif: true },
     });
     if (!target) return { success: false as const, error: "Profil introuvable." };
 
-    // Auto-édition (limité aux champs non sensibles) OU admin de la structure
-    const isSelfEdit = !!actorProfilId && actorProfilId === profilId;
-    const requireAdmin = !isSelfEdit;
     const ctx = await assertAccess(target.structure_id, {
       profilId: actorProfilId,
-      requireAdmin,
     });
 
-    // Garde-fou : un non-admin ne peut PAS changer son propre rôle ni son statut actif
-    if (isSelfEdit && (data.role !== undefined || data.actif !== undefined)) {
+    const isActorAdmin = ctx.userRole === "GESTIONNAIRE" || ctx.profil?.role === RoleProfil.ADMINISTRATEUR;
+    const isSelfEdit = !!actorProfilId && actorProfilId === profilId;
+
+    // Si l'acteur n'est ni administrateur ni en auto-édition
+    if (!isActorAdmin && !isSelfEdit) {
+      return { success: false as const, error: "Action réservée aux administrateurs." };
+    }
+
+    // Garde-fou : un non-admin ne peut PAS changer son propre rôle vers un autre rôle ni son statut actif
+    if (!isActorAdmin && ((data.role !== undefined && data.role !== target.role) || (data.actif !== undefined && data.actif !== target.actif))) {
       return { success: false as const, error: "Action réservée aux administrateurs." };
     }
 

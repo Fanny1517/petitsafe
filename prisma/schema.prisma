@@ -851,3 +851,22 @@ model Presence {
   @@index([structure_id, date])
   @@index([enfant_id, date])
 }
+
+// ═══ INSCRIPTIONS TEMPORAIRES (EN ATTENTE DE VALIDATION EMAIL) ═══
+
+model InscriptionTemporaire {
+  id                 String        @id @default(uuid())
+  email              String        @unique
+  password_encrypted String
+  prenom             String
+  nom                String
+  nom_structure      String
+  type_structure     StructureType
+  modules_actifs     String[]      @default([])
+  token              String        @unique @default(uuid())
+  expires_at         DateTime
+  created_at         DateTime      @default(now())
+
+  @@index([token])
+  @@index([email])
+}
