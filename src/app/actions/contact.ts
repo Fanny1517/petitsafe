@@ -24,17 +24,29 @@ export async function envoyerMessageContact(formData: {
       return { success: true as const }; // Succès silencieux pour ne pas alerter le robot
     }
 
-    // Création du transporteur Nodemailer configuré pour Microsoft Office 365
+    // Création du transporteur Nodemailer universel (Infomaniak, Office 365, OVH, etc.)
+    const host = process.env.SMTP_HOST || "smtp.office365.com";
+    const port = Number(process.env.SMTP_PORT) || 587;
+    const user = process.env.SMTP_USER || "info@rzpanda.com";
+    const pass = process.env.SMTP_PASS;
+    const senderEmail = process.env.SMTP_FROM || user;
+    const adminEmail = process.env.ADMIN_EMAIL || senderEmail;
+
+    if (!pass) {
+      console.error("Mot de passe SMTP manquant dans process.env.SMTP_PASS");
+      return { success: false as const, error: "Configuration SMTP incomplète (mot de passe manquant)." };
+    }
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.office365.com",
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: false, // STARTTLS sur port 587
+      host,
+      port,
+      secure: port === 465, // true pour le port 465 (SSL/TLS), false pour 587 (STARTTLS)
       auth: {
-        user: process.env.SMTP_USER || "info@rzpanda.com",
-        pass: process.env.SMTP_PASS,
+        user,
+        pass,
       },
       tls: {
-        ciphers: "SSLv3", // Assure la compatibilité TLS avec Office 365
+        rejectUnauthorized: false,
       },
     });
 
@@ -86,30 +98,29 @@ export async function envoyerMessageContact(formData: {
     `;
 
     const adminMailOptions = {
-      from: `"RZPan'Da Formulaire" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
-      to: process.env.ADMIN_EMAIL || "info@rzpanda.com",
+      from: `"RZPan'Da Formulaire" <${senderEmail}>`,
+      to: adminEmail,
       replyTo: email,
       subject: `[Contact RZPan'Da] ${sujet} - de ${nom}`,
       html: adminHtml,
     };
 
     const clientMailOptions = {
-      from: `"L'équipe RZPan'Da" <${process.env.SMTP_USER || "info@rzpanda.com"}>`,
+      from: `"L'équipe RZPan'Da" <${senderEmail}>`,
       to: email,
       subject: "Accusé de réception - Votre message à RZPan'Da",
       html: clientHtml,
     };
 
-    // Envoi des deux emails
-    await Promise.all([
-      transporter.sendMail(adminMailOptions),
-      transporter.sendMail(clientMailOptions),
-    ]);
+    // Envoi séquentiel des deux emails pour éviter les collisions de socket SMTP
+    await transporter.sendMail(adminMailOptions);
+    await transporter.sendMail(clientMailOptions);
 
     return { success: true as const };
   } catch (error) {
-    console.error("Erreur d'envoi d'email SMTP Office 365 :", error);
-    return { success: false as const, error: "Erreur lors de l'envoi du message. Réessayez." };
+    console.error("Erreur d'envoi d'email SMTP :", error);
+    const detail = error instanceof Error ? error.message : "Erreur inconnue";
+    return { success: false as const, error: `Erreur lors de l'envoi du message : ${detail}` };
   }
 }
 

@@ -10,7 +10,7 @@ import { useModules } from "@/hooks/use-modules";
 import { useProfil } from "@/hooks/use-profil";
 import {
   LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles,
-  MessageSquare, FileText, FileDown, Settings, LogOut, ChevronLeft, Moon,
+  MessageSquare, FileText, FileDown, Settings, LogOut, ChevronLeft, Moon, CalendarCheck,
 } from "lucide-react";
 import { useState } from "react";
 import type { ModuleId } from "@/lib/constants";
@@ -172,6 +172,7 @@ const SECTIONS: { title: string; category?: string; items: MenuItem[] }[] = [
     category: "suivi",
     items: [
       { label: "Enfants", icon: Baby, href: "/enfants", alwaysVisible: true, color: "orange" },
+      { label: "Présences", icon: CalendarCheck, href: "/presences", alwaysVisible: true, color: "emerald" },
       { label: "Suivi du jour", icon: ClipboardList, href: "/suivi", condition: (isActif) => isActif("repas") || isActif("changes") || isActif("siestes"), color: "emerald" },
       { label: "Transmissions", icon: MessageSquare, href: "/transmissions", moduleId: "transmissions", color: "teal" },
     ],

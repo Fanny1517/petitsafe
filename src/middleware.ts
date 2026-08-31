@@ -48,7 +48,8 @@ export async function middleware(request: NextRequest) {
     "/a-propos",
     "/contact",
     "/roadmap",
-    "/guides"
+    "/guides",
+    "/valider-inscription"
   ];
   const isPublicRoute =
     publicRoutes.includes(pathname) ||

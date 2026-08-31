@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { useModules } from "@/hooks/use-modules";
 import { useProfil } from "@/hooks/use-profil";
-import { LayoutDashboard, Thermometer, Baby, Sparkles, Package, Menu, X, ClipboardList, MessageSquare, FileText, FileDown, Settings, LogOut, Moon } from "lucide-react";
+import { LayoutDashboard, Thermometer, Baby, Sparkles, Package, Menu, X, ClipboardList, MessageSquare, FileText, FileDown, Settings, LogOut, Moon, CalendarCheck } from "lucide-react";
 import { useState } from "react";
 import type { ModuleId } from "@/lib/constants";
 
@@ -65,6 +65,7 @@ const COLOR_CLASSES: Record<ColorTheme, {
 
   const moreItems = [
     { label: "Enfants", icon: Baby, href: "/enfants", color: "orange" as ColorTheme },
+    { label: "Présences", icon: CalendarCheck, href: "/presences", color: "emerald" as ColorTheme },
     ...(isActif("repas") || isActif("changes") || isActif("siestes") ? [{ label: "Suivi", icon: ClipboardList, href: "/suivi", color: "emerald" as ColorTheme }] : []),
     ...(isActif("transmissions") ? [{ label: "Transmissions", icon: MessageSquare, href: "/transmissions", color: "teal" as ColorTheme }] : []),
     ...(isActif("protocoles") ? [{ label: "Protocoles", icon: FileText, href: "/protocoles", color: "cyan" as ColorTheme }] : []),

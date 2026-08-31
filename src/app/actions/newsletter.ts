@@ -23,22 +23,31 @@ export async function demanderGuideDDPP(formData: { email: string; website?: str
       return { success: true as const };
     }
 
-    // Transporteur SMTP Office 365
+    // Transporteur SMTP universel (Infomaniak, Office 365, OVH, etc.)
+    const host = process.env.SMTP_HOST || "smtp.office365.com";
+    const port = Number(process.env.SMTP_PORT) || 587;
+    const user = process.env.SMTP_USER || "info@rzpanda.com";
+    const pass = process.env.SMTP_PASS;
+    const sendEmail = process.env.SMTP_FROM || user;
+    const adminEmail = process.env.ADMIN_EMAIL || sendEmail;
+
+    if (!pass) {
+      console.error("Mot de passe SMTP manquant dans process.env.SMTP_PASS");
+      return { success: false as const, error: "Configuration SMTP incomplète (mot de passe manquant)." };
+    }
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.office365.com",
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: false,
+      host,
+      port,
+      secure: port === 465, // true pour le port 465 (SSL/TLS), false pour 587 (STARTTLS)
       auth: {
-        user: process.env.SMTP_USER || "info@rzpanda.com",
-        pass: process.env.SMTP_PASS,
+        user,
+        pass,
       },
       tls: {
-        ciphers: "SSLv3",
+        rejectUnauthorized: false,
       },
     });
-
-    const sendEmail = process.env.SMTP_USER || "info@rzpanda.com";
-    const adminEmail = process.env.ADMIN_EMAIL || "info@rzpanda.com";
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://rzpanda.com";
 
@@ -92,26 +101,25 @@ export async function demanderGuideDDPP(formData: { email: string; website?: str
       </div>
     `;
 
-    // Envoi parallèle des emails
-    await Promise.all([
-      transporter.sendMail({
-        from: `"RZPan'Da" <${sendEmail}>`,
-        to: email,
-        subject: "Votre Guide DDPP 2026 — RZPan'Da",
-        html: clientHtml,
-      }),
-      transporter.sendMail({
-        from: `"RZPan'Da Notif" <${sendEmail}>`,
-        to: adminEmail,
-        replyTo: email,
-        subject: `[Lead Guide DDPP] Nouvelle inscription : ${email}`,
-        html: adminHtml,
-      }),
-    ]);
+    // Envoi séquentiel des emails
+    await transporter.sendMail({
+      from: `"RZPan'Da" <${sendEmail}>`,
+      to: email,
+      subject: "Votre Guide DDPP 2026 — RZPan'Da",
+      html: clientHtml,
+    });
+    await transporter.sendMail({
+      from: `"RZPan'Da Notif" <${sendEmail}>`,
+      to: adminEmail,
+      replyTo: email,
+      subject: `[Lead Guide DDPP] Nouvelle inscription : ${email}`,
+      html: adminHtml,
+    });
 
     return { success: true as const };
   } catch (error) {
     console.error("Erreur lors de l'envoi du guide DDPP :", error);
-    return { success: false as const, error: "Erreur lors de l'envoi du guide. Veuillez réessayer." };
+    const detail = error instanceof Error ? error.message : "Erreur inconnue";
+    return { success: false as const, error: `Erreur lors de l'envoi du guide : ${detail}` };
   }
 }

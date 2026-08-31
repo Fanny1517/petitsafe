@@ -8,16 +8,17 @@ export class AuthError extends Error {
   }
 }
 
-interface AuthCtx {
+export interface AuthCtx {
   userId: string;
   structureId: string;
+  userRole?: string;
   profil?: { id: string; role: RoleProfil; prenom: string; nom: string };
 }
 
 interface AssertOptions {
   /** Si fourni, vérifie que ce profil appartient à la structure */
   profilId?: string;
-  /** Si true, vérifie que le profil est ADMINISTRATEUR */
+  /** Si true, vérifie que le profil est ADMINISTRATEUR ou l'utilisateur GESTIONNAIRE */
   requireAdmin?: boolean;
 }
 
@@ -28,7 +29,7 @@ interface AssertOptions {
  *  1. L'utilisateur Supabase est authentifié (cookies).
  *  2. Cet utilisateur a bien un UserStructure pour le `structureId` donné.
  *  3. (option) Le `profilId` appartient à la même structure.
- *  4. (option) Ce profil a le rôle ADMINISTRATEUR.
+ *  4. (option) Ce profil ou l'utilisateur a le rôle administrateur/gestionnaire.
  *
  * Lève une AuthError si l'une des vérifications échoue.
  * Toutes les actions doivent appeler ce helper en début d'exécution avec
@@ -50,9 +51,11 @@ export async function assertAccess(
 
   const us = await prisma.userStructure.findUnique({
     where: { user_id_structure_id: { user_id: user.id, structure_id: structureId } },
-    select: { user_id: true },
+    select: { user_id: true, role: true },
   });
   if (!us) throw new AuthError("FORBIDDEN", "Accès refusé à cette structure");
+
+  const isGestionnaireAccount = us.role === "GESTIONNAIRE";
 
   let profil: AuthCtx["profil"];
   if (opts.profilId) {
@@ -61,15 +64,17 @@ export async function assertAccess(
       select: { id: true, role: true, prenom: true, nom: true },
     });
     if (!p) throw new AuthError("INVALID_PROFIL", "Profil invalide pour cette structure");
-    if (opts.requireAdmin && p.role !== RoleProfil.ADMINISTRATEUR) {
+    if (opts.requireAdmin && p.role !== RoleProfil.ADMINISTRATEUR && !isGestionnaireAccount) {
       throw new AuthError("FORBIDDEN", "Action réservée aux administrateurs");
     }
     profil = p;
   } else if (opts.requireAdmin) {
-    throw new AuthError("FORBIDDEN", "Profil administrateur requis");
+    if (!isGestionnaireAccount) {
+      throw new AuthError("FORBIDDEN", "Profil administrateur requis");
+    }
   }
 
-  return { userId: user.id, structureId, profil };
+  return { userId: user.id, structureId, userRole: us.role, profil };
 }
 
 /**
