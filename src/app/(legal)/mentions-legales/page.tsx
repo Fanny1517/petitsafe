@@ -10,29 +10,31 @@ export default function MentionsLegalesPage() {
   return (
     <>
       <h1>Mentions légales</h1>
-      <p className="meta">Dernière mise à jour : 26 avril 2026</p>
+      {/*<p className="meta">Dernière mise à jour : 26 avril 2026</p>*/}
 
       <h2>Éditeur du site</h2>
       <ul>
-        <li><strong>Nom / Raison sociale :</strong> RZPan'Da</li>
-        <li><strong>Adresse :</strong> 13 Douazel 35230 St erblon France</li>
-        <li><strong>SIRET :</strong> 123 456 789 00012</li>
+        <li><strong>Dénomination / Raison sociale :</strong> RZ PANDA</li>
+        <li><strong>Forme juridique :</strong> Société par actions simplifiée</li>
+        <li><strong>Capital social :</strong> 1000,00 Euros</li>
+        <li><strong>Adresse du siège:</strong> 3500 Rennes</li>
+        <li><strong>Immatriculation au RCS, numéro :</strong> 109 172 742 R.C.S Rennes</li>
+        <li><strong>Numéro d'identification Européen - EUID :</strong> FR3501.109172742</li>
         <li><strong>Email :</strong> contact@rzpanda.com</li>
       </ul>
 
-      <h2>Directeur de la publication</h2>
-      <p>Fanny Zongo</p>
-
       <h2>Hébergeur</h2>
+    
       <p>
         <strong>Vercel Inc.</strong>
         <br />
-        340 S Lemon Ave #4133, Walnut, CA 91789, USA
+        440 N Barranca Avenue #4133, Covina, CA 91723, USA
         <br />
         <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
           vercel.com
         </a>
       </p>
+
 
       <h2>Base de données</h2>
       <p>

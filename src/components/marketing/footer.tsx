@@ -270,7 +270,7 @@ export function Footer() {
             </span>
           </div>
           <p className="text-sm text-gray-400">
-            © 2026 RZPan'Da · Conçu en France 🇫🇷 · rzpanda.fr
+            © 2026 RZPan'Da · Conçu en France 🇫🇷 · rzpanda.com
           </p>
         </div>
       </div>
