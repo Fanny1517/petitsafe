@@ -34,6 +34,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, { headers: supabaseResponse.headers });
   }
 
+  const cleanPath = pathname !== "/" && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+
   const publicRoutes = [
     "/",
     "/blog",
@@ -52,6 +54,7 @@ export async function middleware(request: NextRequest) {
     "/valider-inscription"
   ];
   const isPublicRoute =
+    publicRoutes.includes(cleanPath) ||
     publicRoutes.includes(pathname) ||
     pathname.startsWith("/blog/") ||
     pathname.startsWith("/guides/") ||
@@ -62,7 +65,7 @@ export async function middleware(request: NextRequest) {
 
   if (!user) {
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/login/";
     url.searchParams.set("redirect", pathname);
     return NextResponse.redirect(url);
   }

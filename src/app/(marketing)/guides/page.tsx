@@ -7,6 +7,9 @@ export const metadata = {
   title: "Guides réglementaires et HACCP pour crèches & micro-crèches | RZPan'Da",
   description:
     "Tous nos guides pratiques et réglementaires pour micro-crèches, crèches et MAM : préparation aux contrôles DDPP/PMI, décryptages de décrets, biberonnerie et traçabilité.",
+  alternates: {
+    canonical: "/guides/",
+  },
 };
 
 export default function GuidesListPage() {
@@ -18,7 +21,7 @@ export default function GuidesListPage() {
       category: "Guide DDPP",
       icon: <ShieldCheck className="h-6 w-6 text-blue-600" />,
       color: "text-blue-600 bg-blue-50 border-blue-100",
-      href: "/guides/controle-ddpp-creche-preparation",
+      href: "/guides/controle-ddpp-creche-preparation/",
       readTime: "Lecture : 5 min",
     },
     {
@@ -28,7 +31,7 @@ export default function GuidesListPage() {
       category: "Guide Réglementaire",
       icon: <Calendar className="h-6 w-6 text-indigo-600" />,
       color: "text-indigo-600 bg-indigo-50 border-indigo-100",
-      href: "/guides/decret-2025-304-micro-creche",
+      href: "/guides/decret-2025-304-micro-creche/",
       readTime: "Lecture : 6 min",
     },
   ];

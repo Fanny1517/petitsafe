@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.rzpanda.fr";
+const rawBaseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://rzpanda.com";
+const BASE_URL = `${rawBaseUrl.replace(/\/+$/, "")}/`;
 
 export const metadata: Metadata = {
   title: "RZPan'Da — Registre HACCP numerique pour creches et micro-creches",

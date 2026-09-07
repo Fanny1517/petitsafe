@@ -7,6 +7,9 @@ export const metadata = {
   title: "Contrôle DDPP en crèche : comment s’y préparer sans stress | RZPan'Da",
   description:
     "Préparer un contrôle DDPP en micro-crèche : les 7 documents attendus, les erreurs qui coûtent cher, la méthode pour sortir un dossier complet en 3 clics.",
+  alternates: {
+    canonical: "/guides/controle-ddpp-creche-preparation/",
+  },
 };
 
 export default function GuideDDPPPage() {
@@ -36,7 +39,7 @@ export default function GuideDDPPPage() {
             "datePublished": "2026-04-26",
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": "https://rzpanda.fr/guides/controle-ddpp-creche-preparation"
+              "@id": "https://rzpanda.fr/guides/controle-ddpp-creche-preparation/"
             }
           })
         }}
@@ -173,7 +176,7 @@ export default function GuideDDPPPage() {
                 C'est pour simplifier ce quotidien administratif que nous avons conçu RZPan'Da. Plutôt que de manipuler des classeurs papier volumineux et de risquer d'oublier des relevés, notre application vous permet d'enregistrer vos températures de frigo, la traçabilité des étiquettes et l'émargement du plan de nettoyage en quelques secondes sur tablette. Lors d'une inspection DDPP ou PMI, il vous suffit de vous rendre dans l'onglet 'Exports DDPP', de sélectionner la période demandée et de générer un rapport PDF complet. Tout est propre, horodaté et instantanément accessible.
               </p>
               <p className="mt-4 text-base leading-relaxed text-gray-500">
-                Pour en savoir plus sur l'évolution des réglementations en crèche, consultez notre <Link href="/guides/decret-2025-304-micro-creche" className="text-blue-600 hover:underline">guide complet sur le décret 2025-304</Link>.
+                Pour en savoir plus sur l'évolution des réglementations en crèche, consultez notre <Link href="/guides/decret-2025-304-micro-creche/" className="text-blue-600 hover:underline">guide complet sur le décret 2025-304</Link>.
               </p>
             </div>
 
@@ -187,7 +190,7 @@ export default function GuideDDPPPage() {
               </p>
               <div className="mt-6">
                 <Link
-                  href="/register"
+                  href="/register/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
                   aria-label="Démarrer l'essai gratuit 30 jours"
                 >

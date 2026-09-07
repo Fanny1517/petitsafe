@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mentions légales",
   description: "Mentions légales du service RZPan'Da : éditeur, hébergeur et stockage des données.",
-  alternates: { canonical: "/mentions-legales" },
+  alternates: { canonical: "/mentions-legales/" },
 };
 
 export default function MentionsLegalesPage() {
