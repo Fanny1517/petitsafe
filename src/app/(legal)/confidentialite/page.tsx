@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Politique de confidentialité",
   description:
     "Politique de confidentialité RZPan'Da : données collectées, finalités, durées de conservation et droits RGPD.",
-  alternates: { canonical: "/confidentialite" },
+  alternates: { canonical: "/confidentialite/" },
 };
 
 export default function ConfidentialitePage() {

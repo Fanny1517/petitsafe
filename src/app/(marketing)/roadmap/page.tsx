@@ -18,6 +18,9 @@ export const metadata = {
   title: "Feuille de route produit - RZPan'Da | RZPan'Da",
   description:
     "Suivez en temps réel le développement et l'évolution des fonctionnalités de RZPan'Da : HACCP, suivi enfants, conformité DDPP et gestion de crèches.",
+  alternates: {
+    canonical: "/roadmap/",
+  },
 };
 
 export default function RoadmapPage() {
@@ -161,7 +164,7 @@ export default function RoadmapPage() {
               </p>
               <div className="mt-8">
                 <Link
-                  href="/contact"
+                  href="/contact/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 active:scale-95 shadow-md"
                 >
                   Proposer une fonctionnalité

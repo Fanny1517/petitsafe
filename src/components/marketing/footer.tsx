@@ -62,7 +62,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/roadmap"
+                  href="/roadmap/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   Feuille de route
@@ -79,7 +79,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
-                  href="/guides"
+                  href="/guides/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   Guides
@@ -87,7 +87,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/guides/controle-ddpp-creche-preparation"
+                  href="/guides/controle-ddpp-creche-preparation/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   Guide DDPP
@@ -95,7 +95,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/guides/decret-2025-304-micro-creche"
+                  href="/guides/decret-2025-304-micro-creche/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   Guide décret 2025-304
@@ -112,7 +112,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               <li>
                 <Link
-                  href="/a-propos"
+                  href="/a-propos/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   À propos
@@ -120,7 +120,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href="/contact/"
                   className="text-sm text-gray-500 transition hover:text-gray-900"
                 >
                   Contact

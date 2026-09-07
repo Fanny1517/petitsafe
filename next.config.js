@@ -11,6 +11,7 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  trailingSlash: true,
   images: {
     remotePatterns: [
       {

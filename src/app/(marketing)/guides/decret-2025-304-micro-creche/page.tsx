@@ -7,6 +7,9 @@ export const metadata = {
   title: "Décret 2025-304 Micro-Crèche : Ce qui change en Septembre 2026",
   description:
     "Quelles sont les obligations HACCP et de biberonnerie du Décret 2025-304 pour les crèches ? Préparez votre conformité avant la date limite.",
+  alternates: {
+    canonical: "/guides/decret-2025-304-micro-creche/",
+  },
 };
 
 export default function DecretGuidePage() {
@@ -64,7 +67,7 @@ export default function DecretGuidePage() {
               </p>
               <div className="mt-6">
                 <Link
-                  href="/register"
+                  href="/register/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-[22px] py-[14px] text-base font-semibold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
                   aria-label="Démarrer l'essai gratuit"
                 >
@@ -214,7 +217,7 @@ export default function DecretGuidePage() {
 
               <div className="mt-8">
                 <Link
-                  href="/register"
+                  href="/register/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-[22px] py-[14px] text-base font-semibold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
                   aria-label="Tester RZPan'Da gratuitement pendant 30 jours (Sans engagement)"
                 >
@@ -234,7 +237,7 @@ export default function DecretGuidePage() {
               </p>
               <div className="mt-6">
                 <Link
-                  href="/register"
+                  href="/register/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
                   aria-label="Tester RZPan'Da gratuitement pendant 30 jours"
                 >
