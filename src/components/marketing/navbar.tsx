@@ -115,7 +115,7 @@ export function Navbar() {
             FAQ
           </Link>
           <Link
-            href="/guides"
+            href="/guides/"
             className="text-sm font-medium text-gray-600 transition hover:text-blue-600"
           >
             Guides
@@ -135,13 +135,13 @@ export function Navbar() {
           ) : (
             <>
               <Link
-                href="/login"
+                href="/login/"
                 className="text-sm font-medium text-gray-600 transition hover:text-blue-600"
               >
                 Se connecter
               </Link>
               <Link
-                href="/register"
+                href="/register/"
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-[18px] py-[10px] text-sm font-semibold text-white transition hover:bg-blue-700 hover:shadow-md active:scale-95"
                 aria-label="Essai gratuit"
               >
@@ -190,7 +190,7 @@ export function Navbar() {
               FAQ
             </Link>
             <Link
-              href="/guides"
+              href="/guides/"
               onClick={() => setIsOpen(false)}
               className="text-base font-semibold text-gray-800 transition hover:text-blue-600 py-2 border-b border-gray-50"
             >
@@ -208,14 +208,14 @@ export function Navbar() {
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href="/login/"
                   onClick={() => setIsOpen(false)}
                   className="text-base font-semibold text-gray-800 transition hover:text-blue-600 py-2"
                 >
                   Se connecter
                 </Link>
                 <Link
-                  href="/register"
+                  href="/register/"
                   onClick={() => setIsOpen(false)}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-base font-semibold text-white transition hover:bg-blue-700"
                 >

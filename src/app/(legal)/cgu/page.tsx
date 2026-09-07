@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Conditions Générales d'Utilisation",
   description: "Conditions générales d'utilisation du service RZPan'Da.",
-  alternates: { canonical: "/cgu" },
+  alternates: { canonical: "/cgu/" },
 };
 
 export default function CGUPage() {

@@ -7,6 +7,9 @@ export const metadata = {
   title: "Qui sommes-nous ? La mission de RZPan'Da | RZPan'Da",
   description:
     "Découvrez l'histoire et les valeurs de RZPan'Da : simplifier le quotidien réglementaire des crèches et micro-crèches pour leur redonner du temps auprès des enfants.",
+  alternates: {
+    canonical: "/a-propos/",
+  },
 };
 
 export default function AboutPage() {
@@ -115,7 +118,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Link
-                href="/register"
+                href="/register/"
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
               >
                 Démarrer l'essai gratuit
