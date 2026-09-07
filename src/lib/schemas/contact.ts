@@ -7,3 +7,6 @@ export const contactSchema = z.object({
   message: z.string().trim().min(10, "Le message doit contenir au moins 10 caractères"),
   website: z.string().optional(),
 });
+
+export const contactFormSchema = contactSchema;
+

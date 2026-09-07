@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronDown, RefreshCw, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, LogOut, Menu, X, CalendarCheck } from "lucide-react";
+import { ChevronDown, RefreshCw, LayoutDashboard, Baby, ClipboardList, Thermometer, Package, Sparkles, MessageSquare, FileText, FileDown, Settings, LogOut, Menu, X, CalendarCheck, Award } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { NotificationsBell } from "./notifications-bell";
@@ -178,6 +178,7 @@ const SECTIONS: { title: string; items: MenuItem[] }[] = [
   {
     title: "Gestion",
     items: [
+      { label: "Démarche Qualité", icon: Award, href: "/qualite", alwaysVisible: true, color: "emerald" },
       { label: "Protocoles", icon: FileText, href: "/protocoles", moduleId: "protocoles", color: "cyan" },
       { label: "Exports PDF", icon: FileDown, href: "/exports", alwaysVisible: true, adminOnly: true, color: "violet" },
       { label: "Paramètres", icon: Settings, href: "/parametres", alwaysVisible: true, adminOnly: true, color: "gray" },
