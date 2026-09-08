@@ -205,6 +205,20 @@ enum StatutAction {
   REPORTE
 }
 
+enum TypeEnquete {
+  ANNUELLE
+  INTEGRATION
+  FLASH
+  AUTRE
+}
+
+enum TypeQuestionEnquete {
+  NOTE_5
+  OUI_NON
+  TEXTE
+  CHOIX_UNIQUE
+}
+
 // ═══ MULTI-TENANT ═══
 
 model Structure {
@@ -249,6 +263,7 @@ model Structure {
   audit_logs                 AuditLog[]
   evaluations_qualite        EvaluationCritere[]
   actions_qualite            ActionQualite[]
+  enquetes_satisfaction      EnqueteSatisfaction[]
 }
 
 model UserStructure {
@@ -971,3 +986,78 @@ model ActionQualite {
   @@index([critere_id])
   @@index([statut])
 }
+
+// ═══ ENQUÊTES FAMILLES & BAROMÈTRE DE SATISFACTION (AXE 2) ═══
+
+model EnqueteSatisfaction {
+  id                  String              @id @default(uuid())
+  structure_id        String
+  titre               String
+  description         String?
+  type_enquete        TypeEnquete         @default(ANNUELLE)
+  public_cible        String?             @default("Parents")
+  cible_reponses      Int?                @default(20)
+  date_debut          DateTime            @default(now())
+  date_fin            DateTime?
+  actif               Boolean             @default(true)
+  anonyme             Boolean             @default(true)
+  token               String              @unique @default(uuid())
+  emails_notification String[]            @default([])
+  date_creation       DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+
+  structure           Structure           @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+  questions           QuestionEnquete[]
+  reponses            ReponseEnquete[]
+
+  @@index([structure_id])
+  @@index([token])
+}
+
+model QuestionEnquete {
+  id            String              @id @default(uuid())
+  enquete_id    String
+  type_question TypeQuestionEnquete @default(NOTE_5)
+  axe_qualite   AxeQualite?
+  libelle       String
+  description   String?
+  options       String[]            @default([])
+  obligatoire   Boolean             @default(true)
+  ordre         Int                 @default(0)
+
+  enquete       EnqueteSatisfaction @relation(fields: [enquete_id], references: [id], onDelete: Cascade)
+  valeurs       ValeurReponse[]
+
+  @@index([enquete_id])
+  @@index([ordre])
+}
+
+model ReponseEnquete {
+  id              String              @id @default(uuid())
+  enquete_id      String
+  parent_nom      String?
+  parent_email    String?
+  date_soumission DateTime            @default(now())
+
+  enquete         EnqueteSatisfaction @relation(fields: [enquete_id], references: [id], onDelete: Cascade)
+  valeurs         ValeurReponse[]
+
+  @@index([enquete_id])
+  @@index([enquete_id, parent_email])
+}
+
+model ValeurReponse {
+  id             String              @id @default(uuid())
+  reponse_id     String
+  question_id    String
+  valeur_note    Int?
+  valeur_booleen Boolean?
+  valeur_texte   String?
+
+  reponse        ReponseEnquete      @relation(fields: [reponse_id], references: [id], onDelete: Cascade)
+  question       QuestionEnquete     @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  @@index([reponse_id])
+  @@index([question_id])
+}
+
