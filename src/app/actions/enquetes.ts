@@ -83,6 +83,7 @@ export async function creerEnqueteCampagne(rawInput: CreerEnqueteInput) {
       },
     });
 
+    revalidatePath(`/dashboard/${data.structureId}/qualite/enquetes`);
     revalidatePath(`/dashboard/${data.structureId}/qualite/enquetes/`);
     return { success: true, enquete };
   } catch (err: any) {
@@ -103,6 +104,7 @@ export async function toggleStatutEnquete(enqueteId: string, actif: boolean, str
       data: { actif },
     });
 
+    revalidatePath(`/dashboard/${structureId}/qualite/enquetes`);
     revalidatePath(`/dashboard/${structureId}/qualite/enquetes/`);
     return { success: true, enquete };
   } catch (err: any) {
@@ -122,6 +124,7 @@ export async function supprimerEnquete(enqueteId: string, structureId: string) {
       where: { id: enqueteId },
     });
 
+    revalidatePath(`/dashboard/${structureId}/qualite/enquetes`);
     revalidatePath(`/dashboard/${structureId}/qualite/enquetes/`);
     return { success: true };
   } catch (err: any) {
@@ -144,11 +147,29 @@ export async function getEnquetePublicData(token: string) {
         questions: {
           orderBy: { ordre: "asc" },
         },
+        _count: {
+          select: { reponses: true },
+        },
       },
     });
 
     if (!enquete) {
       return { error: "Enquête introuvable ou lien expiré" };
+    }
+
+    // Vérifier si le quota d'objectif est atteint
+    const objectifAtteint = Boolean(
+      enquete.cible_reponses &&
+      enquete.cible_reponses > 0 &&
+      enquete._count.reponses >= enquete.cible_reponses
+    );
+
+    if (objectifAtteint) {
+      return {
+        quotaAtteint: true,
+        enquete,
+        error: "L'objectif de réponses pour cette enquête a été atteint.",
+      };
     }
 
     if (!enquete.actif) {
@@ -185,11 +206,24 @@ export async function soumettreReponseParent(rawInput: SoumettreReponseParentInp
       include: {
         structure: { select: { nom: true } },
         questions: { orderBy: { ordre: "asc" } },
+        _count: { select: { reponses: true } },
       },
     });
 
     if (!enquete || !enquete.actif) {
       return { error: "Enquête inaccessible ou terminée" };
+    }
+
+    // Bloquer si le nombre d'objectif de réponses est atteint ou dépassé
+    if (
+      enquete.cible_reponses &&
+      enquete.cible_reponses > 0 &&
+      enquete._count.reponses >= enquete.cible_reponses
+    ) {
+      return {
+        error:
+          "Le nombre maximal de réponses prévu pour cette enquête a été atteint. Les participations sont désormais closes.",
+      };
     }
 
     // Vérifier si un parent avec cet email a déjà soumis une évaluation pour cette enquête

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Plus,
   Users,
@@ -21,7 +21,7 @@ import {
   QrCode,
   X,
 } from "lucide-react";
-import { toggleStatutEnquete, supprimerEnquete } from "@/app/actions/enquetes";
+import { toggleStatutEnquete, supprimerEnquete, getEnquetesStructure } from "@/app/actions/enquetes";
 import { EnqueteCreationModal } from "./enquete-creation-modal";
 import { EnqueteStatsModal } from "./enquete-stats-modal";
 import { TypeEnquete } from "@prisma/client";
@@ -71,6 +71,24 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
   const [showCreationModal, setShowCreationModal] = useState(false);
   const [selectedStatsEnqueteId, setSelectedStatsEnqueteId] = useState<string | null>(null);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+
+  // Synchronisation avec les props initialEnquetes lors des revalidations serveur
+  useEffect(() => {
+    setEnquetes(initialEnquetes);
+  }, [initialEnquetes]);
+
+  // Actualisation explicite côté client et synchronisation serveur
+  const refreshEnquetes = async () => {
+    try {
+      const res = await getEnquetesStructure(structureId);
+      if (!res.error && res.enquetes) {
+        setEnquetes(res.enquetes as EnqueteItem[]);
+      }
+    } catch (err) {
+      console.error("Erreur actualisation enquetes:", err);
+    }
+    router.refresh();
+  };
 
   // Statistiques globales
   const totalCampagnes = enquetes.length;
@@ -248,6 +266,17 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
                           {enq.actif ? "En cours" : "Clôturée"}
                         </span>
 
+                        {Boolean(
+                          enq.cible_reponses &&
+                            enq.cible_reponses > 0 &&
+                            enq._count.reponses >= enq.cible_reponses
+                        ) && (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-amber-600" />
+                            Objectif atteint
+                          </span>
+                        )}
+
                         <span className="text-xs text-gray-400 flex items-center gap-1">
                           <Calendar className="w-3.5 h-3.5" />
                           Créée le {new Date(enq.date_creation).toLocaleDateString("fr-FR")}
@@ -380,8 +409,8 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
         <EnqueteCreationModal
           structureId={structureId}
           onClose={() => setShowCreationModal(false)}
-          onCreated={() => {
-            router.refresh();
+          onCreated={async () => {
+            await refreshEnquetes();
           }}
         />
       )}
