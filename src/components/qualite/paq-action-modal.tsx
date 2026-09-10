@@ -13,7 +13,8 @@ interface PaqActionModalProps {
   critereId?: string;
   critereCode?: string;
   critereTitre?: string;
-  onSuccess?: () => void;
+  criteresDisponibles?: Array<{ id: string; code: string; titre: string; axe: string }>;
+  onSuccess?: (nouvelleAction?: any) => void;
 }
 
 export function PaqActionModal({
@@ -23,6 +24,7 @@ export function PaqActionModal({
   critereId,
   critereCode,
   critereTitre,
+  criteresDisponibles = [],
   onSuccess,
 }: PaqActionModalProps) {
   const [titre, setTitre] = useState("");
@@ -30,7 +32,15 @@ export function PaqActionModal({
   const [responsable, setResponsable] = useState("");
   const [priorite, setPriorite] = useState<PrioriteAction>("MOYENNE");
   const [echeance, setEcheance] = useState("");
+  const [selectedCritereId, setSelectedCritereId] = useState<string>(critereId || "");
   const [loading, setLoading] = useState(false);
+
+  // Synchroniser le critereId si fourni en prop
+  React.useEffect(() => {
+    if (critereId) {
+      setSelectedCritereId(critereId);
+    }
+  }, [critereId]);
 
   if (!isOpen) return null;
 
@@ -43,9 +53,10 @@ export function PaqActionModal({
 
     setLoading(true);
     try {
+      const finalCritereId = critereId || selectedCritereId || undefined;
       const res = await creerActionPAQ({
         structureId,
-        critereId,
+        critereId: finalCritereId,
         titre: titre.trim(),
         description: description.trim() || undefined,
         responsable: responsable.trim() || undefined,
@@ -59,7 +70,8 @@ export function PaqActionModal({
         setDescription("");
         setResponsable("");
         setEcheance("");
-        onSuccess?.();
+        setSelectedCritereId("");
+        onSuccess?.(res.data);
         onClose();
       } else {
         toast.error(res.error || "Impossible d'enregistrer l'action");
@@ -73,17 +85,21 @@ export function PaqActionModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-indigo-50/50 to-white">
+        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-indigo-50/50 to-white flex-shrink-0">
           <div>
             <h3 className="font-semibold text-gray-900 text-base flex items-center gap-2">
               <Plus className="w-5 h-5 text-indigo-600" />
               Nouvelle action d'amélioration (PAQ)
             </h3>
-            {critereCode && (
+            {critereCode ? (
               <p className="text-xs text-indigo-600 font-medium mt-0.5">
                 Rattachée à : {critereCode} — {critereTitre}
+              </p>
+            ) : (
+              <p className="text-xs text-slate-500 font-normal mt-0.5">
+                Action directe d'amélioration continue pour votre crèche
               </p>
             )}
           </div>
@@ -97,7 +113,28 @@ export function PaqActionModal({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
+          {!critereId && criteresDisponibles.length > 0 && (
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <span>Rattachement au Référentiel Qualité</span>
+                <span className="text-[10px] font-normal text-slate-400">Optionnel</span>
+              </label>
+              <select
+                value={selectedCritereId}
+                onChange={(e) => setSelectedCritereId(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white transition-colors"
+              >
+                <option value="">✨ Action transversale / libre (non rattachée)</option>
+                {criteresDisponibles.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    [{c.code}] {c.titre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
               Intitulé de l'action corrective <span className="text-rose-500">*</span>

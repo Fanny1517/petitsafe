@@ -400,15 +400,37 @@ export async function creerActionPAQ(params: {
         statut: "A_FAIRE",
         resultat_attendu: resultatAttendu ?? null,
       },
+      include: {
+        critere: {
+          select: { code: true, titre: true, axe: true },
+        },
+      },
     });
 
     revalidatePath(`/dashboard/${structureId}/qualite`);
     revalidatePath(`/dashboard/${structureId}/qualite/auto-evaluation`);
+    revalidatePath(`/dashboard/${structureId}/qualite/plan-action`);
 
     return { success: true as const, data: action };
   } catch (error) {
     console.error("Erreur creerActionPAQ :", error);
     return { success: false as const, error: "Échec de la création de l'action PAQ." };
+  }
+}
+
+/**
+ * Récupère la liste simplifiée des critères du référentiel pour sélection
+ */
+export async function getCriteresReferentielSimple() {
+  try {
+    const criteres = await prisma.critereReferentiel.findMany({
+      select: { id: true, code: true, titre: true, axe: true },
+      orderBy: [{ axe: "asc" }, { ordre: "asc" }],
+    });
+    return { success: true as const, data: criteres };
+  } catch (error) {
+    console.error("Erreur getCriteresReferentielSimple :", error);
+    return { success: false as const, error: "Impossible de récupérer les critères." };
   }
 }
 
