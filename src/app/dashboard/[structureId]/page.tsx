@@ -59,7 +59,9 @@ export default function DashboardPage() {
     }
   };
 
-  useEffect(() => { fetchData(); }, [structureId]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    fetchData();
+  }, [structureId, modulesActifs.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useRealtimeSubscription("ReleveTemperature", isActif("temperatures") ? structureId : null, { onInsert: () => fetchData() });
   useRealtimeSubscription("Biberon", isActif("biberonnerie") ? structureId : null, { onInsert: () => fetchData() });

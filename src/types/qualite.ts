@@ -1,5 +1,6 @@
 // RZPan'Da — Types & Constantes Référentiel Qualité & Auto-évaluation
 import { AxeQualite, StatutConformite } from "@prisma/client";
+export { AxeQualite, StatutConformite };
 
 export const POIDS_STATUT: Record<StatutConformite, number> = {
   NON_EVALUE: 0,
@@ -229,3 +230,65 @@ export function buildMaturiteStatsFromCriteres(
     par_axe,
   };
 }
+
+export interface DossierEnqueteSynthese {
+  id: string;
+  titre: string;
+  type_enquete: string;
+  totalReponses: number;
+  cibleReponses: number | null;
+  tauxSatisfaction: number;
+  moyenneSur5: number;
+  scoresParAxe: Record<AxeQualite, number>;
+  topVerbatims: string[];
+}
+
+export interface DossierCompletude {
+  tauxGlobal: number; // 0 à 100%
+  autoEvaluationFaite: boolean;
+  criteresEvaluesPct: number;
+  enquetesRealisees: boolean;
+  totalReponsesFamilles: number;
+  paqActif: boolean;
+  actionsPAQCount: number;
+  actionsUrgentesEnAttente: number;
+  preuvesTerrainConformes: boolean;
+  statutPreparation: "NON_DEMARRE" | "EN_CONSTITUTION" | "PRET_POUR_TRANSMISSION";
+  pointsVigilance: string[];
+  pointsForts: string[];
+}
+
+export interface DossierQuinquennalData {
+  structure: {
+    id: string;
+    nom: string;
+    type: string;
+    adresse: string | null;
+    code_postal?: string | null;
+    ville?: string | null;
+    telephone?: string | null;
+    email?: string | null;
+    numero_agrement: string | null;
+    gestionnaire?: string | null;
+  };
+  periodeCycle: string;
+  dateGeneration: string;
+  completude: DossierCompletude;
+  statsAutoEval: StatsGlobalesQualite | null;
+  criteresAvecEval: CritereAvecEvaluation[];
+  enquetesSynthese: DossierEnqueteSynthese[];
+  actionsPAQ: Array<{
+    id: string;
+    titre: string;
+    description: string | null;
+    responsable: string | null;
+    echeance: Date | string | null;
+    priorite: string;
+    statut: string;
+    resultat_attendu: string | null;
+    created_at: Date | string;
+    critere?: { code: string; titre: string; axe: AxeQualite } | null;
+  }>;
+  preuvesTerrain: PreuvesAutomatiques;
+}
+
