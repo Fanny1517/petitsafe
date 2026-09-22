@@ -227,7 +227,7 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
           <Text style={styles.coverInfoLine}>{typeLabel}</Text>
           {data.structure.adresse && (
             <Text style={styles.coverInfoLine}>
-              {data.structure.adresse} — {data.structure.code_postal} {data.structure.ville}
+              {data.structure.adresse}, {data.structure.code_postal} {data.structure.ville}
             </Text>
           )}
           {data.structure.numero_agrement && (
@@ -248,14 +248,14 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         </Text>
       </Page>
 
-      {/* PAGE 2 : SYNTHÈSE MANAGÉRIALE & PREUVES TERRAIN */}
+      {/* PAGE 2 : SYNTHÈSE MANAGÉRIALE ET PREUVES TERRAIN */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dossier Quinquennal • {data.structure.nom}</Text>
-          <Text style={styles.headerTitle}>1. Synthèse Globale</Text>
+          <Text style={styles.headerTitle}>Dossier quinquennal • {data.structure.nom}</Text>
+          <Text style={styles.headerTitle}>1. Synthèse globale</Text>
         </View>
 
-        <Text style={styles.sectionTitle}>1. Synthèse Exécutive & Degré de Préparation</Text>
+        <Text style={styles.sectionTitle}>1. Synthèse exécutive et degré de préparation</Text>
 
         <View style={styles.kpiRow}>
           <View style={styles.kpiCard}>
@@ -272,7 +272,7 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
             <Text style={{ ...styles.kpiValue, color: "#0284c7" }}>
               {data.completude.totalReponsesFamilles}
             </Text>
-            <Text style={styles.kpiLabel}>Avis Familles</Text>
+            <Text style={styles.kpiLabel}>Avis familles</Text>
           </View>
           <View style={styles.kpiCard}>
             <Text style={{ ...styles.kpiValue, color: "#d97706" }}>
@@ -328,7 +328,7 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
 
         {/* Intégrité des preuves terrain */}
         <Text style={{ ...styles.sectionTitle, fontSize: 11, marginTop: 10 }}>
-          Traçabilité et Preuves Opérationnelles Terrain
+          Traçabilité et preuves opérationnelles terrain
         </Text>
         <View style={{ backgroundColor: "#f8fafc", borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 6, padding: 8 }}>
           <Text style={{ fontSize: 8, color: "#334155", marginBottom: 3 }}>
@@ -346,24 +346,24 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         </View>
 
         <Text style={styles.footer} fixed>
-          Page 2 • RZPan'Da — Dossier Quinquennal d'Évaluation • {data.dateGeneration}
+          Page 2 • RZPan'Da : Dossier quinquennal d'évaluation • {data.dateGeneration}
         </Text>
       </Page>
 
-      {/* PAGE 3 & 4 : TABLEAU DÉTAILLÉ DE L'AUTO-ÉVALUATION */}
+      {/* PAGE 3 ET 4 : TABLEAU DÉTAILLÉ DE L'AUTO-ÉVALUATION */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dossier Quinquennal • {data.structure.nom}</Text>
-          <Text style={styles.headerTitle}>2. Auto-évaluation des 20 Critères (1/2)</Text>
+          <Text style={styles.headerTitle}>Dossier quinquennal • {data.structure.nom}</Text>
+          <Text style={styles.headerTitle}>2. Auto-évaluation des 20 critères (1/2)</Text>
         </View>
 
-        <Text style={styles.sectionTitle}>2. Grille d'Auto-évaluation Continue (Critères 1 à 10)</Text>
+        <Text style={styles.sectionTitle}>2. Grille d'auto-évaluation continue (critères 1 à 10)</Text>
 
         <View style={styles.tableHeader}>
           <Text style={{ ...styles.th, width: "12%" }}>Réf</Text>
-          <Text style={{ ...styles.th, width: "40%" }}>Intitulé du Critère</Text>
+          <Text style={{ ...styles.th, width: "40%" }}>Intitulé du critère</Text>
           <Text style={{ ...styles.th, width: "20%" }}>Conformité</Text>
-          <Text style={{ ...styles.th, width: "28%" }}>Constats & Pistes</Text>
+          <Text style={{ ...styles.th, width: "28%" }}>Constats et pistes</Text>
         </View>
 
         {data.criteresAvecEval.slice(0, 10).map((c) => {
@@ -407,24 +407,24 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         })}
 
         <Text style={styles.footer} fixed>
-          Page 3 • RZPan'Da — Dossier Quinquennal d'Évaluation • {data.dateGeneration}
+          Page 3 • RZPan'Da : Dossier quinquennal d'évaluation • {data.dateGeneration}
         </Text>
       </Page>
 
       {/* PAGE 4 : SUITE AUTO-ÉVALUATION (CRITÈRES 11 À 20) */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dossier Quinquennal • {data.structure.nom}</Text>
-          <Text style={styles.headerTitle}>2. Auto-évaluation des 20 Critères (2/2)</Text>
+          <Text style={styles.headerTitle}>Dossier quinquennal • {data.structure.nom}</Text>
+          <Text style={styles.headerTitle}>2. Auto-évaluation des 20 critères (2/2)</Text>
         </View>
 
-        <Text style={styles.sectionTitle}>2. Grille d'Auto-évaluation Continue (Critères 11 à 20)</Text>
+        <Text style={styles.sectionTitle}>2. Grille d'auto-évaluation continue (critères 11 à 20)</Text>
 
         <View style={styles.tableHeader}>
           <Text style={{ ...styles.th, width: "12%" }}>Réf</Text>
-          <Text style={{ ...styles.th, width: "40%" }}>Intitulé du Critère</Text>
+          <Text style={{ ...styles.th, width: "40%" }}>Intitulé du critère</Text>
           <Text style={{ ...styles.th, width: "20%" }}>Conformité</Text>
-          <Text style={{ ...styles.th, width: "28%" }}>Constats & Pistes</Text>
+          <Text style={{ ...styles.th, width: "28%" }}>Constats et pistes</Text>
         </View>
 
         {data.criteresAvecEval.slice(10, 20).map((c) => {
@@ -468,19 +468,19 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         })}
 
         <Text style={styles.footer} fixed>
-          Page 4 • RZPan'Da — Dossier Quinquennal d'Évaluation • {data.dateGeneration}
+          Page 4 • RZPan'Da : Dossier quinquennal d'évaluation • {data.dateGeneration}
         </Text>
       </Page>
 
-      {/* PAGE 5 : ENQUÊTES & PLAN D'ACTION QUALITÉ (PAQ) */}
+      {/* PAGE 5 : ENQUÊTES ET PLAN D'ACTION QUALITÉ (PAQ) */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dossier Quinquennal • {data.structure.nom}</Text>
-          <Text style={styles.headerTitle}>3. Usagers & Plan d'Amélioration</Text>
+          <Text style={styles.headerTitle}>Dossier quinquennal • {data.structure.nom}</Text>
+          <Text style={styles.headerTitle}>3. Usagers et plan d'amélioration</Text>
         </View>
 
         {/* Section Enquêtes */}
-        <Text style={styles.sectionTitle}>3. Écoute Usagers & Baromètre Familles</Text>
+        <Text style={styles.sectionTitle}>3. Écoute usagers et baromètre familles</Text>
         {data.enquetesSynthese.length > 0 ? (
           <View style={{ marginBottom: 14 }}>
             {data.enquetesSynthese.map((enq) => (
@@ -508,7 +508,7 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         )}
 
         {/* Section Plan d'Action Qualité */}
-        <Text style={styles.sectionTitle}>4. Plan d'Action Qualité (PAQ)</Text>
+        <Text style={styles.sectionTitle}>4. Plan d'action qualité (PAQ)</Text>
         <View style={styles.tableHeader}>
           <Text style={{ ...styles.th, width: "35%" }}>Action</Text>
           <Text style={{ ...styles.th, width: "20%" }}>Responsable</Text>
@@ -551,24 +551,24 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         {/* Visas et signatures */}
         <View style={{ marginTop: 20 }}>
           <Text style={{ ...styles.sectionTitle, fontSize: 10, borderBottomColor: "#cbd5e1" }}>
-            Visas Officiels & Transmission Réglementaire
+            Visas officiels et transmission réglementaire
           </Text>
           <View style={{ flexDirection: "row", gap: 12, marginTop: 8 }}>
             <View style={{ ...styles.signatureBox, flex: 1 }}>
               <Text style={{ fontSize: 8, fontFamily: "Helvetica-Bold", color: "#334155" }}>
-                Visa de la Direction d'Établissement
+                Visa de la direction d'établissement
               </Text>
               <Text style={{ fontSize: 7, color: "#94a3b8" }}>Date et signature :</Text>
             </View>
             <View style={{ ...styles.signatureBox, flex: 1 }}>
               <Text style={{ fontSize: 8, fontFamily: "Helvetica-Bold", color: "#334155" }}>
-                Visa du Référent Santé & Accueil Inclusif
+                Visa du référent santé et accueil inclusif
               </Text>
               <Text style={{ fontSize: 7, color: "#94a3b8" }}>Date et signature :</Text>
             </View>
             <View style={{ ...styles.signatureBox, flex: 1 }}>
               <Text style={{ fontSize: 8, fontFamily: "Helvetica-Bold", color: "#334155" }}>
-                Organisme Évaluateur Externe (HAS / PMI)
+                Organisme évaluateur externe (HAS / PMI)
               </Text>
               <Text style={{ fontSize: 7, color: "#94a3b8" }}>Date et cachet :</Text>
             </View>
@@ -576,7 +576,7 @@ export function PdfDossierQuinquennal({ data }: { data: DossierQuinquennalData }
         </View>
 
         <Text style={styles.footer} fixed>
-          Page 5 • RZPan'Da — Dossier Quinquennal d'Évaluation • {data.dateGeneration}
+          Page 5 • RZPan'Da : Dossier quinquennal d'évaluation • {data.dateGeneration}
         </Text>
       </Page>
     </Document>

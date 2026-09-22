@@ -70,7 +70,7 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
 
   const handleSelectCustom = () => {
     setSelectedTemplate(null);
-    setTitre("Nouvelle Enquête de Satisfaction");
+    setTitre("Nouvelle enquête de satisfaction");
     setDescription("");
     setTypeEnquete(TypeEnquete.AUTRE);
     setQuestions([
@@ -206,7 +206,7 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100/70 text-emerald-800 rounded-full text-xs font-semibold mb-1">
               <Sparkles className="w-3.5 h-3.5" />
-              Nouvelle Campagne
+              Nouvelle campagne
             </div>
             <h2 className="text-xl font-bold text-gray-900">
               {step === "template" ? "Choisir un modèle d'enquête" : "Configurer la campagne"}
@@ -232,7 +232,7 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
           {step === "template" ? (
             <div className="space-y-4">
               <p className="text-sm text-gray-600">
-                Gagnez du temps en sélectionnant un questionnaire clé-en-main conforme au Référentiel National 2025,
+                Gagnez du temps en sélectionnant un questionnaire clé-en-main conforme au référentiel national 2025,
                 ou partez d&apos;une enquête personnalisée.
               </p>
 
@@ -279,7 +279,7 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
                       </span>
                     </div>
                     <h3 className="text-base font-bold text-gray-900 group-hover:text-emerald-700 transition mb-2">
-                      Enquête Personnalisée
+                      Enquête personnalisée
                     </h3>
                     <p className="text-xs text-gray-500 leading-relaxed">
                       Créez vos propres questions thématiques (sorties extérieures, fête de fin d&apos;année, avis ponctuel...).
@@ -498,7 +498,7 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
                         </div>
 
                         <div>
-                          <label className="block text-gray-500 font-medium mb-1">Axe Référentiel 2025</label>
+                          <label className="block text-gray-500 font-medium mb-1">Axe référentiel 2025</label>
                           <select
                             value={q.axe_qualite || ""}
                             onChange={(e) =>
@@ -511,10 +511,10 @@ export function EnqueteCreationModal({ structureId, onClose, onCreated }: Enquet
                             className="w-full p-2 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white"
                           >
                             <option value="">(Aucun axe spécifique)</option>
-                            <option value="ACCUEIL_SECURITE">Axe 1 - Accueil & Sécurité</option>
-                            <option value="DEVELOPPEMENT_EVEIL">Axe 2 - Éveil & Rythmes</option>
-                            <option value="RELATION_FAMILLES">Axe 3 - Relation Familles</option>
-                            <option value="PILOTAGE_RISQUES">Axe 4 - Organisation & Qualité</option>
+                            <option value="ACCUEIL_SECURITE">Axe 1 : accueil et sécurité</option>
+                            <option value="DEVELOPPEMENT_EVEIL">Axe 2 : éveil et rythmes</option>
+                            <option value="RELATION_FAMILLES">Axe 3 : relation familles</option>
+                            <option value="PILOTAGE_RISQUES">Axe 4 : organisation et qualité</option>
                           </select>
                         </div>
 

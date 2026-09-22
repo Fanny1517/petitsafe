@@ -261,7 +261,7 @@ export function PaqExportModal({
               </div>
               <div>
                 <h3 className="text-base font-bold text-slate-900">
-                  Synthèse & Exportation du Plan d'Action Qualité
+                  Synthèse et exportation du plan d'action qualité (PAQ)
                 </h3>
                 <p className="text-xs text-slate-500">
                   Rapport prêt à imprimer pour revues de direction, réunions d'équipe et contrôles PMI
@@ -351,7 +351,7 @@ export function PaqExportModal({
                   onChange={(e) => setInclureSignatures(e.target.checked)}
                   className="rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                 />
-                Inclure la zone de visas & signatures
+                Inclure la zone de visas et signatures
               </label>
             </div>
           </div>
@@ -438,7 +438,7 @@ export function PaqExportModal({
                   <thead>
                     <tr className="border-b-2 border-slate-300 bg-slate-50 text-slate-700 font-bold uppercase tracking-wider text-[10px]">
                       <th className="py-2.5 px-3 w-[15%]">Référence</th>
-                      <th className="py-2.5 px-3 w-[35%]">Action & Démarche</th>
+                      <th className="py-2.5 px-3 w-[35%]">Action et démarche</th>
                       <th className="py-2.5 px-3 w-[12%]">Priorité</th>
                       <th className="py-2.5 px-3 w-[15%]">Responsable</th>
                       <th className="py-2.5 px-3 w-[13%]">Échéance</th>
@@ -561,13 +561,13 @@ export function PaqExportModal({
               {inclureSignatures && (
                 <div className="pt-6 border-t-2 border-slate-200 break-inside-avoid">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">
-                    Visas & Validation officielle
+                    Visas et validation officielle
                   </h4>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="border border-slate-300 rounded-lg p-3.5 space-y-8 bg-slate-50/40">
                       <div>
                         <p className="text-xs font-bold text-slate-900">
-                          Visa de la Direction / Responsable d'Établissement
+                          Visa de la direction / responsable d'établissement
                         </p>
                         <p className="text-[10px] text-slate-500">Date et signature :</p>
                       </div>
@@ -576,7 +576,7 @@ export function PaqExportModal({
                     <div className="border border-slate-300 rounded-lg p-3.5 space-y-8 bg-slate-50/40">
                       <div>
                         <p className="text-xs font-bold text-slate-900">
-                          Visa du Référent Santé / Équipe Pédagogique
+                          Visa du référent santé / équipe pédagogique
                         </p>
                         <p className="text-[10px] text-slate-500">Date et signature :</p>
                       </div>
@@ -588,7 +588,7 @@ export function PaqExportModal({
 
               {/* Pied de page du document */}
               <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-400">
-                <span>RZPan'Da — Solution de traçabilité et qualité petite enfance</span>
+                <span>RZPan'Da : Solution de traçabilité et qualité petite enfance</span>
                 <span>Document généré le {dateJour}</span>
               </div>
             </div>

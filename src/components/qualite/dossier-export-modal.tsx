@@ -136,10 +136,10 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
               </div>
               <div>
                 <h3 className="text-base font-bold text-slate-900">
-                  Exportation du Dossier Quinquennal (HAS / PMI)
+                  Exportation du dossier quinquennal (HAS / PMI)
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Livrable réglementaire consolidé conforme au Référentiel National Qualité 2025
+                  Livrable réglementaire consolidé conforme au référentiel national qualité 2025
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
                   onChange={(e) => setInclurePreuvesTerrain(e.target.checked)}
                   className="rounded text-indigo-600 focus:ring-indigo-500 border-slate-300"
                 />
-                Inclure la synthèse des preuves terrain (HACCP & Hygiène)
+                Inclure la synthèse des preuves terrain (HACCP et hygiène)
               </label>
             </div>
 
@@ -214,7 +214,7 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
               {/* Entête officiel */}
               <div className="border-b-2 border-slate-900 pb-6 text-center space-y-2">
                 <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-                  Arrêté du 29 août 2024 • Référentiel National Qualité 2025
+                  Arrêté du 29 août 2024 • Référentiel national qualité 2025
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   DOSSIER QUINQUENNAL D'ÉVALUATION DE LA QUALITÉ
@@ -249,7 +249,7 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
               <div className="space-y-3">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 border-b border-slate-200 pb-1 flex items-center gap-2">
                   <Award className="w-4 h-4 text-indigo-600" />
-                  1. Synthèse Globale & Degré de Préparation
+                  1. Synthèse globale et degré de préparation
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -278,8 +278,8 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
                 {/* Ventilation par axe */}
                 <div className="mt-4 border border-slate-200 rounded-xl overflow-hidden text-xs">
                   <div className="bg-slate-50 px-4 py-2.5 font-bold text-slate-700 border-b border-slate-200 flex justify-between">
-                    <span>Axe du Référentiel National Qualité 2025</span>
-                    <span>Niveau de Conformité</span>
+                    <span>Axe du référentiel national qualité 2025</span>
+                    <span>Niveau de conformité</span>
                   </div>
                   <div className="divide-y divide-slate-100">
                     {data.statsAutoEval &&
@@ -312,29 +312,29 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
                 <div className="space-y-3">
                   <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 border-b border-slate-200 pb-1 flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    2. Preuves et Registres Terrain Opérationnels
+                    2. Preuves et registres terrain opérationnels
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <p className="font-bold text-slate-900">Maîtrise sanitaire & HACCP</p>
+                      <p className="font-bold text-slate-900">Maîtrise sanitaire et HACCP</p>
                       <p className="text-slate-600 mt-1">
                         {data.preuvesTerrain.temperaturesHaccp.totalSemaine} relevés biquotidiens archivés • {data.preuvesTerrain.temperaturesHaccp.anomaliesSemaine} anomalie(s)
                       </p>
                     </div>
                     <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <p className="font-bold text-slate-900">Hygiène & Bionettoyage</p>
+                      <p className="font-bold text-slate-900">Hygiène et bionettoyage</p>
                       <p className="text-slate-600 mt-1">
                         {data.preuvesTerrain.nettoyage.validationsSemaine} validations de tâches et désinfections tracées
                       </p>
                     </div>
                     <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <p className="font-bold text-slate-900">Médicaments & PAI</p>
+                      <p className="font-bold text-slate-900">Médicaments et PAI</p>
                       <p className="text-slate-600 mt-1">
                         {data.preuvesTerrain.medicamentsEtPai.paisActifs} PAI actifs • {data.preuvesTerrain.medicamentsEtPai.administrationsSemaine} administrations avec cosignature
                       </p>
                     </div>
                     <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/50">
-                      <p className="font-bold text-slate-900">Présences & Ratios d'encadrement</p>
+                      <p className="font-bold text-slate-900">Présences et ratios d'encadrement</p>
                       <p className="text-slate-600 mt-1">
                         {data.preuvesTerrain.presences.presentsAujourdhui} enfants pointés en continu sur le registre dématérialisé
                       </p>
@@ -347,7 +347,7 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
               <div className="space-y-3">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 border-b border-slate-200 pb-1 flex items-center gap-2">
                   <FileText className="w-4 h-4 text-indigo-600" />
-                  3. Grille des Critères Officiels du Référentiel National (Extrait)
+                  3. Grille des critères officiels du référentiel national (extrait)
                 </h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs border-collapse">
@@ -356,7 +356,7 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
                         <th className="p-2 w-[12%]">Réf</th>
                         <th className="p-2 w-[45%]">Critère</th>
                         <th className="p-2 w-[18%]">Statut</th>
-                        <th className="p-2 w-[25%]">Pistes & Observations</th>
+                        <th className="p-2 w-[25%]">Pistes et observations</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -396,26 +396,26 @@ export function DossierExportModal({ isOpen, onClose, data }: DossierExportModal
               {inclureSignatures && (
                 <div className="space-y-3 pt-4 border-t-2 border-slate-200">
                   <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800 pb-1">
-                    4. Visas Officiels & Validation Réglementaire
+                    4. Visas officiels et validation réglementaire
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                     <div className="border border-slate-300 rounded-lg p-3 h-28 flex flex-col justify-between bg-slate-50/40">
                       <div>
-                        <p className="font-bold text-slate-900">Visa de la Direction</p>
+                        <p className="font-bold text-slate-900">Visa de la direction</p>
                         <p className="text-[10px] text-slate-500">Date et signature :</p>
                       </div>
                       <div className="border-b border-dashed border-slate-300 w-3/4"></div>
                     </div>
                     <div className="border border-slate-300 rounded-lg p-3 h-28 flex flex-col justify-between bg-slate-50/40">
                       <div>
-                        <p className="font-bold text-slate-900">Visa Référent Santé</p>
+                        <p className="font-bold text-slate-900">Visa référent santé</p>
                         <p className="text-[10px] text-slate-500">Date et signature :</p>
                       </div>
                       <div className="border-b border-dashed border-slate-300 w-3/4"></div>
                     </div>
                     <div className="border border-slate-300 rounded-lg p-3 h-28 flex flex-col justify-between bg-slate-50/40">
                       <div>
-                        <p className="font-bold text-slate-900">Évaluateur Externe</p>
+                        <p className="font-bold text-slate-900">Évaluateur externe</p>
                         <p className="text-[10px] text-slate-500">Date et cachet :</p>
                       </div>
                       <div className="border-b border-dashed border-slate-300 w-3/4"></div>

@@ -240,7 +240,7 @@ export function CritereCard({
           <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-2.5">
             <div className="flex items-center gap-2 text-indigo-700 font-semibold">
               <BookOpen className="w-4 h-4" />
-              <span>Exigences du Référentiel National (Arrêté 2025 / HAS)</span>
+              <span>Exigences du référentiel national (Arrêté 2025 / HAS)</span>
             </div>
 
             {critere.guide_ministeriel && (
@@ -269,7 +269,7 @@ export function CritereCard({
           <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-2">
             <div className="flex items-center justify-between">
               <label className="font-semibold text-gray-800">
-                Observations de la structure & Justificatifs internes :
+                Observations de la structure et justificatifs internes :
               </label>
               {critere.evaluation?.date_evaluation && (
                 <span className="text-[11px] text-gray-400">

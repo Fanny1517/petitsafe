@@ -34,23 +34,23 @@ interface MaturiteGaugeProps {
 
 const AXE_LABELS: Record<AxeQualite, { label: string; short: string; color: string }> = {
   ACCUEIL_SECURITE: {
-    label: "Axe 1 — Accueil, Santé & Sécurité",
-    short: "Santé & Sécurité",
+    label: "Axe 1 : accueil, santé et sécurité",
+    short: "Santé et sécurité",
     color: "emerald",
   },
   DEVELOPPEMENT_EVEIL: {
-    label: "Axe 2 — Pratiques d'Éveil & Socialisation",
-    short: "Éveil & Bien-être",
+    label: "Axe 2 : pratiques d'éveil et socialisation",
+    short: "Éveil et bien-être",
     color: "blue",
   },
   RELATION_FAMILLES: {
-    label: "Axe 3 — Relation Familles & Co-éducation",
-    short: "Relation Familles",
+    label: "Axe 3 : relation familles et co-éducation",
+    short: "Relation familles",
     color: "purple",
   },
   PILOTAGE_RISQUES: {
-    label: "Axe 4 — Organisation, Équipe & Pilotage des risques",
-    short: "Organisation & RH",
+    label: "Axe 4 : organisation, équipe et pilotage des risques",
+    short: "Organisation et RH",
     color: "amber",
   },
 };
@@ -67,19 +67,25 @@ export function MaturiteGauge({ stats, compact = false }: MaturiteGaugeProps) {
 
   const getNiveauBadge = (niveau?: string) => {
     switch (niveau) {
+      case "Excellence et maîtrise":
       case "Excellence & Maîtrise":
+      case "Niveau excellence":
+      case "Niveau Excellence":
         return {
           bg: "bg-emerald-50 text-emerald-700 border-emerald-200",
           icon: ShieldCheck,
           desc: "Niveau cible atteint pour l'évaluation quinquennale externe.",
         };
       case "Démarche confirmée":
+      case "Qualité confirmée":
+      case "Qualité Confirmée":
         return {
           bg: "bg-blue-50 text-blue-700 border-blue-200",
           icon: Award,
           desc: "Démarche qualité solide avec preuves tangibles d'application.",
         };
       case "En cours de structuration":
+      case "En cours d'appropriation":
         return {
           bg: "bg-amber-50 text-amber-700 border-amber-200",
           icon: AlertTriangle,

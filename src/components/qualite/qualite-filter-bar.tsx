@@ -22,10 +22,10 @@ interface QualiteFilterBarProps {
 
 const AXE_OPTIONS: { id: AxeQualite | "TOUS"; label: string; short: string }[] = [
   { id: "TOUS", label: "Tous les axes", short: "Tous" },
-  { id: "ACCUEIL_SECURITE", label: "Axe 1 — Santé & Sécurité", short: "Axe 1 : Sécurité" },
-  { id: "DEVELOPPEMENT_EVEIL", label: "Axe 2 — Éveil & Pratiques", short: "Axe 2 : Éveil" },
-  { id: "RELATION_FAMILLES", label: "Axe 3 — Relation Familles", short: "Axe 3 : Co-éducation" },
-  { id: "PILOTAGE_RISQUES", label: "Axe 4 — Pilotage des risques & RH", short: "Axe 4 : RH & Pilotage" },
+  { id: "ACCUEIL_SECURITE", label: "Axe 1 : santé et sécurité", short: "Axe 1 : sécurité" },
+  { id: "DEVELOPPEMENT_EVEIL", label: "Axe 2 : éveil et pratiques", short: "Axe 2 : éveil" },
+  { id: "RELATION_FAMILLES", label: "Axe 3 : relation familles", short: "Axe 3 : co-éducation" },
+  { id: "PILOTAGE_RISQUES", label: "Axe 4 : pilotage des risques et RH", short: "Axe 4 : RH et pilotage" },
 ];
 
 export function QualiteFilterBar({

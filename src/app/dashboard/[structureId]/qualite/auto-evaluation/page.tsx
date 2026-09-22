@@ -103,7 +103,7 @@ export default async function AutoEvaluationPage({
     <QualitePageLayout
       structureId={structureId}
       titre="Auto-évaluation du référentiel national"
-      description="Évaluez la conformité de votre établissement sur les 4 axes ministériels (relation enfant, relation parents, organisation & RH, bâtiment & sécurité) et connectez vos preuves terrain en temps réel."
+      description="Évaluez la conformité de votre établissement sur les 4 axes ministériels (relation enfant, relation parents, organisation et RH, bâtiment et sécurité) et connectez vos preuves terrain en temps réel."
       periodeActuelle={periode}
     >
       <AutoEvaluationGrid

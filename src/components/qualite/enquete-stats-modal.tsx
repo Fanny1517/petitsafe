@@ -33,22 +33,22 @@ interface EnqueteStatsModalProps {
 
 const AXE_LABELS: Record<AxeQualite, { titre: string; couleur: string; bg: string }> = {
   ACCUEIL_SECURITE: {
-    titre: "Axe 1 - Accueil & Sécurité",
+    titre: "Axe 1 : accueil et sécurité",
     couleur: "text-blue-700",
     bg: "bg-blue-50 border-blue-200",
   },
   DEVELOPPEMENT_EVEIL: {
-    titre: "Axe 2 - Développement & Éveil",
+    titre: "Axe 2 : développement et éveil",
     couleur: "text-emerald-700",
     bg: "bg-emerald-50 border-emerald-200",
   },
   RELATION_FAMILLES: {
-    titre: "Axe 3 - Relation avec les Familles",
+    titre: "Axe 3 : relation avec les familles",
     couleur: "text-purple-700",
     bg: "bg-purple-50 border-purple-200",
   },
   PILOTAGE_RISQUES: {
-    titre: "Axe 4 - Organisation & Pilotage",
+    titre: "Axe 4 : organisation et pilotage",
     couleur: "text-amber-700",
     bg: "bg-amber-50 border-amber-200",
   },
@@ -94,7 +94,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold mb-1.5 border border-emerald-200/60">
               <TrendingUp className="w-3.5 h-3.5" />
-              Baromètre & Analyse Statistique
+              Baromètre et analyse statistique
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-gray-900">
               {data?.enquete?.titre || "Résultats de l'enquête"}
@@ -118,7 +118,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
-            Vue Synthétique & Axes 2025
+            Vue synthétique et axes 2025
           </button>
           <button
             onClick={() => setActiveTab("questions")}
@@ -128,7 +128,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
-            Détail par Question
+            Détail par question
           </button>
           <button
             onClick={() => setActiveTab("verbatims")}
@@ -138,7 +138,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                 : "border-transparent text-gray-500 hover:text-gray-900"
             }`}
           >
-            Verbatims des Parents ({data?.stats?.tousLesVerbatims?.length ?? 0})
+            Verbatims des parents ({data?.stats?.tousLesVerbatims?.length ?? 0})
           </button>
           <button
             onClick={() => setActiveTab("parents")}
@@ -178,7 +178,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4">
                       <span className="text-xs font-semibold text-emerald-800 uppercase tracking-wider">
-                        Satisfaction Globale
+                        Satisfaction globale
                       </span>
                       <div className="flex items-baseline gap-2 mt-1">
                         <span className="text-3xl font-black text-emerald-700">
@@ -216,7 +216,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                         </span>
                         <span className="text-xs text-purple-600 font-medium">commentaires</span>
                       </div>
-                      <p className="text-xs text-purple-700/80 mt-1">Suggestions & compliments</p>
+                      <p className="text-xs text-purple-700/80 mt-1">Suggestions et compliments</p>
                     </div>
                   </div>
 
@@ -224,7 +224,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                   <div>
                     <h3 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
                       <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                      Score de satisfaction aligné sur le Référentiel National 2025
+                      Score de satisfaction aligné sur le référentiel national 2025
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -269,11 +269,11 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
                     <div>
                       <h4 className="text-sm font-bold text-amber-900 flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-amber-600" />
-                        Passerelle Qualité : Transformer les retours en actions
+                        Passerelle qualité : transformer les retours en actions
                       </h4>
                       <p className="text-xs text-amber-800/80 mt-1 max-w-xl">
                         Un point de vigilance identifié ? Intégrez directement une action corrective dans votre
-                        Plan d&apos;Amélioration de la Qualité (PAQ) pour prouver votre réactivité lors des audits.
+                        plan d&apos;action qualité (PAQ) pour prouver votre réactivité lors des audits.
                       </p>
                     </div>
                     <Link

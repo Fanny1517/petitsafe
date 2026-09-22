@@ -14,8 +14,8 @@ export default async function EnquetesPage({
   return (
     <QualitePageLayout
       structureId={structureId}
-      titre="Enquêtes Familles & Baromètre de Satisfaction"
-      description="Mesurez la perception des familles et de l'équipe pédagogique avec des questionnaires standardisés conformes aux exigences du Référentiel National Qualité 2025."
+      titre="Enquêtes familles et baromètre de satisfaction"
+      description="Mesurez la perception des familles et de l'équipe pédagogique avec des questionnaires standardisés conformes aux exigences du référentiel national qualité 2025."
     >
       <div className="w-full">
         <EnquetesManager structureId={structureId} initialEnquetes={enquetes} />

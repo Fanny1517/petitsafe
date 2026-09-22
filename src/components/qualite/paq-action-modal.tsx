@@ -65,7 +65,7 @@ export function PaqActionModal({
       });
 
       if (res.success) {
-        toast.success("Action ajoutée avec succès au Plan d'Action Qualité !");
+        toast.success("Action ajoutée avec succès au plan d'action qualité !");
         setTitre("");
         setDescription("");
         setResponsable("");
@@ -95,7 +95,7 @@ export function PaqActionModal({
             </h3>
             {critereCode ? (
               <p className="text-xs text-indigo-600 font-medium mt-0.5">
-                Rattachée à : {critereCode} — {critereTitre}
+                Rattachée à : {critereCode} - {critereTitre}
               </p>
             ) : (
               <p className="text-xs text-slate-500 font-normal mt-0.5">
@@ -117,7 +117,7 @@ export function PaqActionModal({
           {!critereId && criteresDisponibles.length > 0 && (
             <div>
               <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                <span>Rattachement au Référentiel Qualité</span>
+                <span>Rattachement au référentiel qualité</span>
                 <span className="text-[10px] font-normal text-slate-400">Optionnel</span>
               </label>
               <select
@@ -151,7 +151,7 @@ export function PaqActionModal({
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
-              Objectif mesurable & Moyens prévus
+              Objectif mesurable et moyens prévus
             </label>
             <textarea
               rows={3}

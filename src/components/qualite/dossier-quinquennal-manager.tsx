@@ -92,7 +92,7 @@ export function DossierQuinquennalManager({
               </span>
             </div>
             <h2 className="text-lg font-bold text-slate-900 mt-1">
-              Dossier Quinquennal d'Évaluation de la Qualité
+              Dossier quinquennal d'évaluation de la qualité
             </h2>
             <p className="text-xs text-slate-500">
               Agrégation continue de l'auto-évaluation, des avis familles, du PAQ et des preuves terrain.
@@ -108,7 +108,7 @@ export function DossierQuinquennalManager({
             className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold transition-all shadow-sm active:scale-95 cursor-pointer"
           >
             <FileDown className="w-4 h-4" />
-            Générer & Exporter le dossier
+            Générer et exporter le dossier
           </button>
         </div>
       </div>
@@ -231,7 +231,7 @@ export function DossierQuinquennalManager({
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          1. Synthèse d'Audit & Éligibilité
+          1. Synthèse d'audit et éligibilité
         </button>
         <button
           type="button"
@@ -242,7 +242,7 @@ export function DossierQuinquennalManager({
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          2. Auto-évaluation Référentiel ({data.criteresAvecEval.length})
+          2. Auto-évaluation du référentiel ({data.criteresAvecEval.length})
         </button>
         <button
           type="button"
@@ -253,7 +253,7 @@ export function DossierQuinquennalManager({
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          3. Baromètre & Voix des Familles
+          3. Baromètre et voix des familles
         </button>
         <button
           type="button"
@@ -264,7 +264,7 @@ export function DossierQuinquennalManager({
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
-          4. Plan d'Action Qualité ({data.actionsPAQ.length})
+          4. Plan d'action qualité (PAQ) ({data.actionsPAQ.length})
         </button>
       </div>
 
@@ -363,7 +363,7 @@ export function DossierQuinquennalManager({
               <div>
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  Traçabilité Opérationnelle & Preuves Terrain
+                  Traçabilité opérationnelle et preuves terrain
                 </h3>
                 <p className="text-xs text-slate-500">
                   Registres intègres et horodatés extraits en direct des modules RZPan'Da.
@@ -395,7 +395,7 @@ export function DossierQuinquennalManager({
               </div>
 
               <div className="p-4 rounded-xl border border-slate-200/80 bg-white">
-                <span className="text-slate-500 text-[11px]">Médicaments & PAI</span>
+                <span className="text-slate-500 text-[11px]">Médicaments et PAI</span>
                 <p className="text-base font-bold text-slate-900 mt-1">
                   {data.preuvesTerrain.medicamentsEtPai.paisActifs} PAI actifs
                 </p>
@@ -424,7 +424,7 @@ export function DossierQuinquennalManager({
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
               <h3 className="text-sm font-bold text-slate-900">
-                Grille des 20 Critères Nationaux
+                Grille des 20 critères nationaux
               </h3>
               <p className="text-xs text-slate-500">
                 Consultez l'état de validation de chaque critère ministériel.
@@ -439,10 +439,10 @@ export function DossierQuinquennalManager({
                 className="text-xs border border-slate-200 rounded-lg px-2.5 py-1.5 bg-slate-50 focus:outline-none"
               >
                 <option value="TOUS">Tous les axes</option>
-                <option value="ACCUEIL_SECURITE">1. Accueil & Sécurité</option>
-                <option value="DEVELOPPEMENT_EVEIL">2. Éveil & Développement</option>
-                <option value="RELATION_FAMILLES">3. Relation Familles</option>
-                <option value="PILOTAGE_RISQUES">4. Risques & Équipe</option>
+                <option value="ACCUEIL_SECURITE">1. Accueil et sécurité</option>
+                <option value="DEVELOPPEMENT_EVEIL">2. Éveil et développement</option>
+                <option value="RELATION_FAMILLES">3. Relation familles</option>
+                <option value="PILOTAGE_RISQUES">4. Risques et équipe</option>
               </select>
 
               {/* Recherche textuelle */}
@@ -464,9 +464,9 @@ export function DossierQuinquennalManager({
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50 text-slate-700 font-bold uppercase text-[10px]">
                   <th className="py-2.5 px-3 w-[12%]">Réf</th>
-                  <th className="py-2.5 px-3 w-[45%]">Critère Officiel</th>
-                  <th className="py-2.5 px-3 w-[18%]">Statut de Conformité</th>
-                  <th className="py-2.5 px-3 w-[25%]">Constats & Pistes</th>
+                  <th className="py-2.5 px-3 w-[45%]">Critère officiel</th>
+                  <th className="py-2.5 px-3 w-[18%]">Statut de conformité</th>
+                  <th className="py-2.5 px-3 w-[25%]">Constats et pistes</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -521,7 +521,7 @@ export function DossierQuinquennalManager({
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 space-y-6">
           <div>
             <h3 className="text-sm font-bold text-slate-900">
-              Baromètre de Satisfaction des Familles & Usagers
+              Baromètre de satisfaction des familles et usagers
             </h3>
             <p className="text-xs text-slate-500">
               Résultats agrégés des enquêtes administrées pendant le cycle d'évaluation.
@@ -599,7 +599,7 @@ export function DossierQuinquennalManager({
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-bold text-slate-900">
-                Plan d'Action Qualité (PAQ) associé au cycle
+                Plan d'action qualité (PAQ) associé au cycle
               </h3>
               <p className="text-xs text-slate-500">
                 Actions correctives et améliorations continues engagées par l'équipe.

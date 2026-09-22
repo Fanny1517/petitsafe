@@ -33,7 +33,7 @@ export default async function PlanActionPage({
   return (
     <QualitePageLayout
       structureId={structureId}
-      titre="Plan d'Action Qualité (PAQ)"
+      titre="Plan d'action qualité (PAQ)"
       description="Pilotage des actions d'amélioration continue générées à partir des écarts identifiés dans l'auto-évaluation."
     >
       <PlanActionManager

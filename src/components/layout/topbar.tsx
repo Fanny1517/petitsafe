@@ -178,7 +178,7 @@ const SECTIONS: { title: string; items: MenuItem[] }[] = [
   {
     title: "Gestion",
     items: [
-      { label: "Démarche Qualité", icon: Award, href: "/qualite", alwaysVisible: true, color: "emerald" },
+      { label: "Démarche qualité", icon: Award, href: "/qualite", alwaysVisible: true, color: "emerald" },
       { label: "Protocoles", icon: FileText, href: "/protocoles", moduleId: "protocoles", color: "cyan" },
       { label: "Exports PDF", icon: FileDown, href: "/exports", alwaysVisible: true, adminOnly: true, color: "violet" },
       { label: "Paramètres", icon: Settings, href: "/parametres", alwaysVisible: true, adminOnly: true, color: "gray" },

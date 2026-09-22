@@ -34,31 +34,31 @@ export function EvidenceBadge({
 
   const getSourceMeta = (source: string) => {
     switch (source) {
-      case "HACCP_TEMP":
+      case "HACCP":
         return {
-          title: "Module Températures (HACCP)",
-          label: "Données Températures",
+          title: "Relevés HACCP",
+          label: "Données températures",
           defaultUrl: `/dashboard/${structureId}/temperatures`,
           color: "blue",
         };
       case "NETTOYAGE":
         return {
-          title: "Plan de Nettoyage",
-          label: "Plan d'Entretien",
+          title: "Plan de nettoyage",
+          label: "Plan d'entretien",
           defaultUrl: `/dashboard/${structureId}/nettoyage`,
           color: "purple",
         };
       case "MEDICAMENTS":
         return {
-          title: "Registre Médical & PAI",
-          label: "Suivi Médical",
+          title: "Registre médical et PAI",
+          label: "Suivi médical",
           defaultUrl: `/dashboard/${structureId}/suivi`,
           color: "rose",
         };
       case "PRESENCES":
         return {
-          title: "Registre Présences & Ratios",
-          label: "Registre Présences",
+          title: "Registre présences et ratios",
+          label: "Registre présences",
           defaultUrl: `/dashboard/${structureId}/presences`,
           color: "emerald",
         };

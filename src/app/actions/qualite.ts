@@ -1,6 +1,6 @@
 "use server";
 
-// RZPan'Da — Server Actions pour le Référentiel Qualité & Auto-évaluation (Axe 1)
+// RZPan'Da : Server Actions pour le Référentiel Qualité & Auto-évaluation (Axe 1)
 // Architecture modulaire réutilisable pour les axes 2 (enquêtes) et 3 (PAQ / dossier quinquennal)
 
 import { prisma } from "@/lib/supabase/prisma";
@@ -257,10 +257,10 @@ export async function calculerStatistiquesQualite(
 
     if (scoreGlobal >= 85) {
       niveauMaturite = "EXCELLENCE";
-      libelleMaturite = "Niveau Excellence";
+      libelleMaturite = "Niveau excellence";
     } else if (scoreGlobal >= 60) {
       niveauMaturite = "CONFIRMEE";
-      libelleMaturite = "Qualité Confirmée";
+      libelleMaturite = "Qualité confirmée";
     } else if (scoreGlobal >= 30) {
       niveauMaturite = "EN_COURS";
       libelleMaturite = "En cours d'appropriation";

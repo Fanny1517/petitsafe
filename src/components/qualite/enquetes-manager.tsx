@@ -57,9 +57,9 @@ const TYPE_ICONS: Record<TypeEnquete, any> = {
 };
 
 const TYPE_BADGES: Record<TypeEnquete, { label: string; bg: string; text: string }> = {
-  ANNUELLE: { label: "Baromètre Annuel", bg: "bg-purple-50 border-purple-200", text: "text-purple-700" },
-  INTEGRATION: { label: "Fin d'Adaptation", bg: "bg-blue-50 border-blue-200", text: "text-blue-700" },
-  FLASH: { label: "Enquête Flash", bg: "bg-amber-50 border-amber-200", text: "text-amber-700" },
+  ANNUELLE: { label: "Baromètre annuel", bg: "bg-purple-50 border-purple-200", text: "text-purple-700" },
+  INTEGRATION: { label: "Fin d'adaptation", bg: "bg-blue-50 border-blue-200", text: "text-blue-700" },
+  FLASH: { label: "Enquête flash", bg: "bg-amber-50 border-amber-200", text: "text-amber-700" },
   AUTRE: { label: "Personnalisée", bg: "bg-gray-100 border-gray-200", text: "text-gray-700" },
 };
 
@@ -146,7 +146,7 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
         <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between">
           <div>
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Campagnes Actives
+              Campagnes actives
             </span>
             <div className="text-2xl font-black text-gray-900 mt-1">
               {activesCampagnes} <span className="text-xs text-gray-400 font-normal">/ {totalCampagnes} total</span>
@@ -160,7 +160,7 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
         <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between">
           <div>
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Avis Parents Collectés
+              Avis parents collectés
             </span>
             <div className="text-2xl font-black text-emerald-700 mt-1">
               {totalReponses}
@@ -174,7 +174,7 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
         <div className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-2xl p-5 text-white shadow-md flex items-center justify-between">
           <div>
             <span className="text-xs font-semibold text-emerald-100 uppercase tracking-wider">
-              Nouvelle Consultation
+              Nouvelle consultation
             </span>
             <p className="text-xs text-emerald-100/90 mt-0.5">
               Lancez un baromètre 2025 en 1 clic
@@ -195,7 +195,7 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
         <div className="flex items-center justify-between">
           <h2 className="text-base sm:text-lg font-bold text-gray-900 flex items-center gap-2">
             <ClipboardList className="w-5 h-5 text-emerald-600" />
-            <span>Campagnes d&apos;enquêtes & Baromètres</span>
+            <span>Campagnes d&apos;enquêtes et baromètres</span>
           </h2>
           <button
             onClick={() => setShowCreationModal(true)}
@@ -326,7 +326,7 @@ export function EnquetesManager({ structureId, initialEnquetes }: EnquetesManage
                         className="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-xs font-bold transition flex items-center gap-1.5"
                       >
                         <BarChart3 className="w-4 h-4" />
-                        <span>Résultats & Stats</span>
+                        <span>Résultats et stats</span>
                       </button>
 
                       {/* Bouton Copier le lien parent */}

@@ -22,9 +22,9 @@ export interface TemplateEnquete {
 export const TEMPLATES_ENQUETES: TemplateEnquete[] = [
   {
     id: "barometre_annuel_2025",
-    titre: "Baromètre Annuel des Familles 2025",
+    titre: "Baromètre annuel des familles 2025",
     description:
-      "Évaluation complète de la satisfaction des familles alignée sur les 4 axes du Référentiel National Qualité (RNQ 2025). Idéal pour le bilan annuel et les audits PMI/CAF.",
+      "Évaluation complète de la satisfaction des familles alignée sur les 4 axes du référentiel national qualité (RNQ 2025). Idéal pour le bilan annuel et les audits PMI/CAF.",
     type: "ANNUELLE",
     icon: "ClipboardCheck",
     badge: "Référentiel 2025",
@@ -88,12 +88,12 @@ export const TEMPLATES_ENQUETES: TemplateEnquete[] = [
   },
   {
     id: "fin_adaptation",
-    titre: "Enquête Fin d'Adaptation & Intégration",
+    titre: "Enquête fin d'adaptation et intégration",
     description:
       "Mesure le vécu des parents et de l'enfant lors des premières semaines d'accueil (familiarisation, séparation, repères de l'enfant).",
     type: "INTEGRATION",
     icon: "HeartHandshake",
-    badge: "Nouveaux Parents",
+    badge: "Nouveaux parents",
     questions: [
       {
         libelle: "La période de familiarisation progressive a-t-elle été adaptée au rythme de votre enfant ?",
@@ -126,7 +126,7 @@ export const TEMPLATES_ENQUETES: TemplateEnquete[] = [
   },
   {
     id: "flash_restauration_sommeil",
-    titre: "Enquête Flash : Restauration, Rythmes & Sommeil",
+    titre: "Enquête flash : restauration, rythmes et sommeil",
     description:
       "Sondage rapide en 3 questions pour sonder les habitudes alimentaires, le goût des repas et les siestes.",
     type: "FLASH",

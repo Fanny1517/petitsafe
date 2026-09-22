@@ -1,4 +1,4 @@
-// RZPan'Da — Types & Constantes Référentiel Qualité & Auto-évaluation
+// RZPan'Da : Types & Constantes Référentiel Qualité & Auto-évaluation
 import { AxeQualite, StatutConformite } from "@prisma/client";
 export { AxeQualite, StatutConformite };
 
@@ -11,10 +11,10 @@ export const POIDS_STATUT: Record<StatutConformite, number> = {
 };
 
 export const LIBELLES_AXES: Record<AxeQualite, string> = {
-  ACCUEIL_SECURITE: "Accueil, Sécurité, Santé & Hygiène",
-  DEVELOPPEMENT_EVEIL: "Développement, Éveil & Bientraitance",
-  RELATION_FAMILLES: "Relation Familles & Co-éducation",
-  PILOTAGE_RISQUES: "Organisation, Équipe & Pilotage des risques",
+  ACCUEIL_SECURITE: "Accueil, sécurité, santé et hygiène",
+  DEVELOPPEMENT_EVEIL: "Développement, éveil et bientraitance",
+  RELATION_FAMILLES: "Relation familles et co-éducation",
+  PILOTAGE_RISQUES: "Organisation, équipe et pilotage des risques",
 };
 
 export interface CritereAvecEvaluation {
@@ -213,7 +213,7 @@ export function buildMaturiteStatsFromCriteres(
   }
 
   let niveau = "À initier";
-  if (score_global >= 90) niveau = "Excellence & Maîtrise";
+  if (score_global >= 90) niveau = "Excellence et maîtrise";
   else if (score_global >= 75) niveau = "Démarche confirmée";
   else if (score_global >= 50) niveau = "En cours de structuration";
 

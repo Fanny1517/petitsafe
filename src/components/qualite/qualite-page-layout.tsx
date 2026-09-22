@@ -26,7 +26,7 @@ interface QualitePageLayoutProps {
 
 export function QualitePageLayout({
   structureId,
-  titre = "Démarche Qualité & Référentiel National",
+  titre = "Démarche qualité et référentiel national",
   description = "Évaluation continue des pratiques, gouvernance des plans d'action et préparation au dossier quinquennal.",
   actions,
   children,
