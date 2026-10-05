@@ -2,22 +2,22 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Calendar, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
+import { GuideEvaluationForm } from "@/components/marketing/guide-evaluation-form";
+import { buildMarketingMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Guides réglementaires et HACCP pour crèches & micro-crèches | RZPan'Da",
+export const metadata = buildMarketingMetadata({
+  title: "Guides HACCP et qualité pour crèches",
   description:
-    "Tous nos guides pratiques et réglementaires pour micro-crèches, crèches et MAM : préparation aux contrôles DDPP/PMI, décryptages de décrets, biberonnerie et traçabilité.",
-  alternates: {
-    canonical: "/guides/",
-  },
-};
+    "Guides pratiques pour crèches : HACCP, contrôle DDPP, Référentiel national, qualité d’accueil et préparation de l’évaluation quinquennale.",
+  path: "/guides/",
+});
 
 export default function GuidesListPage() {
   const guides = [
     {
-      title: "Contrôle DDPP en crèche : la méthode pour être prête à tout moment",
+      title: "Contrôle DDPP en crèche : les documents et preuves à préparer",
       description:
-        "Un contrôle DDPP se joue sur la traçabilité. Découvrez les 7 documents toujours attendus par les inspecteurs, les pièges classiques à éviter, et comment préparer vos dossiers en 3 clics.",
+        "Préparez les principaux documents et preuves utiles à un contrôle DDPP, en tenant compte de l’activité réelle de votre structure et de votre Plan de Maîtrise Sanitaire (PMS).",
       category: "Guide DDPP",
       icon: <ShieldCheck className="h-6 w-6 text-blue-600" />,
       color: "text-blue-600 bg-blue-50 border-blue-100",
@@ -25,10 +25,10 @@ export default function GuidesListPage() {
       readTime: "Lecture : 5 min",
     },
     {
-      title: "Décret 2025-304 : ce qui change pour les micro-crèches en septembre 2026",
+      title: "Décret 2025-304 : ce qu’il change réellement pour les micro-crèches",
       description:
-        "Le décret 2025-304 durcit les obligations HACCP, traçabilité et biberonnerie des structures d'accueil 0-3 ans. Voici une synthèse complète des échéances et des solutions pour vous mettre en conformité.",
-      category: "Guide Réglementaire",
+        "Le décret 2025-304 porte sur les autorisations et certaines règles d’organisation des EAJE et micro-crèches. Ce guide distingue son périmètre des règles HACCP, qui relèvent d’autres textes.",
+      category: "Guide réglementaire",
       icon: <Calendar className="h-6 w-6 text-indigo-600" />,
       color: "text-indigo-600 bg-indigo-50 border-indigo-100",
       href: "/guides/decret-2025-304-micro-creche/",
@@ -49,10 +49,10 @@ export default function GuidesListPage() {
               Ressources gratuites
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl leading-tight">
-              Nos guides pour crèches & micro-crèches
+              Guides HACCP, qualité et réglementation pour crèches
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 md:text-xl leading-relaxed">
-              Retrouvez toutes nos ressources réglementaires, nos conseils de traçabilité HACCP et nos décryptages de décrets pour simplifier la gestion de votre structure.
+              Retrouvez des ressources pratiques pour organiser votre traçabilité HACCP, préparer les contrôles, comprendre le Référentiel national de la qualité d’accueil et structurer votre démarche d’amélioration continue.
             </p>
           </div>
         </section>
@@ -101,6 +101,9 @@ export default function GuidesListPage() {
                 </article>
               ))}
             </div>
+
+            {/* Lead magnet évaluation quinquennale (plan SEO ligne 41) */}
+            <GuideEvaluationForm />
 
             {/* Newsletter Callout */}
             <div className="mt-20 rounded-3xl border border-blue-100 bg-blue-50/20 p-8 md:p-12 text-center max-w-3xl mx-auto">

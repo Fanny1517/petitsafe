@@ -134,6 +134,33 @@ export async function supprimerEnquete(enqueteId: string, structureId: string) {
 }
 
 /**
+ * Supprime définitivement la réponse d'un parent (droit à l'effacement RGPD).
+ * Les valeurs associées sont supprimées en cascade.
+ */
+export async function supprimerReponseEnquete(reponseId: string, structureId: string) {
+  try {
+    await assertAccess(structureId);
+
+    // Vérifier que la réponse appartient bien à une enquête de cette structure
+    const reponse = await prisma.reponseEnquete.findFirst({
+      where: { id: reponseId, enquete: { structure_id: structureId } },
+      select: { id: true },
+    });
+    if (!reponse) {
+      return { error: "Réponse introuvable" };
+    }
+
+    await prisma.reponseEnquete.delete({ where: { id: reponse.id } });
+
+    revalidatePath(`/dashboard/${structureId}/qualite/enquetes/`);
+    return { success: true };
+  } catch (err: any) {
+    console.error("Erreur supprimerReponseEnquete:", err);
+    return { error: "Erreur lors de la suppression de la réponse" };
+  }
+}
+
+/**
  * Récupère les informations publiques d'une enquête pour les familles (via token)
  */
 export async function getEnquetePublicData(token: string) {
@@ -212,6 +239,11 @@ export async function soumettreReponseParent(rawInput: SoumettreReponseParentInp
 
     if (!enquete || !enquete.actif) {
       return { error: "Enquête inaccessible ou terminée" };
+    }
+
+    // Refuser les réponses envoyées après la date de fin de campagne
+    if (enquete.date_fin && new Date(enquete.date_fin) < new Date()) {
+      return { error: "La période de réponse à cette enquête est désormais terminée." };
     }
 
     // Bloquer si le nombre d'objectif de réponses est atteint ou dépassé

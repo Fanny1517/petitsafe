@@ -66,7 +66,7 @@ export function Features() {
       color: "text-purple-600 bg-purple-50",
       title: "Exports DDPP / PMI",
       description: "Générez un dossier d'exportation PDF complet en 3 clics, couvrant jusqu'à 12 mois glissants d'historique de traçabilité.",
-      badge: "✓ Conforme décret 2025-304",
+      badge: "✓ Historique et exports disponibles",
     },
   ];
 
@@ -143,7 +143,7 @@ export function Features() {
             variants={scrollVariants}
           >
             <h2 className="text-3xl font-extrabold text-gray-900 md:text-5xl tracking-tight">
-              Une appli. Tout ce que la DDPP va vous demander.
+              Centralisez votre traçabilité HACCP en crèche
             </h2>
             <p className="mt-4 text-lg text-gray-500">
               Pensé avec et pour les professionnels de la petite enfance en crèche et MAM.

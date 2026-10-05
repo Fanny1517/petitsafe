@@ -7,21 +7,24 @@ import {
   Receipt,
   Baby,
   Thermometer,
-  ShieldAlert,
+  FileDown,
   MapPin,
   MessageSquarePlus,
+  ClipboardList,
+  MessageSquareHeart,
+  ListChecks,
+  FileStack,
 } from "lucide-react";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
+import { buildMarketingMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Feuille de route produit - RZPan'Da | RZPan'Da",
+export const metadata = buildMarketingMetadata({
+  title: "Logiciel qualité crèche : feuille de route",
   description:
-    "Suivez en temps réel le développement et l'évolution des fonctionnalités de RZPan'Da : HACCP, suivi enfants, conformité DDPP et gestion de crèches.",
-  alternates: {
-    canonical: "/roadmap/",
-  },
-};
+    "Feuille de route RZPan'Da : Référentiel national, auto-évaluation, enquêtes familles, plan d’amélioration et préparation quinquennale.",
+  path: "/roadmap/",
+});
 
 export default function RoadmapPage() {
   const columns = [
@@ -31,16 +34,40 @@ export default function RoadmapPage() {
       badgeColor: "bg-green-50 text-green-700 border-green-100",
       items: [
         {
+          title: "Auto-évaluation du Référentiel national",
+          description:
+            "Grille guidée fondée sur les critères du Référentiel national de la qualité d’accueil du jeune enfant, rattachement automatique des preuves de terrain, radar de progression et score RZPan'Da de 0 à 100 %. Ce score est un indicateur interne de progression, pas une note officielle.",
+          icon: <ClipboardList className="h-5 w-5 text-green-600" />,
+        },
+        {
+          title: "Enquêtes familles et baromètre de satisfaction",
+          description:
+            "Questionnaires accessibles sur mobile sans mot de passe, envoi automatique des liens par email, réponses confidentielles, réservées à la structure, graphiques de synthèse, verbatims et exports pour suivre la perception des familles.",
+          icon: <MessageSquareHeart className="h-5 w-5 text-green-600" />,
+        },
+        {
+          title: "Plan d’amélioration qualité (PAQ)",
+          description:
+            "Transformez les constats en actions suivies : priorité, responsable, échéance, statut et preuve de réalisation, avec une vue tableau ou Kanban.",
+          icon: <ListChecks className="h-5 w-5 text-green-600" />,
+        },
+        {
+          title: "Dossier de préparation à l’évaluation quinquennale",
+          description:
+            "Regroupez l’auto-évaluation, les preuves, les enquêtes familles et le plan d’amélioration dans un dossier de synthèse exportable en PDF en un clic. Le format sera maintenu à jour selon les modalités réglementaires applicables.",
+          icon: <FileStack className="h-5 w-5 text-green-600" />,
+        },
+        {
           title: "Registre biberonnerie ANSES",
           description:
             "Suivi complet des laits maternels et infantiles (heures de préparation, DLC, température, attribution enfant) conforme aux dernières directives sanitaires.",
           icon: <Baby className="h-5 w-5 text-green-600" />,
         },
         {
-          title: "Conformité décret 2025-304",
+          title: "Exports de traçabilité et historiques",
           description:
-            "Génération d'exports réglementaires en un clic pour les inspecteurs DDPP et PMI en cas de contrôle.",
-          icon: <ShieldAlert className="h-5 w-5 text-green-600" />,
+            "Générez des exports à partir des relevés et historiques enregistrés dans RZPan'Da pour préparer vos dossiers de contrôle.",
+          icon: <FileDown className="h-5 w-5 text-green-600" />,
         },
         {
           title: "Suivi des températures simplifié",
@@ -55,6 +82,8 @@ export default function RoadmapPage() {
       description: "Ce sur quoi nos développeurs travaillent en ce moment.",
       badgeColor: "bg-blue-50 text-blue-700 border-blue-100",
       items: [
+        // Modules qualité (plan SEO lignes 26 à 33) : « 4 modules RZPan'Da », jamais « 4 axes du Référentiel »
+        
         {
           title: "Portail parents enrichi",
           description:
@@ -99,10 +128,10 @@ export default function RoadmapPage() {
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(37,99,235,0.06),transparent_55%)]"></div>
           <div className="mx-auto max-w-5xl px-5 md:px-8 text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl leading-tight">
-              Feuille de route produit
+              Feuille de route : HACCP, qualité d’accueil et évaluation en crèche
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 md:text-xl leading-relaxed">
-              Nous construisons RZPan'Da en collaboration avec les équipes de terrain. Découvrez ce que nous préparons pour simplifier la vie de votre crèche.
+              RZPan'Da évolue d’un outil de traçabilité quotidienne vers une plateforme de pilotage de la qualité pour les crèches et micro-crèches. Cette page distingue clairement ce qui est disponible, en cours de développement et planifié.
             </p>
           </div>
         </section>

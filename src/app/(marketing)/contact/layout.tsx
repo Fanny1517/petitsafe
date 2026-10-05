@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
+import { buildMarketingMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contactez l'équipe RZPan'Da | RZPan'Da",
+export const metadata: Metadata = buildMarketingMetadata({
+  title: "Démo RZPan'Da : logiciel HACCP pour crèches",
+  absoluteTitle: true,
   description:
-    "Une question sur le logiciel RZPan'Da ou besoin d'une démonstration personnalisée ? Contactez notre équipe dédiée aux crèches et micro-crèches.",
-  alternates: {
-    canonical: "/contact/",
-  },
-};
+    "Demandez une démo de RZPan'Da pour centraliser HACCP, traçabilité, biberonnerie et plan de nettoyage dans votre crèche ou micro-crèche.",
+  path: "/contact/",
+});
 
 export default function ContactLayout({
   children,

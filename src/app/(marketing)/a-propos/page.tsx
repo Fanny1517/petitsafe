@@ -2,15 +2,15 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, Heart, Sparkles, UserCheck } from "lucide-react";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
+import { buildMarketingMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Qui sommes-nous ? La mission de RZPan'Da | RZPan'Da",
+export const metadata = buildMarketingMetadata({
+  title: "À propos de RZPan'Da | Logiciel HACCP pour crèches",
+  absoluteTitle: true,
   description:
-    "Découvrez l'histoire et les valeurs de RZPan'Da : simplifier le quotidien réglementaire des crèches et micro-crèches pour leur redonner du temps auprès des enfants.",
-  alternates: {
-    canonical: "/a-propos/",
-  },
-};
+    "Découvrez RZPan'Da, logiciel conçu pour centraliser la traçabilité HACCP et simplifier le suivi quotidien des crèches et micro-crèches.",
+  path: "/a-propos/",
+});
 
 export default function AboutPage() {
   const values = [
@@ -23,14 +23,14 @@ export default function AboutPage() {
     },
     {
       icon: <ShieldCheck className="h-6 w-6 text-blue-600" />,
-      title: "Rigueur & Conformité",
+      title: "Rigueur et conformité",
       description:
-        "Nous traduisons la complexité des réglementations (décrets, HACCP, normes ANSES) en actions simples et guidées au quotidien. Soyez tranquille, vous êtes toujours en conformité.",
+        "RZPan'Da aide les équipes à structurer, dater et retrouver leurs enregistrements. La conformité dépend aussi des procédures et obligations propres à chaque structure.",
       color: "bg-blue-50 text-blue-600 border-blue-100",
     },
     {
       icon: <Sparkles className="h-6 w-6 text-amber-600" />,
-      title: "Proximité & Accompagnement",
+      title: "Proximité et accompagnement",
       description:
         "Développé en France et hébergé en Europe, notre outil s'accompagne d'un support humain et réactif. Nous formons personnellement chaque structure pilote en visioconférence.",
       color: "bg-amber-50 text-amber-600 border-amber-100",
@@ -50,7 +50,7 @@ export default function AboutPage() {
               Notre mission
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl leading-tight">
-              Libérer les crèches de la paperasse réglementaire
+              RZPan'Da : simplifier le suivi quotidien des crèches
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 md:text-xl leading-relaxed">
               Nous simplifions les tâches HACCP, la traçabilité et le suivi administratif pour redonner aux professionnels de la petite enfance leur ressource la plus précieuse : le temps.
@@ -66,13 +66,22 @@ export default function AboutPage() {
                 Pourquoi avoir créé RZPan'Da ?
               </h2>
               <p className="text-base leading-relaxed text-gray-500 mb-6">
-                La gestion d'une micro-crèche, d'une crèche ou d'une MAM est un métier passionnant mais d'une complexité administrative croissante. Entre le suivi du sommeil des enfants, les repas, la gestion de la biberonnerie et les obligations strictes du protocole HACCP, les professionnels passent en moyenne plus de 12 heures par semaine à remplir des classeurs papier ou à mettre à jour des tableaux Excel déconnectés.
+                La gestion d'une micro-crèche, d'une crèche ou d'une MAM est un métier passionnant mais d'une complexité administrative croissante. Entre le suivi du sommeil des enfants, les repas, la gestion de la biberonnerie et les obligations du protocole HACCP, les professionnels doivent souvent jongler entre classeurs papier, procédures, tableaux et outils dispersés pour assurer le suivi quotidien de la structure.
               </p>
               <p className="text-base leading-relaxed text-gray-500 mb-6">
-                Le stress d'un contrôle inopiné de la DDPP ou de la PMI ne devrait pas gâcher le quotidien de ceux qui s'occupent de nos enfants. 
+                Le stress d'un contrôle inopiné de la DDPP ou de la PMI ne devrait pas gâcher le quotidien de ceux qui s'occupent de nos enfants.
               </p>
               <p className="text-base leading-relaxed text-gray-500 mb-6">
-                C'est de ce constat qu'est né **RZPan'Da**. Nous avons voulu concevoir un registre HACCP numérique et un suivi quotidien qui ne demandent aucune compétence technique. Un outil unique, 100% sécurisé et pensé spécifiquement pour le quotidien de la petite enfance en France.
+                C'est de ce constat qu'est né <strong>RZPan'Da</strong>. Nous avons voulu concevoir un registre HACCP numérique et un suivi quotidien qui ne demandent aucune compétence technique. Un outil unique, avec des accès contrôlés et une politique de confidentialité documentée, pensé spécifiquement pour le quotidien de la petite enfance en France.
+              </p>
+              <p className="text-base leading-relaxed text-gray-500 mb-6">
+                Notre feuille de route élargit cette logique à la qualité d’accueil : auto-évaluation du Référentiel national, retours des familles, plan d’amélioration et préparation de l’évaluation quinquennale.
+              </p>
+              <p className="text-base leading-relaxed mb-6">
+                <Link href="/roadmap/" className="inline-flex items-center gap-1.5 font-bold text-blue-600 hover:text-blue-700 hover:underline">
+                  Voir la feuille de route
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </p>
             </div>
           </div>

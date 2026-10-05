@@ -46,21 +46,21 @@ export function Hero() {
             className="inline-flex w-fit items-center gap-2 rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-700 border border-blue-100"
           >
             <Zap className="h-3.5 w-3.5 fill-blue-600 stroke-blue-600" />
-            Décret 2025-304 — conformité septembre 2026
+            HACCP, traçabilité et qualité d’accueil pour les crèches
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
             className="mt-6 text-[38px] font-extrabold leading-[1.1] tracking-tight text-gray-900 md:text-[54px] lg:text-[62px]"
           >
-            Le contrôle DDPP ne devrait pas vous empêcher de dormir.
+            Logiciel HACCP pour crèches et micro-crèches
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="mt-6 max-w-xl text-lg text-gray-600 md:text-xl md:leading-[1.5]"
           >
-            RZPan'Da réunit HACCP, traçabilité, biberonnerie ANSES et suivi enfants dans une seule appli. Vos équipes gagnent 1 h/jour. Vos contrôles se préparent en 3 clics.
+            RZPan'Da centralise les relevés HACCP, la traçabilité alimentaire, la biberonnerie, le plan de nettoyage et le suivi des enfants. Vos équipes retrouvent leurs historiques et leurs preuves dans un même environnement, sans multiplier les classeurs et les tableaux.
           </motion.p>
 
           <motion.div
@@ -70,9 +70,9 @@ export function Hero() {
             <Link
               href="/register"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 py-4 text-base font-bold text-white transition hover:bg-blue-700 hover:shadow-lg active:scale-95"
-              aria-label="Démarrer l'essai gratuit — 30 jours"
+              aria-label="Démarrer l'essai gratuit de 30 jours"
             >
-              Démarrer l'essai gratuit — 30 jours
+              Démarrer l'essai gratuit : 30 jours
               <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
@@ -96,7 +96,7 @@ export function Hero() {
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4.5 w-4.5 text-blue-600 stroke-[3]" />
-                <span>Conforme décret 2025-304</span>
+                <span>Traçabilité HACCP centralisée</span>
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4.5 w-4.5 text-blue-600 stroke-[3]" />
@@ -126,7 +126,7 @@ export function Hero() {
                 <span className="h-3 w-3 rounded-full bg-[#FEBC2E]"></span>
                 <span className="h-3 w-3 rounded-full bg-[#28C840]"></span>
                 <div className="ml-4 flex h-6 flex-1 items-center rounded-lg bg-white px-3 text-[11px] text-gray-400 border border-gray-100 shadow-inner">
-                  rzpanda.fr/dashboard
+                  rzpanda.com/dashboard
                 </div>
               </div>
 

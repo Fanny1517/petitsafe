@@ -20,8 +20,9 @@ import {
   Mail,
   Calendar,
   User,
+  Trash2,
 } from "lucide-react";
-import { getStatistiquesEnquete } from "@/app/actions/enquetes";
+import { getStatistiquesEnquete, supprimerReponseEnquete } from "@/app/actions/enquetes";
 import { AxeQualite } from "@prisma/client";
 import Link from "next/link";
 
@@ -61,6 +62,7 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("synthese");
   const [expandedParents, setExpandedParents] = useState<Set<string>>(new Set());
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const toggleParent = (id: string) => {
     setExpandedParents((prev) => {
@@ -74,17 +76,38 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
     });
   };
 
-  useEffect(() => {
-    async function load() {
-      setLoading(true);
-      const res = await getStatistiquesEnquete(enqueteId);
-      if (!res.error && res.stats) {
-        setData(res);
-      }
-      setLoading(false);
+  // Chargement (et rechargement) des statistiques de l'enquête
+  const loadStats = React.useCallback(async (showLoader = true) => {
+    if (showLoader) setLoading(true);
+    const res = await getStatistiquesEnquete(enqueteId);
+    if (!res.error && res.stats) {
+      setData(res);
     }
-    load();
+    setLoading(false);
   }, [enqueteId]);
+
+  useEffect(() => {
+    loadStats();
+  }, [loadStats]);
+
+  // Suppression définitive de la réponse d'un parent (droit à l'effacement)
+  const handleDeleteReponse = async (reponseId: string, nom: string) => {
+    if (
+      !confirm(
+        `Supprimer définitivement la réponse de ${nom} ?\n\nSes notes et commentaires seront effacés et les statistiques recalculées. Cette action est irréversible.`
+      )
+    ) {
+      return;
+    }
+    setDeletingId(reponseId);
+    const res = await supprimerReponseEnquete(reponseId, structureId);
+    if (res.error) {
+      alert(res.error);
+    } else {
+      await loadStats(false);
+    }
+    setDeletingId(null);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
@@ -497,6 +520,23 @@ export function EnqueteStatsModal({ enqueteId, structureId, onClose }: EnqueteSt
 
                             {/* Chevron et action */}
                             <div className="flex items-center gap-3 shrink-0">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteReponse(parent.id, parent.nom);
+                                }}
+                                disabled={deletingId === parent.id}
+                                className="w-8 h-8 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 transition shadow-sm disabled:opacity-50"
+                                title="Supprimer cette réponse"
+                                aria-label={`Supprimer la réponse de ${parent.nom}`}
+                              >
+                                {deletingId === parent.id ? (
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                ) : (
+                                  <Trash2 className="w-4 h-4" />
+                                )}
+                              </button>
                               <span className="hidden sm:inline-block text-xs font-medium text-gray-400">
                                 {isExpanded ? "Masquer les réponses" : "Voir les réponses"}
                               </span>

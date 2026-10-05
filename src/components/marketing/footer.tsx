@@ -144,7 +144,7 @@ export function Footer() {
             </h3>
             <div className="mt-4 flex items-center gap-3">
               <a
-                href="mailto:contact@rzpanda.fr"
+                href="mailto:contact@rzpanda.com"
                 aria-label="Nous écrire"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-blue-600 hover:text-blue-600"
               >

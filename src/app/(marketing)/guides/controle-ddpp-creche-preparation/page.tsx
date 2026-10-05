@@ -2,15 +2,17 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
+import { buildMarketingMetadata, SITE_URL } from "@/lib/seo";
 
-export const metadata = {
-  title: "Contrôle DDPP en crèche : comment s’y préparer sans stress | RZPan'Da",
-  description:
-    "Préparer un contrôle DDPP en micro-crèche : les 7 documents attendus, les erreurs qui coûtent cher, la méthode pour sortir un dossier complet en 3 clics.",
-  alternates: {
-    canonical: "/guides/controle-ddpp-creche-preparation/",
-  },
-};
+const DESCRIPTION =
+  "Préparez un contrôle DDPP en crèche : documents, traçabilité, relevés, PMS et actions correctives à adapter à l’activité réelle de votre structure.";
+
+export const metadata = buildMarketingMetadata({
+  title: "Contrôle DDPP crèche : documents et préparation",
+  description: DESCRIPTION,
+  path: "/guides/controle-ddpp-creche-preparation/",
+  type: "article",
+});
 
 export default function GuideDDPPPage() {
   return (
@@ -21,15 +23,15 @@ export default function GuideDDPPPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "TechArticle",
-            "headline": "Contrôle DDPP en crèche : comment s’y préparer sans stress",
-            "description": "Préparer un contrôle DDPP en micro-crèche : les 7 documents attendus, les erreurs qui coûtent cher, la méthode pour sortir un dossier complet en 3 clics.",
+            "headline": "Contrôle DDPP en crèche : les documents et preuves à préparer",
+            "description": DESCRIPTION,
             "inLanguage": "fr-FR",
             "publisher": {
               "@type": "Organization",
               "name": "RZPan'Da",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://rzpanda.fr/logo.png"
+                "url": `${SITE_URL}/rzpanda-logo.svg`
               }
             },
             "author": {
@@ -37,9 +39,10 @@ export default function GuideDDPPPage() {
               "name": "Fanny Zongo"
             },
             "datePublished": "2026-04-26",
+            "dateModified": "2026-10-05",
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": "https://rzpanda.fr/guides/controle-ddpp-creche-preparation/"
+              "@id": `${SITE_URL}/guides/controle-ddpp-creche-preparation/`
             }
           })
         }}
@@ -54,10 +57,10 @@ export default function GuideDDPPPage() {
                 Guide DDPP
               </div>
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl leading-tight">
-                Contrôle DDPP en crèche : la méthode pour être prête à tout moment
+                Contrôle DDPP en crèche : les documents et preuves à préparer
               </h1>
               <p className="mt-5 text-lg text-gray-500 md:text-xl leading-relaxed">
-                Un contrôle DDPP se joue sur la traçabilité. Voici les 7 documents toujours attendus, les pièges à éviter, et comment réunir tout ça en 3 clics.
+                Les pièces demandées lors d’un contrôle dépendent de l’activité réelle de la structure : préparation sur place, livraison de repas, remise en température, stockage, biberonnerie et procédures internes. Cette checklist vous aide à organiser vos preuves ; elle doit être adaptée à votre PMS et aux règles applicables à votre organisation.
               </p>
               <div className="mt-6">
                 <Link
@@ -81,35 +84,35 @@ export default function GuideDDPPPage() {
               </p>
 
               <h2 className="mt-12 text-2xl font-extrabold text-gray-900 tracking-tight border-b border-gray-100 pb-2">
-                Les 7 documents à avoir sous la main
+                Les documents et preuves à organiser
               </h2>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
                 1. Relevés de température
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Obligatoires dans le cadre du HACCP, les relevés de température doivent être effectués quotidiennement sur vos équipements réfrigérés (entre 0 °C et 4 °C) et sur vos plats chauds avant service (minimum 63 °C). Chaque relevé doit être daté, signé par l'auxiliaire responsable et conservé 3 ans. En cas de dépassement, une action corrective doit être immédiatement tracée.
+                Les températures à surveiller, leur fréquence de contrôle et la durée de conservation des relevés dépendent des denrées, du procédé et de votre PMS. Documentez les contrôles pertinents, les écarts observés et les actions correctives, puis indiquez la source réglementaire ou sanitaire utilisée pour chaque seuil.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
                 2. Traçabilité des lots alimentaires
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Pour chaque livraison, vous devez enregistrer le nom du fournisseur, la date de livraison, le numéro de lot et la DLC (Date Limite de Consommation) de chaque produit. Ces informations permettent, en cas d'alerte sanitaire, de retrouver en quelques secondes l'origine d'un produit servi aux enfants. Conservez également les bons de livraison 3 ans minimum.
+                Organisez la traçabilité de manière à pouvoir identifier les fournisseurs et les informations utiles pour retrouver l’origine des denrées et répondre à une demande de l’autorité compétente. Les modalités de preuve et de conservation doivent être cohérentes avec votre activité et les textes applicables.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
                 3. Plan de nettoyage et émargement
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Votre plan de nettoyage définit les tâches de nettoyage et désinfection à réaliser quotidiennement, hebdomadairement et mensuellement (surfaces, équipements, réfrigérateurs, sols, toilettes). Chaque tâche doit être signée par l'auxiliaire qui l'a réalisée. Sans émargement, le nettoyage n'est pas considéré comme prouvé lors d'une inspection PMI ou sanitaire.
+                Votre plan de nettoyage précise les zones, fréquences, méthodes, produits et responsabilités. Conservez une trace de sa réalisation et des écarts traités selon l’organisation définie dans votre PMS.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
                 4. Plats témoins
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Obligation réglementaire souvent méconnue : pour tout repas préparé ou réchauffé sur place, vous devez conserver un échantillon de chaque plat (environ 100 g) pendant 5 jours à une température entre 0 °C et 4 °C. En cas d'intoxication alimentaire, ces échantillons permettent aux autorités d'identifier l'aliment en cause et de vous protéger juridiquement.
+                Lorsque les règles de restauration collective applicables à votre organisation imposent des plats témoins, l’arrêté du 21 décembre 2009 prévoit une conservation pendant au moins cinq jours en froid positif entre 0 et +3 °C. Vérifiez que votre organisation relève de ce dispositif avant de présenter cette règle comme applicable.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
@@ -123,39 +126,42 @@ export default function GuideDDPPPage() {
                 6. Registre biberonnerie
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Si votre crèche prépare des biberons, vous devez tenir un registre détaillant pour chaque biberon : le nom de l'enfant, le type de lait (maternel ou infantile), la quantité préparée, l'heure de préparation, la température et la quantité consommée. Ce registre est obligatoire et fait l'objet d'un contrôle systématique lors des visites de la PMI.
+                Si votre structure prépare ou conserve des biberons, formalisez un protocole adapté et conservez les éléments utiles à la traçabilité : enfant concerné, type de lait, horaires de préparation ou de réception, conditions de conservation et événements particuliers. Appuyez la procédure sur les recommandations sanitaires applicables et sur vos protocoles internes.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-gray-900">
                 7. Formation du personnel
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Tout personnel en contact avec les aliments doit avoir reçu une formation à l'hygiène alimentaire (règlement CE 852/2004). Conservez les attestations de formation de chaque salarié, ainsi que le programme des formations réalisées. En cas d'inspection, l'absence de justificatif de formation peut entraîner une mise en demeure.
+                Le règlement (CE) n° 852/2004 prévoit que les personnes manipulant des denrées soient encadrées et disposent d’instructions et/ou d’une formation en hygiène adaptées à leur activité. Les personnes responsables des procédures fondées sur les principes HACCP doivent recevoir une formation appropriée.
               </p>
 
               <h2 className="mt-12 text-2xl font-extrabold text-gray-900 tracking-tight border-b border-gray-100 pb-2">
-                Les 3 erreurs qui coûtent cher
+                3 erreurs qui fragilisent un dossier de contrôle
               </h2>
-
-              <h3 className="mt-8 text-lg font-bold text-red-600">
-                Erreur n°1 — Ne pas archiver les relevés de température.
-              </h3>
-              <p className="mt-3 text-base leading-relaxed text-gray-500">
-                C'est l'infraction la plus fréquemment relevée lors des contrôles sanitaires. Sans historique daté et signé, vous ne pouvez pas prouver que la chaîne du froid a été respectée — même si c'est le cas. Résultat : mise en demeure, voire fermeture temporaire de la structure.
+              <p className="mt-4 text-base leading-relaxed text-gray-500">
+                Un écart ne produit pas automatiquement la même conséquence dans toutes les situations. L’autorité apprécie la nature, la gravité et le contexte du manquement. L’objectif est donc de rendre les preuves cohérentes, datées et faciles à retrouver.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-red-600">
-                Erreur n°2 — Confondre PMS existant et PMS à jour.
+                Erreur n°1 : ne pas archiver les relevés de température
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Avoir un PMS rédigé il y a 5 ans sans le mettre à jour équivaut à ne pas en avoir. Votre plan doit refléter votre organisation actuelle, vos équipements et votre personnel en poste.
+                Sans historique daté, il devient difficile de démontrer que la chaîne du froid a été maîtrisée, même lorsqu’elle l’a été. Les écarts et les actions correctives doivent eux aussi pouvoir être retrouvés.
               </p>
 
               <h3 className="mt-8 text-lg font-bold text-red-600">
-                Erreur n°3 — Oublier les plats témoins.
+                Erreur n°2 : confondre PMS existant et PMS à jour
               </h3>
               <p className="mt-3 text-base leading-relaxed text-gray-500">
-                Cette obligation est souvent ignorée, surtout dans les petites structures. En cas d'intoxication alimentaire collective (TIAC) sans plat témoin conservé, votre responsabilité peut être directement engagée, sans possibilité de vous défendre face aux assurances ou aux autorités.
+                Un PMS rédigé il y a plusieurs années et jamais revu ne reflète plus forcément votre organisation, vos équipements et votre personnel en poste. Prévoyez une revue régulière et datez chaque mise à jour.
+              </p>
+
+              <h3 className="mt-8 text-lg font-bold text-red-600">
+                Erreur n°3 : négliger les plats témoins quand ils s’appliquent
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-gray-500">
+                Lorsque votre organisation relève du dispositif des plats témoins, leur absence prive l’autorité d’un moyen d’investigation en cas de toxi-infection alimentaire collective (TIAC). Vérifiez votre situation et formalisez la procédure dans votre PMS.
               </p>
 
               <div className="mt-8">
@@ -176,25 +182,24 @@ export default function GuideDDPPPage() {
                 C'est pour simplifier ce quotidien administratif que nous avons conçu RZPan'Da. Plutôt que de manipuler des classeurs papier volumineux et de risquer d'oublier des relevés, notre application vous permet d'enregistrer vos températures de frigo, la traçabilité des étiquettes et l'émargement du plan de nettoyage en quelques secondes sur tablette. Lors d'une inspection DDPP ou PMI, il vous suffit de vous rendre dans l'onglet 'Exports DDPP', de sélectionner la période demandée et de générer un rapport PDF complet. Tout est propre, horodaté et instantanément accessible.
               </p>
               <p className="mt-4 text-base leading-relaxed text-gray-500">
-                Pour en savoir plus sur l'évolution des réglementations en crèche, consultez notre <Link href="/guides/decret-2025-304-micro-creche/" className="text-blue-600 hover:underline">guide complet sur le décret 2025-304</Link>.
+                Pour comprendre le périmètre réel du décret 2025-304, consultez notre <Link href="/guides/decret-2025-304-micro-creche/" className="text-blue-600 hover:underline">guide sur le décret 2025-304</Link>.
               </p>
             </div>
 
             {/* Aside Callout Box */}
             <aside className="mt-16 rounded-2xl border border-blue-100 bg-blue-50/30 p-6 md:p-8">
               <h2 className="text-xl font-extrabold text-gray-900">
-                Mettez-vous en conformité sans y passer vos soirées.
+                Centralisez vos preuves HACCP sans multiplier les classeurs
               </h2>
               <p className="mt-3 text-base text-gray-500 leading-relaxed">
-                RZPan'Da couvre HACCP, biberonnerie ANSES, suivi enfants et exports DDPP. Essai gratuit 30 jours, sans carte bancaire.
+                RZPan'Da regroupe relevés, traçabilité, biberonnerie, plan de nettoyage et exports dans un même environnement.
               </p>
               <div className="mt-6">
                 <Link
                   href="/register/"
                   className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-blue-700 shadow-md active:scale-95"
-                  aria-label="Démarrer l'essai gratuit 30 jours"
                 >
-                  Démarrer l'essai gratuit 30 jours
+                  Tester RZPan'Da pendant 30 jours
                   <ArrowRight className="h-4.5 w-4.5" />
                 </Link>
               </div>

@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 export function FAQ() {
   const faqs = [
     {
-      question: "Est-ce que c’est vraiment conforme au décret 2025-304 ?",
-      answer: "Oui, RZPan'Da a été conçu pour respecter scrupuleusement les exigences réglementaires. Il intègre le suivi des températures, la traçabilité alimentaire HACCP avec photos de lots, le protocole biberonnerie de l'ANSES et les plans de nettoyage émargés requis lors des contrôles DDPP / PMI.",
+      question: "RZPan'Da garantit-il à lui seul la conformité de ma crèche ?",
+      answer: "Non. RZPan'Da est un outil de gestion et de traçabilité. Il aide à centraliser des relevés, historiques et justificatifs, mais la structure reste responsable de l’application des textes, procédures et protocoles qui lui sont applicables.",
     },
     {
       question: "Mon équipe n’est pas à l’aise avec le digital.",

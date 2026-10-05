@@ -395,9 +395,15 @@ export function EnqueteParentForm({
             </>
           )}
         </button>
-        <p className="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          Vos informations sont traitées conformément au RGPD et transmises de manière sécurisée.
+        {/* Mention d'information RGPD (art. 13) : texte à faire valider par le DPO */}
+        <p className="text-xs text-gray-400 mt-3 flex items-start justify-center gap-1.5 max-w-xl mx-auto leading-relaxed">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+          <span>
+            Vos informations sont transmises de manière sécurisée à {structureNom} pour mesurer la
+            satisfaction des familles et améliorer l&apos;accueil, conformément au RGPD. L&apos;email sert
+            à n&apos;accepter qu&apos;une réponse par personne. Vous pouvez demander leur suppression à la
+            structure.
+          </span>
         </p>
       </div>
     </form>
