@@ -7,9 +7,9 @@ import { ProfilProvider } from "@/hooks/use-profil";
 //import { Sidebar } from "@/components/layout/sidebar";
 import  Navbar from "@/components/layout/topNav";
 
-import { BottomNav } from "@/components/layout/bottom-nav";
 import { Topbar } from "@/components/layout/topbar";
 import { SelectProfil } from "@/components/layout/select-profil";
+import { RouteLoadingIndicator, startNavigationLoading } from "@/components/layout/route-loading-indicator";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2 } from "lucide-react";
@@ -41,6 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [loading, user, router]);
 
   const handleSwitchStructure = (id: string) => {
+    startNavigationLoading();
     switchStructure(id);
     router.push(`/dashboard/${id}`);
   };
@@ -86,7 +87,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <ProfilProvider structureId={activeStructureId}>
       <SelectProfil structureId={activeStructureId} userPrenom={prenom} userNom={nom}>
         <div className={cn("min-h-screen transition-colors duration-300", bgClass)}>
-      
+          <RouteLoadingIndicator />
           <Topbar
             structures={structures}
             activeStructureId={activeStructureId}

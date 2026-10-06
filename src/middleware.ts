@@ -59,7 +59,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/blog/") ||
     pathname.startsWith("/guides/") ||
     pathname.startsWith("/api/") ||
-    pathname.startsWith("/portail/");
+    pathname.startsWith("/portail/") ||
+    pathname.startsWith("/enquete/");
 
   if (isPublicRoute) return supabaseResponse;
 

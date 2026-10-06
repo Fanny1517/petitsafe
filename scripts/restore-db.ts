@@ -44,6 +44,15 @@ const MODELS = [
   "transmission",
   "administrationMedicament",
   "pAI",
+  "presence",
+  "inscriptionTemporaire",
+  "critereReferentiel",
+  "evaluationCritere",
+  "actionQualite",
+  "enqueteSatisfaction",
+  "questionEnquete",
+  "reponseEnquete",
+  "valeurReponse",
   "demandeDemo",
   "auditLog",
 ] as const;
@@ -126,7 +135,7 @@ async function main() {
     console.log(`  ✓ ${model.padEnd(28)} ${restored}/${rows.length} ligne(s)`);
   }
 
-  console.log(`\n✓ Restauration terminée — ${totalRestored} ligne(s) restaurée(s).`);
+  console.log(`\n✓ Restauration terminée : ${totalRestored} ligne(s) restaurée(s).`);
 }
 
 main()

@@ -45,6 +45,14 @@ const MODELS = [
   "administrationMedicament",
   "pAI",
   "presence",
+  "inscriptionTemporaire",
+  "critereReferentiel",
+  "evaluationCritere",
+  "actionQualite",
+  "enqueteSatisfaction",
+  "questionEnquete",
+  "reponseEnquete",
+  "valeurReponse",
   "demandeDemo",
   "auditLog",
 ] as const;
@@ -85,7 +93,7 @@ async function main() {
 
   const sizeMB = (Buffer.byteLength(JSON.stringify(payload)) / 1024 / 1024).toFixed(2);
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  console.log(`\n✓ Backup terminé en ${elapsed}s — ${totalRows} lignes — ${sizeMB} MB`);
+  console.log(`\n✓ Backup terminé en ${elapsed}s : ${totalRows} lignes, ${sizeMB} MB`);
   console.log(`  → ${filePath}`);
 }
 

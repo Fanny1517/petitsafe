@@ -33,7 +33,15 @@ export async function getDashboardData(
     await assertAccess(structureId);
     const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
     const todayEnd = new Date(); todayEnd.setHours(23, 59, 59, 999);
-    const isActif = (m: string) => modulesActifs.includes(m);
+    let resolvedModules = modulesActifs;
+    if (!resolvedModules || resolvedModules.length === 0) {
+      const struct = await prisma.structure.findUnique({
+        where: { id: structureId },
+        select: { modules_actifs: true },
+      });
+      resolvedModules = struct?.modules_actifs ?? [];
+    }
+    const isActif = (m: string) => resolvedModules.includes(m);
 
     // 1. Enfants
     const enfantsCount = await prisma.enfant.count({

@@ -1,0 +1,407 @@
+[
+  {
+    "code": "SEC-01",
+    "axe": "ACCUEIL_SECURITE",
+    "titre": "Respect des règles d'hygiène alimentaire et de la chaîne du froid (HACCP)",
+    "description": "Contrôle quotidien des températures des enceintes frigorifiques, plats témoins et traçabilité des denrées pour prévenir tout risque microbiologique.",
+    "points_cles": [
+      "Relevés de température biquotidiens des réfrigérateurs et congélateurs",
+      "Contrôle systématique à réception des marchandises périssables",
+      "Refroidissement rapide et conservation étiquetée des plats et restes",
+      "Archivage conforme des bordereaux sanitaires"
+    ],
+    "guide_ministeriel": "Conformément au paquet hygiène et aux arrêtés ministériels Petite Enfance, tout établissement d'accueil du jeune enfant servant des repas doit justifier d'un plan de maîtrise sanitaire (PMS) auditable.",
+    "ordre": 1,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Relevés de températures frigorifiques RZPan'Da",
+      "Fiches de réception traçabilité",
+      "Procédure écrite de conservation"
+    ],
+    "source_preuve_auto": "HACCP_TEMP"
+  },
+  {
+    "code": "SEC-02",
+    "axe": "ACCUEIL_SECURITE",
+    "titre": "Nettoyage et désinfection rigoureuse des locaux, matériels et jouets",
+    "description": "Application systématique d'un plan de bionettoyage adapté aux espaces d'accueil, change, repos et manipulation de jouets.",
+    "points_cles": [
+      "Désinfection pluri-quotidienne des plans de change et sanitaires",
+      "Nettoyage quotidien des sols avec produits écologiques certifiés contact alimentaire/enfance",
+      "Cycle régulier de lavage et désinfection des jouets et doudous",
+      "Émargement et traçabilité des validations de nettoyage"
+    ],
+    "guide_ministeriel": "L'hygiène environnementale en collectivité prévient la transmission des gastro-entérites, bronchiolites et dermatoses. Le plan de nettoyage doit être formalisé et suivi d'émargements datés.",
+    "ordre": 2,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Validation numérique des zones de nettoyage RZPan'Da",
+      "Fiches techniques des produits d'entretien",
+      "Planning d'entretien des jouets"
+    ],
+    "source_preuve_auto": "NETTOYAGE"
+  },
+  {
+    "code": "SEC-03",
+    "axe": "ACCUEIL_SECURITE",
+    "titre": "Gestion sécurisée des protocoles d'accueil individualisé (PAI) et médicaments",
+    "description": "Respect scrupuleux des ordonnances médicales, autorisations parentales, double vérification et conservation sécurisée des traitements.",
+    "points_cles": [
+      "Ordonnance médicale en cours de validité et autorisation parentale signée",
+      "Stockage des médicaments sous clé hors de portée des enfants",
+      "Enregistrement immédiat de chaque administration avec cosignature d'un témoin",
+      "Affichage confidentiel et accessible des consignes d'urgence PAI"
+    ],
+    "guide_ministeriel": "L'administration de médicaments en EAJE est strictement encadrée par l'article R. 2111-1 du CSP. Toute prise médicamenteuse nécessite la traçabilité de l'heure, du dosage et du praticien délégué.",
+    "ordre": 3,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Registre d'administration médicamenteuse RZPan'Da",
+      "Copies numériques des PAI et ordonnances",
+      "Cosignatures des professionnels"
+    ],
+    "source_preuve_auto": "MEDICAMENTS"
+  },
+  {
+    "code": "SEC-04",
+    "axe": "ACCUEIL_SECURITE",
+    "titre": "Sécurisation physique des accès et surveillance des circulations",
+    "description": "Contrôle des entrées et sorties de l'établissement, sécurisation des portillons, barrières et identification des personnes autorisées à récupérer l'enfant.",
+    "points_cles": [
+      "Accès sécurisé par digicode ou interphone avec vérification visuelle",
+      "Registre des personnes légalement habilitées à reprendre l'enfant",
+      "Vérification de l'identité en cas de tiers mandaté",
+      "Contrôle anti-pincement sur toutes les portes accessibles aux enfants"
+    ],
+    "guide_ministeriel": "La protection physique contre l'intrusion et la prévention des sorties non accompagnées constituent une exigence absolue du contrôle PMI et de la sûreté des locaux.",
+    "ordre": 4,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Registre des autorisations parentales et fiches contacts",
+      "Rapport de contrôle annuel des dispositifs d'accès"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "SEC-05",
+    "axe": "ACCUEIL_SECURITE",
+    "titre": "Traçabilité des présences et respect des taux d'encadrement",
+    "description": "Pointage en temps réel des arrivées et départs garantissant à chaque instant la conformité du ratio d'encadrement enfants/professionnels.",
+    "points_cles": [
+      "Pointage d'arrivée et départ horodaté pour chaque enfant",
+      "Suivi permanent du ratio d'encadrement selon la réglementation (1 pour 5 qui ne marchent pas, 1 pour 8 qui marchent)",
+      "Présence permanente d'au moins deux professionnels lorsque plus de trois enfants sont accueillis",
+      "Gestion des plannings d'équipe en adéquation avec les flux réels"
+    ],
+    "guide_ministeriel": "Le taux d'encadrement fixé par le décret Petite Enfance doit pouvoir être justifié sur réquisition de la PMI grâce à des registres de présence exhaustifs.",
+    "ordre": 5,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Registre de présences numérique RZPan'Da",
+      "Graphiques de taux d'occupation journalier",
+      "Planning d'équipe horodaté"
+    ],
+    "source_preuve_auto": "PRESENCES"
+  },
+  {
+    "code": "EVE-01",
+    "axe": "DEVELOPPEMENT_EVEIL",
+    "titre": "Respect du rythme individuel de sommeil et environnement de sieste sécurisé",
+    "description": "Prise en compte des signes de fatigue propres à chaque enfant, couchage dorsal sécurisé et surveillance visuelle continue des dortoirs.",
+    "points_cles": [
+      "Respect scrupuleux des recommandations de prévention de la mort inattendue du nourrisson (couchage à plat, gigoteuse)",
+      "Température des dortoirs régulée entre 18°C et 20°C",
+      "Écoute et traçabilité des endormissements et réveils échelonnés",
+      "Surveillance physique régulière et consignation des tours de dortoir"
+    ],
+    "guide_ministeriel": "Le sommeil est fondamental pour le développement neurobiologique du tout-petit. L'environnement doit être calme, sécurisé et adapté à la physiologie du jeune enfant.",
+    "ordre": 6,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Journal des siestes RZPan'Da",
+      "Protocole de couchage et fiche de surveillance dortoirs"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "EVE-02",
+    "axe": "DEVELOPPEMENT_EVEIL",
+    "titre": "Aménagement spatial favorisant l'autonomie et la motricité libre",
+    "description": "Espaces pensés à hauteur d'enfant, matériel non contraignant favorisant le jeu spontané et l'expérimentation corporelle autonome.",
+    "points_cles": [
+      "Sol adapté à la reptation et aux premiers pas sans entrave",
+      "Jeux et livres en accès direct permettant un choix libre",
+      "Zones d'activités différenciées : motricité globale, coin calme, manipulation",
+      "Mobilier sécurisé et adapté à la taille des différentes tranches d'âge"
+    ],
+    "guide_ministeriel": "La Charte nationale d'accueil du jeune enfant préconise la liberté de mouvement : l'enfant doit pouvoir expérimenter ses compétences motrices sans contrainte prématurée.",
+    "ordre": 7,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Projet pédagogique de l'établissement",
+      "Plans d'aménagement des sections et photos d'ambiance"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "EVE-03",
+    "axe": "DEVELOPPEMENT_EVEIL",
+    "titre": "Posture bientraitante, écoute active et communication positive",
+    "description": "Attitude bienveillante constante des professionnels, verbalisation des actions, gestion respectueuse des émotions et des séparations.",
+    "points_cles": [
+      "Mise à hauteur de l'enfant pour lui parler et capter son regard",
+      "Verbalisation systématique avant tout soin ou portage",
+      "Accueil et légitimation des émotions sans réprimande (pleurs, colère)",
+      "Bannissement formel de toute violence éducative ordinaire (VEO)"
+    ],
+    "guide_ministeriel": "La bientraitance active est au cœur du référentiel national 2025. Elle repose sur la conscience professionnelle des micros-gestes et la prévention de l'épuisement des professionnels.",
+    "ordre": 8,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Charte de bientraitance signée par l'équipe",
+      "Comptes-rendus des séances d'analyse des pratiques"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "EVE-04",
+    "axe": "DEVELOPPEMENT_EVEIL",
+    "titre": "Activités d'éveil sensoriel, culturel, artistique et sorties extérieures",
+    "description": "Propositions quotidiennes riches et diversifiées soutenant l'imaginaire, le langage, la musique et le contact régulier avec la nature.",
+    "points_cles": [
+      "Lectures partagées quotidiennes et comptines dès le plus jeune âge",
+      "Ateliers sensoriels de manipulation (peinture, argile, eau, graines)",
+      "Sorties régulières dans le jardin ou parc extérieur par tout temps adapté",
+      "Éveil aux langues, à la musique et ouverture sur la culture"
+    ],
+    "guide_ministeriel": "L'ouverture au monde et l'éveil artistique dès les 1000 premiers jours participent directement à la réduction des inégalités sociales et au développement cognitif.",
+    "ordre": 9,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Cahier de vie de la crèche",
+      "Planning hebdomadaire des activités et ateliers"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "EVE-05",
+    "axe": "DEVELOPPEMENT_EVEIL",
+    "titre": "Accompagnement individualisé des repas et éveil gustatif",
+    "description": "Moment de repas convivial, respect des signaux de satiété, diversification progressive et autonomie dans la prise des repas.",
+    "points_cles": [
+      "Biberons donnés dans les bras dans un climat serein et sécurisant",
+      "Respect absolu du refus de manger (aucun forçage alimentaire)",
+      "Présentation attrayante et valorisation des textures selon l'âge",
+      "Encouragement de la préhension et de l'usage des couverts adaptés"
+    ],
+    "guide_ministeriel": "Le repas est un temps fort d'échange, d'éveil sensoriel et de socialisation qui doit toujours respecter le rythme et l'appétit de l'enfant.",
+    "ordre": 10,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Suivi des quantités et diversification sur RZPan'Da",
+      "Menus équilibrés affichés et validés"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "FAM-01",
+    "axe": "RELATION_FAMILLES",
+    "titre": "Qualité et continuité des transmissions d'accueil et de départ",
+    "description": "Échange d'informations complètes et bienveillantes matin et soir, consolidé par le carnet de liaison numérique partagé avec les parents.",
+    "points_cles": [
+      "Transmission orale individualisée lors de l'arrivée et du départ",
+      "Consignation en continu des événements de la journée (sommeil, repas, changes, humeur)",
+      "Mise à disposition en temps réel sur l'application mobile parents",
+      "Valorisation des progrès et anecdotes positives de l'enfant"
+    ],
+    "guide_ministeriel": "La continuité affective et éducative entre le milieu familial et l'accueil en collectivité repose sur la fluidité et la fiabilité des transmissions quotidiennes.",
+    "ordre": 11,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Transmissions quotidiennes RZPan'Da",
+      "Historique des notifications de départ aux familles"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "FAM-02",
+    "axe": "RELATION_FAMILLES",
+    "titre": "Période d'adaptation personnalisée, progressive et concertée",
+    "description": "Dispositif d'intégration en douceur sur plusieurs jours avec la présence active des parents pour construire le lien de confiance.",
+    "points_cles": [
+      "Protocole d'adaptation modulable sur 1 à 2 semaines selon l'enfant",
+      "Temps d'échange approfondi sur les habitudes familiales et rituels",
+      "Désignation d'un professionnel référent facilitateur d'attachement",
+      "Bilan d'adaptation formalisé à l'issue de la première quinzaine"
+    ],
+    "guide_ministeriel": "Une adaptation réussie est le garant de la sécurité affective de l'enfant et de la sérénité parentale face au mode d'accueil choisi.",
+    "ordre": 12,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Protocole d'adaptation écrit",
+      "Fiche de recueil des habitudes de vie"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "FAM-03",
+    "axe": "RELATION_FAMILLES",
+    "titre": "Implication des parents dans la vie de la structure et communication",
+    "description": "Organisation d'espaces de rencontre, cafés des parents, réunions de rentrée et transparence sur le projet pédagogique.",
+    "points_cles": [
+      "Réunion d'information annuelle sur le projet d'établissement",
+      "Moments de convivialité réguliers (fêtes de saison, ateliers parents-enfants)",
+      "Affichage clair des projets, menus et actualités de la structure",
+      "Possibilité pour les parents de passer du temps dans la section"
+    ],
+    "guide_ministeriel": "Les parents sont les premiers éducateurs de leur enfant. La structure doit encourager la co-éducation et créer un climat de coopération ouverte.",
+    "ordre": 13,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Planning des événements parents-enfants",
+      "Comptes-rendus de réunions de rentrée"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "FAM-04",
+    "axe": "RELATION_FAMILLES",
+    "titre": "Recueil régulier et exploitation de la satisfaction des familles",
+    "description": "Administration d'enquêtes annuelles anonymisées et prise en compte concrète des retours dans le plan d'amélioration.",
+    "points_cles": [
+      "Diffusion annuelle d'un questionnaire de satisfaction aux parents",
+      "Analyse objective des résultats et identification des points d'amélioration",
+      "Restitution transparente des conclusions et des actions décidées",
+      "Boîte à idées ou canal numérique d'écoute des suggestions"
+    ],
+    "guide_ministeriel": "L'évaluation externe quinquennale s'appuiera obligatoirement sur l'évaluation de la satisfaction des usagers mesurée de manière formalisée.",
+    "ordre": 14,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Synthèse des résultats de l'enquête familles annuelle",
+      "Intégration des demandes au Plan d'Action Qualité"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "FAM-05",
+    "axe": "RELATION_FAMILLES",
+    "titre": "Soutien à la parentalité et écoute des situations particulières",
+    "description": "Accompagnement bienveillant lors des étapes charnières et orientation vers les professionnels spécialisés si besoin (PMI, CAMSP).",
+    "points_cles": [
+      "Entretiens individuels sur demande des parents ou de l'équipe",
+      "Réseau de partenaires médico-sociaux identifié pour orientation",
+      "Non-jugement face aux difficultés éducatives ou familiales",
+      "Accueil inclusif d'enfants en situation de handicap ou maladie chronique"
+    ],
+    "guide_ministeriel": "L'EAJE est un lieu ressource de prévention précoce et d'étayage parental, acteur central du réseau local des 1000 premiers jours.",
+    "ordre": 15,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Liste des partenaires médico-sociaux locaux",
+      "Comptes-rendus de bilans d'accompagnement"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "ORG-01",
+    "axe": "PILOTAGE_RISQUES",
+    "titre": "Analyse et déclaration systématique des événements indésirables",
+    "description": "Signalement des incidents, analyse collégiale des causes profondes (sans recherche de coupable) et ajustement immédiat des protocoles.",
+    "points_cles": [
+      "Enregistrement immédiat de toute chute, morsure ou incident corporel",
+      "Information transparente et immédiate transmise aux parents",
+      "Signalement réglementaire à la PMI des incidents graves conformément à l'article R. 2324-17-1",
+      "Revue mensuelle en équipe pour dégager des mesures de prévention durables"
+    ],
+    "guide_ministeriel": "La culture de sécurité exige la déclaration sans tabou des quasi-accidents et incidents pour en faire un levier d'apprentissage collectif et de sécurisation.",
+    "ordre": 16,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Registre des incidents RZPan'Da",
+      "Fiches de déclaration PMI",
+      "Comptes-rendus d'analyse d'incident"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "ORG-02",
+    "axe": "PILOTAGE_RISQUES",
+    "titre": "Continuité de service, gestion des qualifications et remplacement",
+    "description": "Maintien des compétences professionnelles exigées par la réglementation et anticipation des remplacements d'urgence.",
+    "points_cles": [
+      "Contrôle de la conformité des diplômes et diplômes d'État (EJE, AP, CAP AEPE)",
+      "Procédures d'accueil et livret d'accueil pour les remplaçants et intérimaires",
+      "Dispositif de renfort en cas d'absence imprévue",
+      "Vérification des attestations de formation aux gestes de premiers secours (SST/PSC1)"
+    ],
+    "guide_ministeriel": "La stabilité de l'équipe et la qualification certifiée du personnel sont des indicateurs clés de la qualité globale d'accueil évaluée par les corps de contrôle.",
+    "ordre": 17,
+    "poids": 2,
+    "preuves_suggerees": [
+      "Registre du personnel et copies des diplômes/SST",
+      "Livret d'accueil des professionnels remplaçants"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "ORG-03",
+    "axe": "PILOTAGE_RISQUES",
+    "titre": "Formation continue et temps réguliers d'analyse des pratiques",
+    "description": "Organisation de temps d'échanges encadrés par un intervenant extérieur et déploiement d'un plan de formation pluri-annuel.",
+    "points_cles": [
+      "Minimum 6 séances annuelles d'analyse des pratiques professionnelles (APP)",
+      "Journées pédagogiques dédiées à la cohésion d'équipe et à l'actualisation du projet",
+      "Accès facilité aux formations qualifiantes (bientraitance, neurosciences, gestion des émotions)",
+      "Valorisation des retours de formation auprès du reste de l'équipe"
+    ],
+    "guide_ministeriel": "L'analyse des pratiques professionnelles est rendue obligatoire par la loi. Elle permet de prendre du recul sur le quotidien et d'harmoniser les postures éducatives.",
+    "ordre": 18,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Contrat et attestations d'émargement d'intervenant APP",
+      "Plan de formation annuel de la structure"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "ORG-04",
+    "axe": "PILOTAGE_RISQUES",
+    "titre": "Protocoles d'urgence, sécurité incendie et exercices d'évacuation",
+    "description": "Maîtrise opérationnelle des consignes d'évacuation, exercices semestriels et contrôle technique périodique des extincteurs et alarmes.",
+    "points_cles": [
+      "Affichage des plans d'évacuation et consignes d'urgence dans chaque pièce",
+      "Réalisation semestrielle d'un exercice d'évacuation incendie chronométré",
+      "Registre de sécurité incendie à jour avec visa de la commission de sécurité",
+      "Numéros d'urgence (SAMU 15, Pompiers 18, Centre Antipoison) visibles près de chaque téléphone"
+    ],
+    "guide_ministeriel": "La sécurité incendie et les plans particuliers de mise en sûreté (PPMS) doivent faire l'objet d'entraînements réguliers impliquant tout le personnel.",
+    "ordre": 19,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Registre de sécurité incendie à jour",
+      "Comptes-rendus des exercices d'évacuation avec chronométrage"
+    ],
+    "source_preuve_auto": null
+  },
+  {
+    "code": "ORG-05",
+    "axe": "PILOTAGE_RISQUES",
+    "titre": "Démarche continue d'amélioration de la qualité et suivi du PAQ",
+    "description": "Pilotage proactif des auto-évaluations, formalisation du Plan d'Action Qualité et préparation méthodique du dossier quinquennal.",
+    "points_cles": [
+      "Actualisation annuelle de la grille d'auto-évaluation par l'équipe de direction",
+      "Attribution formelle de chaque piste d'amélioration à un responsable avec échéance",
+      "Revue périodique de l'avancement des actions lors des réunions d'encadrement",
+      "Centralisation des preuves documentaires prêtes pour la visite des évaluateurs externes"
+    ],
+    "guide_ministeriel": "La démarche qualité n'est pas un contrôle ponctuel mais un processus continu d'auto-diagnostic et de progrès mesurable engageant toute la structure.",
+    "ordre": 20,
+    "poids": 3,
+    "preuves_suggerees": [
+      "Plan d'Action Qualité (PAQ) RZPan'Da à jour",
+      "Rapport d'auto-évaluation annuel exporté"
+    ],
+    "source_preuve_auto": null
+  }
+]

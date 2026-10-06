@@ -93,6 +93,7 @@ export const MODULES_DISPONIBLES = {
   presences:     { label: "Présences",      icon: "CalendarCheck",   categorie: "gestion" as const, description: "Pointage et registre des présences" },
   stocks:        { label: "Stocks",         icon: "Boxes",           categorie: "gestion" as const, description: "Gestion des stocks consommables" },
   protocoles:    { label: "Protocoles",     icon: "FileText",        categorie: "gestion" as const, description: "Documents et protocoles internes" },
+  qualite:       { label: "Démarche qualité", icon: "Award",         categorie: "gestion" as const, description: "Référentiel national et auto-évaluation continue" },
 } as const;
 
 export type ModuleId = keyof typeof MODULES_DISPONIBLES;

@@ -1,6 +1,6 @@
 # RZPan'Da — Document de reconstruction complète
 
-> Ce document décrit l'intégralité du projet **RZPan'Da** (anciennement PetitSafe) — un SaaS HACCP, traçabilité alimentaire et suivi enfants pour crèches, micro-crèches, MAM et assistantes maternelles. Il est dimensionné pour qu'un développeur ou une IA puisse recréer le produit à l'identique sans accès au code source.
+> Ce document décrit l'intégralité du projet **RZPan'Da** (anciennement RZPan'Da) — un SaaS HACCP, traçabilité alimentaire et suivi enfants pour crèches, micro-crèches, MAM et assistantes maternelles. Il est dimensionné pour qu'un développeur ou une IA puisse recréer le produit à l'identique sans accès au code source.
 >
 > **Dernière mise à jour** : Phase 4 — Profils partagés avec PIN, droits d'accès, groupes d'âge, alertes lait, émargement nettoyage, annuaire équipe.
 >
@@ -159,7 +159,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 ## 4. Arborescence projet
 
 ```
-petitsafe/
+RZPan'Da/
 ├── .env.local.example
 ├── .gitignore
 ├── next.config.js
@@ -2697,7 +2697,7 @@ export function useAuth() {
 
 ### Domaine personnalisé
 - **Domaine principal** : `rzpanda.fr`
-- **Alias Vercel** : `rzpanda.vercel.app`, `petitsafe-3qmv.vercel.app`
+- **Alias Vercel** : `rzpanda.vercel.app`, `RZPan'Da-3qmv.vercel.app`
 
 ### Post-déploiement
 1. Appliquer les migrations : `npx prisma migrate deploy` (ou `npx prisma db push`)

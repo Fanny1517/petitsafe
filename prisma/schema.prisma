@@ -176,6 +176,49 @@ enum StatutPresence {
   CONGE
 }
 
+enum AxeQualite {
+  ACCUEIL_SECURITE
+  DEVELOPPEMENT_EVEIL
+  RELATION_FAMILLES
+  PILOTAGE_RISQUES
+}
+
+enum StatutConformite {
+  NON_EVALUE
+  A_AMELIORER
+  PARTIELLEMENT_CONFORME
+  CONFORME
+  EXEMPLAIRE
+}
+
+enum PrioriteAction {
+  BASSE
+  MOYENNE
+  HAUTE
+  URGENTE
+}
+
+enum StatutAction {
+  A_FAIRE
+  EN_COURS
+  TERMINE
+  REPORTE
+}
+
+enum TypeEnquete {
+  ANNUELLE
+  INTEGRATION
+  FLASH
+  AUTRE
+}
+
+enum TypeQuestionEnquete {
+  NOTE_5
+  OUI_NON
+  TEXTE
+  CHOIX_UNIQUE
+}
+
 // ═══ MULTI-TENANT ═══
 
 model Structure {
@@ -218,6 +261,9 @@ model Structure {
   pais                       PAI[]
   presences                  Presence[]
   audit_logs                 AuditLog[]
+  evaluations_qualite        EvaluationCritere[]
+  actions_qualite            ActionQualite[]
+  enquetes_satisfaction      EnqueteSatisfaction[]
 }
 
 model UserStructure {
@@ -265,6 +311,7 @@ model Profil {
   administrations_medicament AdministrationMedicament[] @relation("ProfilAdministrateur")
   cosignatures_medicament    AdministrationMedicament[] @relation("ProfilTemoin")
   releves_presence           Presence[]
+  evaluations_qualite        EvaluationCritere[]
 
   @@index([structure_id])
   @@index([structure_id, actif])
@@ -870,3 +917,147 @@ model InscriptionTemporaire {
   @@index([token])
   @@index([email])
 }
+
+// ═══ RÉFÉRENTIEL QUALITÉ & AUTO-ÉVALUATION (AXE 1) ═══
+
+model CritereReferentiel {
+  id                   String       @id @default(uuid())
+  code                 String       @unique
+  axe                  AxeQualite
+  titre                String
+  description          String
+  points_cles          String[]     @default([])
+  guide_ministeriel    String?
+  ordre                Int          @default(0)
+  poids                Int          @default(1)
+  preuves_suggerees    String[]     @default([])
+  source_preuve_auto   String?
+  created_at           DateTime     @default(now())
+  updated_at           DateTime     @updatedAt
+
+  evaluations          EvaluationCritere[]
+  actions              ActionQualite[]
+
+  @@index([axe])
+  @@index([ordre])
+}
+
+model EvaluationCritere {
+  id                  String            @id @default(uuid())
+  structure_id        String
+  critere_id          String
+  periode             String            @default("2025")
+  statut              StatutConformite  @default(NON_EVALUE)
+  observations        String?
+  pistes_amelioration String?
+  evalue_par_id       String?
+  evalue_par_nom      String?
+  derniere_eval       DateTime          @default(now())
+  created_at          DateTime          @default(now())
+  updated_at          DateTime          @updatedAt
+
+  structure           Structure          @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+  critere             CritereReferentiel @relation(fields: [critere_id], references: [id], onDelete: Cascade)
+  evalue_par          Profil?            @relation(fields: [evalue_par_id], references: [id], onDelete: SetNull)
+
+  @@unique([structure_id, critere_id, periode])
+  @@index([structure_id, periode])
+  @@index([critere_id])
+}
+
+model ActionQualite {
+  id                  String            @id @default(uuid())
+  structure_id        String
+  critere_id          String?
+  titre               String
+  description         String?
+  responsable         String?
+  echeance            DateTime?
+  priorite            PrioriteAction    @default(MOYENNE)
+  statut              StatutAction      @default(A_FAIRE)
+  resultat_attendu    String?
+  created_at          DateTime          @default(now())
+  updated_at          DateTime          @updatedAt
+
+  structure           Structure          @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+  critere             CritereReferentiel? @relation(fields: [critere_id], references: [id], onDelete: SetNull)
+
+  @@index([structure_id])
+  @@index([critere_id])
+  @@index([statut])
+}
+
+// ═══ ENQUÊTES FAMILLES & BAROMÈTRE DE SATISFACTION (AXE 2) ═══
+
+model EnqueteSatisfaction {
+  id                  String              @id @default(uuid())
+  structure_id        String
+  titre               String
+  description         String?
+  type_enquete        TypeEnquete         @default(ANNUELLE)
+  public_cible        String?             @default("Parents")
+  cible_reponses      Int?                @default(20)
+  date_debut          DateTime            @default(now())
+  date_fin            DateTime?
+  actif               Boolean             @default(true)
+  anonyme             Boolean             @default(true)
+  token               String              @unique @default(uuid())
+  emails_notification String[]            @default([])
+  date_creation       DateTime            @default(now())
+  updated_at          DateTime            @updatedAt
+
+  structure           Structure           @relation(fields: [structure_id], references: [id], onDelete: Cascade)
+  questions           QuestionEnquete[]
+  reponses            ReponseEnquete[]
+
+  @@index([structure_id])
+  @@index([token])
+}
+
+model QuestionEnquete {
+  id            String              @id @default(uuid())
+  enquete_id    String
+  type_question TypeQuestionEnquete @default(NOTE_5)
+  axe_qualite   AxeQualite?
+  libelle       String
+  description   String?
+  options       String[]            @default([])
+  obligatoire   Boolean             @default(true)
+  ordre         Int                 @default(0)
+
+  enquete       EnqueteSatisfaction @relation(fields: [enquete_id], references: [id], onDelete: Cascade)
+  valeurs       ValeurReponse[]
+
+  @@index([enquete_id])
+  @@index([ordre])
+}
+
+model ReponseEnquete {
+  id              String              @id @default(uuid())
+  enquete_id      String
+  parent_nom      String?
+  parent_email    String?
+  date_soumission DateTime            @default(now())
+
+  enquete         EnqueteSatisfaction @relation(fields: [enquete_id], references: [id], onDelete: Cascade)
+  valeurs         ValeurReponse[]
+
+  @@index([enquete_id])
+  @@index([enquete_id, parent_email])
+}
+
+model ValeurReponse {
+  id             String              @id @default(uuid())
+  reponse_id     String
+  question_id    String
+  valeur_note    Int?
+  valeur_booleen Boolean?
+  valeur_texte   String?
+
+  reponse        ReponseEnquete      @relation(fields: [reponse_id], references: [id], onDelete: Cascade)
+  question       QuestionEnquete     @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  @@index([reponse_id])
+  @@index([question_id])
+}
+
