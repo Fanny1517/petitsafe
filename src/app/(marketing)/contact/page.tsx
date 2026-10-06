@@ -53,10 +53,10 @@ export default function ContactPage() {
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(37,99,235,0.06),transparent_55%)]"></div>
           <div className="mx-auto max-w-5xl px-5 md:px-8 text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl lg:text-6xl leading-tight">
-              Contactez-nous
+              Demander une démo de RZPan'Da
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 md:text-xl leading-relaxed">
-              Une question sur la conformité réglementaire, l'abonnement ou besoin d'une démonstration personnalisée ? Notre équipe vous répond sous 24h.
+              Vous souhaitez voir comment RZPan'Da s’intègre à l’organisation de votre crèche ou de votre réseau ? Présentez-nous votre besoin : notre équipe vous recontacte pour organiser un échange.
             </p>
           </div>
         </section>

@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/seo";
 
-const rawBaseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://rzpanda.com";
-const BASE_URL = `${rawBaseUrl.replace(/\/+$/, "")}/`;
+const BASE_URL = `${SITE_URL}/`;
 
 export const metadata: Metadata = {
-  title: "RZPan'Da — Registre HACCP numerique pour creches et micro-creches",
+  // Un titre en simple chaîne annulerait le gabarit du layout racine pour les pages enfants
+  title: {
+    default: "Logiciel HACCP crèche & micro-crèche | RZPan'Da",
+    template: "%s | RZPan'Da",
+  },
   description:
-    "Conformite DDPP, tracabilite alimentaire, biberonnerie ANSES, plan de nettoyage. Le tout-en-un HACCP pour la petite enfance en France. Gratuit 14 jours.",
+    "Centralisez relevés HACCP, traçabilité alimentaire, biberonnerie et plan de nettoyage dans une application conçue pour les crèches et micro-crèches.",
   openGraph: {
-    title: "RZPan'Da — Registre HACCP numerique pour creches",
+    title: "Logiciel HACCP crèche & micro-crèche",
     description:
-      "Votre registre HACCP numerique, en 30 secondes par saisie. Conformite DDPP garantie.",
+      "Centralisez relevés HACCP, traçabilité alimentaire, biberonnerie et plan de nettoyage dans une application conçue pour les crèches et micro-crèches.",
     type: "website",
     locale: "fr_FR",
     url: BASE_URL,
@@ -18,9 +22,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RZPan'Da — HACCP numerique petite enfance",
+    title: "Logiciel HACCP crèche & micro-crèche",
     description:
-      "Registre HACCP, tracabilite alimentaire, biberonnerie ANSES. 30 secondes par saisie.",
+      "Centralisez relevés HACCP, traçabilité alimentaire, biberonnerie et plan de nettoyage dans une application conçue pour les crèches et micro-crèches.",
   },
   alternates: {
     canonical: BASE_URL,
@@ -35,10 +39,10 @@ const jsonLd = {
       name: "RZPan'Da",
       url: BASE_URL,
       description:
-        "SaaS de gestion HACCP, PMS et tracabilite alimentaire pour les creches, micro-creches, MAM et assistantes maternelles en France.",
+        "Centralisez relevés HACCP, traçabilité alimentaire, biberonnerie et plan de nettoyage dans une application conçue pour les crèches et micro-crèches.",
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+33-1-23-45-67-89",
+        telephone: "+33 7 83 46 57 48",
         contactType: "customer service",
         availableLanguage: "French",
       },
@@ -49,7 +53,7 @@ const jsonLd = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description:
-        "Registre HACCP numerique pour la petite enfance. Releves de temperature, tracabilite alimentaire, biberonnerie ANSES, plan de nettoyage, exports DDPP.",
+        "Registre HACCP numérique pour la petite enfance : relevés de température, traçabilité alimentaire, biberonnerie ANSES, plan de nettoyage et exports DDPP.",
       offers: [
         {
           "@type": "Offer",

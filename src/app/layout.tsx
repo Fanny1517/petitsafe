@@ -2,20 +2,22 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
 import { CookieBanner } from "@/components/layout/cookie-banner";
+import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "RZPan'Da — Gestion HACCP & Traçabilité Petite Enfance",
+    default: "RZPan'Da : gestion HACCP et traçabilité petite enfance",
     template: "%s | RZPan'Da",
   },
   description:
     "RZPan'Da : le SaaS de gestion HACCP, PMS et traçabilité alimentaire pour les crèches, micro-crèches, MAM et assistantes maternelles en France.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
+  // Même URL de secours que sitemap.ts et robots.ts pour éviter des canonicals en localhost
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "RZPan'Da — Gestion HACCP & Traçabilité Petite Enfance",
+    title: "RZPan'Da : gestion HACCP et traçabilité petite enfance",
     description:
-      "Conformité HACCP, traçabilité alimentaire, biberonnerie ANSES, suivi enfants — tout en un.",
+      "Conformité HACCP, traçabilité alimentaire, biberonnerie ANSES, suivi enfants : tout en un.",
     siteName: "RZPan'Da",
     type: "website",
     locale: "fr_FR",

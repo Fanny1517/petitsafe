@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 export function CTAFinal() {
   const benefits = [
     "Sans carte bancaire",
-    "Conforme décret 2025-304",
+    "Traçabilité HACCP centralisée",
     "Exports DDPP/PMI",
     "Hébergé en Europe",
   ];
@@ -28,10 +28,10 @@ export function CTAFinal() {
             id="cta-final-heading"
             className="text-4xl font-extrabold tracking-tight md:text-6xl"
           >
-            Septembre 2026 approche.
+            Passez d’une traçabilité dispersée à un suivi centralisé
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-white/90 md:text-xl">
-            Mettez-vous en conformité dès aujourd'hui. L'essai est gratuit, l'installation prend 2 minutes.
+            Testez RZPan'Da pendant 30 jours et vérifiez si l’outil correspond à l’organisation de votre structure.
           </p>
         </motion.div>
 
@@ -46,7 +46,7 @@ export function CTAFinal() {
             href="/register"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-700 transition hover:bg-white/95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-95"
           >
-            Démarrer l'essai gratuit
+            Essayer 30 jours
             <ArrowRight className="h-5 w-5" />
           </Link>
         </motion.div>

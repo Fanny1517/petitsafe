@@ -157,7 +157,7 @@ export function Pricing() {
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-blue-600 stroke-[3]" />
-                <span>Conforme décret 2025-304</span>
+                <span>Traçabilité HACCP centralisée</span>
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-blue-600 stroke-[3]" />
