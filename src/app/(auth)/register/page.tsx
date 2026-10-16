@@ -3,8 +3,7 @@
 export const dynamic = "force-dynamic";
 
 import { useState } from "react";
-import { PandaIcon } from "@/components/shared/panda-icon";
-import { LogoText } from "@/components/shared/logo-text";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -249,11 +248,17 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-rzpanda-fond flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center flex flex-col items-center">
-          <PandaIcon size={64} />
-          <h1 className="mt-3 text-3xl font-bold">
-            <LogoText />
-          </h1>
-          <p className="mt-2 text-sm text-gray-500">Créer votre compte — Étape {step}/3</p>
+          <Link href="/" aria-label="Retour à l'accueil" className="inline-block transition hover:opacity-90">
+            <Image
+              src="/rzpanda-logo.png"
+              alt="RZPan'Da"
+              width={200}
+              height={66}
+              className="h-14 w-auto object-contain"
+              priority
+            />
+          </Link>
+          <p className="mt-3 text-sm text-gray-500">Créer votre compte : Étape {step}/3</p>
         </div>
 
         {/* Progress bar */}

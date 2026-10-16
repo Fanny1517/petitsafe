@@ -8,7 +8,6 @@ export function CTAFinal() {
   const benefits = [
     "Sans carte bancaire",
     "Traçabilité HACCP centralisée",
-    "Exports DDPP/PMI",
     "Hébergé en Europe",
   ];
 
@@ -28,15 +27,15 @@ export function CTAFinal() {
             id="cta-final-heading"
             className="text-4xl font-extrabold tracking-tight md:text-6xl"
           >
-            Passez d’une traçabilité dispersée à un suivi centralisé
+            Prêt à simplifier votre suivi quotidien ?
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-white/90 md:text-xl">
-            Testez RZPan'Da pendant 30 jours et vérifiez si l’outil correspond à l’organisation de votre structure.
+            Découvrez les fonctionnalités de RZPan'Da adaptées à votre crèche ou micro-crèche.
           </p>
         </motion.div>
 
         <motion.div
-          className="mt-8 flex justify-center"
+          className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -46,7 +45,7 @@ export function CTAFinal() {
             href="/register"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-700 transition hover:bg-white/95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-95"
           >
-            Essayer 30 jours
+            Découvrir RZPan'Da en démonstration
             <ArrowRight className="h-5 w-5" />
           </Link>
         </motion.div>
@@ -58,7 +57,7 @@ export function CTAFinal() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
         >
-          Sans carte bancaire · 30 jours pleins · Annulation en 1 clic
+          Sans carte bancaire · 30 jours d'essai · Annulation en 1 clic
         </motion.p>
 
         <motion.div
