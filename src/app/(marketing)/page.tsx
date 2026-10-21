@@ -11,9 +11,9 @@ import { Footer } from "@/components/marketing/footer";
 import { buildMarketingMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMarketingMetadata({
-  title: "Logiciel HACCP crèche & micro-crèche",
+  title: "Logiciel HACCP crèche et micro-crèche",
   description:
-    "Centralisez relevés HACCP, traçabilité alimentaire, biberonnerie et plan de nettoyage dans une application conçue pour les crèches et micro-crèches.",
+    "RZPan'Da, logiciel HACCP pour crèches et micro-crèches : relevés de température, traçabilité alimentaire, biberonnerie et nettoyage. Découvrez la démo.",
   path: "/",
 });
 

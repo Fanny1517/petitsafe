@@ -10,7 +10,7 @@ import { useProfil } from "@/hooks/use-profil";
 import { useModules } from "@/hooks/use-modules";
 import { createClient } from "@/lib/supabase/client";
 import { PandaIcon } from "@/components/shared/panda-icon";
-import { LogoText } from "@/components/shared/logo-text";
+import Image from "next/image";
 import type { ModuleId } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -242,8 +242,15 @@ export function Topbar({ structures, activeStructureId, onSwitchStructure, preno
         {/* Gauche : Logo + Sélecteur structure */}
         <div className="flex items-center gap-3">
           <Link href={basePath} className="flex items-center gap-2 shrink-0">
-            <PandaIcon size={32} />
-            <LogoText className="text-xl font-bold hidden lg:inline" />
+            <PandaIcon size={30} className="lg:hidden" />
+            <Image
+              src="/rzpanda-logo.png"
+              alt="RZPan'Da"
+              width={125}
+              height={42}
+              className="h-7 w-auto object-contain hidden lg:inline-block"
+              priority
+            />
           </Link>
 
           <div className="h-6 w-px bg-gray-200 hidden sm:block" />
