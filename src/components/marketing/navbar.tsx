@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -31,67 +32,15 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" aria-label="Retour en haut">
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 100 100"
-            role="img"
-            aria-label="Mascotte panda RZPan'Da"
-          >
-            <title>Mascotte panda RZPan'Da</title>
-            <circle cx="50" cy="52" r="46" fill="rgba(37,99,235,0.15)"></circle>
-            <circle cx="50" cy="52" r="38" fill="rgba(37,99,235,0.25)"></circle>
-            <circle cx="29" cy="33" r="9" fill="#1A202C"></circle>
-            <circle cx="71" cy="33" r="9" fill="#1A202C"></circle>
-            <ellipse cx="50" cy="55" rx="26" ry="24" fill="#FAFBFC"></ellipse>
-            <ellipse
-              cx="40"
-              cy="51"
-              rx="7"
-              ry="8"
-              fill="#1A202C"
-              transform="rotate(-12 40 51)"
-            ></ellipse>
-            <ellipse
-              cx="60"
-              cy="51"
-              rx="7"
-              ry="8"
-              fill="#1A202C"
-              transform="rotate(12 60 51)"
-            ></ellipse>
-            <circle cx="41" cy="51" r="2.2" fill="#FAFBFC"></circle>
-            <circle cx="59" cy="51" r="2.2" fill="#FAFBFC"></circle>
-            <ellipse cx="50" cy="62" rx="3.8" ry="2.6" fill="#B49090"></ellipse>
-            <path
-              d="M50 65 Q 47 68 44 66 M50 65 Q 53 68 56 66"
-              stroke="#1A202C"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              fill="none"
-            ></path>
-            <g transform="translate(50 14) rotate(-18)">
-              <path
-                d="M0 0 C 8 -4, 16 0, 14 10 C 6 12, -2 8, 0 0 Z"
-                fill="#22C55E"
-              ></path>
-              <line
-                x1="2"
-                y1="4"
-                x2="12"
-                y2="-1"
-                stroke="#16A34A"
-                strokeWidth="0.8"
-              ></line>
-            </g>
-          </svg>
-          <span className="font-bold tracking-tight text-xl">
-            <span className="text-blue-600">RZ</span>
-            <span className="text-gray-900">Pan</span>
-            <span className="text-blue-600">'</span>
-            <span className="text-gray-900">Da</span>
-          </span>
+        <Link href="/" className="flex items-center gap-2" aria-label="Accueil RZPan'Da">
+          <Image
+            src="/rzpanda-logo.png"
+            alt="RZPan'Da"
+            width={160}
+            height={53}
+            className="h-10 md:h-11 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}

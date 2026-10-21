@@ -32,7 +32,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/rzpanda-logo.svg",
+    icon: "/rzpanda-icon.png",
+    apple: "/rzpanda-icon.png",
   },
 };
 

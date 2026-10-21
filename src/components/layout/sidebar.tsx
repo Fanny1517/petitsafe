@@ -1,7 +1,7 @@
 "use client";
 
 import { PandaIcon } from "@/components/shared/panda-icon";
-import { LogoText } from "@/components/shared/logo-text";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -218,10 +218,20 @@ export function Sidebar({ structureId, structureNom, prenom, modulesActifs }: Si
   return (
     <aside className={cn("hidden md:flex flex-col h-screen bg-white border-r border-gray-200 transition-all duration-200 shrink-0", collapsed ? "w-[72px]" : "w-[240px]")}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100">
-        <div className="flex items-center gap-2">
-          <PandaIcon size={32} />
-          {!collapsed && <LogoText className="text-xl font-bold" />}
-        </div>
+        <Link href="/dashboard" className="flex items-center gap-2 overflow-hidden">
+          {collapsed ? (
+            <PandaIcon size={32} />
+          ) : (
+            <Image
+              src="/rzpanda-logo.png"
+              alt="RZPan'Da"
+              width={130}
+              height={43}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+          )}
+        </Link>
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400" aria-label={collapsed ? "Ouvrir le menu" : "Réduire le menu"}>
           <ChevronLeft size={18} className={cn("transition-transform", collapsed && "rotate-180")} />
         </button>

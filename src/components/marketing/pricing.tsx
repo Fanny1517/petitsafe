@@ -91,7 +91,7 @@ export function Pricing() {
               Un seul prix. Sans engagement.
             </motion.h2>
             <p className="mt-4 text-lg text-gray-500">
-              Pas de palier complexe, pas de devis caché, pas de surprise.
+              30 jours d'essai gratuit · Sans carte bancaire
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export function Pricing() {
                     30 jours d'essai gratuit
                   </span>
                   <span className="text-lg text-gray-400 font-medium mt-1">
-                    sans carte bancaire requis
+                    sans carte bancaire requise
                   </span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export function Pricing() {
                   href="/register"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-blue-700 hover:shadow-lg active:scale-95 w-full sm:w-auto"
                 >
-                  Démarrer l'essai gratuit 30 jours
+                  Démarrer l'essai gratuit : 30 jours
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
@@ -138,14 +138,17 @@ export function Pricing() {
             </div>
           </motion.div>
 
-          <div className="mx-auto mt-8 max-w-2xl space-y-2 text-center text-sm font-medium text-gray-500">
-            <p>
+          <div className="mx-auto mt-8 max-w-2xl space-y-3 text-center text-sm font-medium text-gray-500">
+            <div className="rounded-xl border border-dashed border-gray-300 bg-white/80 p-4 text-gray-600">
               <span aria-hidden="true" className="mr-1.5">💼</span>
-              <em>Réseau de plusieurs structures ?</em> Contactez-nous pour une offre multi-structures adaptée.
-            </p>
-            <p>
+              Vous gérez plusieurs micro-crèches ou un réseau de crèches ?{" "}
+              <Link href="/contact/" className="font-semibold text-blue-600 underline hover:text-blue-700">
+                Échangeons sur les besoins de suivi de vos structures et sur une offre adaptée.
+              </Link>
+            </div>
+            <p className="text-xs text-gray-400">
               <span aria-hidden="true" className="mr-1.5">📞</span>
-              <em>Formation en visioconférence personnalisée</em> — offerte pour le lancement.
+              <em>Formation en visioconférence personnalisée</em> : offerte pour le lancement.
             </p>
           </div>
 
@@ -158,10 +161,6 @@ export function Pricing() {
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-blue-600 stroke-[3]" />
                 <span>Traçabilité HACCP centralisée</span>
-              </li>
-              <li className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-blue-600 stroke-[3]" />
-                <span>Exports DDPP/PMI</span>
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-blue-600 stroke-[3]" />

@@ -46,21 +46,21 @@ export function Hero() {
             className="inline-flex w-fit items-center gap-2 rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-700 border border-blue-100"
           >
             <Zap className="h-3.5 w-3.5 fill-blue-600 stroke-blue-600" />
-            HACCP, traçabilité et qualité d’accueil pour les crèches
+            HACCP, traçabilité alimentaire et qualité d'accueil en crèche
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
             className="mt-6 text-[38px] font-extrabold leading-[1.1] tracking-tight text-gray-900 md:text-[54px] lg:text-[62px]"
           >
-            Logiciel HACCP pour crèches et micro-crèches
+            Logiciel HACCP pour crèches, micro-crèches et EAJE
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
             className="mt-6 max-w-xl text-lg text-gray-600 md:text-xl md:leading-[1.5]"
           >
-            RZPan'Da centralise les relevés HACCP, la traçabilité alimentaire, la biberonnerie, le plan de nettoyage et le suivi des enfants. Vos équipes retrouvent leurs historiques et leurs preuves dans un même environnement, sans multiplier les classeurs et les tableaux.
+            RZPan'Da est un logiciel de gestion HACCP pensé pour les professionnels de la petite enfance. Il centralise les relevés de température, la traçabilité alimentaire, la biberonnerie, le plan de nettoyage et le suivi quotidien des enfants en crèche ou micro-crèche. Les équipes retrouvent leurs historiques dans une seule application, sans multiplier les classeurs et les tableaux.
           </motion.p>
 
           <motion.div
@@ -97,10 +97,6 @@ export function Hero() {
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4.5 w-4.5 text-blue-600 stroke-[3]" />
                 <span>Traçabilité HACCP centralisée</span>
-              </li>
-              <li className="inline-flex items-center gap-1.5">
-                <Check className="h-4.5 w-4.5 text-blue-600 stroke-[3]" />
-                <span>Exports DDPP/PMI</span>
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Check className="h-4.5 w-4.5 text-blue-600 stroke-[3]" />

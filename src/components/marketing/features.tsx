@@ -8,20 +8,20 @@ export function Features() {
     {
       icon: <FileX className="h-6 w-6" />,
       color: "text-red-600 bg-red-50",
-      title: "Le classeur HACCP qui déborde",
-      description: "Des relevés de température griffonnés sur post-it, oubliés certains jours. Quand la DDPP arrive, panique : il manque trois semaines.",
+      title: "Le classeur HACCP de la crèche qui déborde",
+      description: "Des relevés sur papier difficiles à retrouver au moment de préparer un contrôle DDPP ou PMI.",
     },
     {
       icon: <LayoutGrid className="h-6 w-6" />,
       color: "text-amber-600 bg-amber-50",
       title: "Excel partout, rien de connecté",
-      description: "Les transmissions sur un tableau, les menus sur un autre, les réceptions marchandises dans un cahier. Personne ne sait où est quoi.",
+      description: "Les transmissions, menus et réceptions sont répartis entre plusieurs supports.",
     },
     {
       icon: <ShieldAlert className="h-6 w-6" />,
       color: "text-red-600 bg-red-50",
       title: "La peur du contrôle inopiné",
-      description: "Vous savez qu’il y a des trous dans la traçabilité. Vous savez que les nouvelles réglementations durcissent les règles. Vous n’avez pas le temps de tout reprendre.",
+      description: "Les exigences d'hygiène, de traçabilité et d'organisation documentaire demandent un suivi régulier, sans que vous ayez toujours le temps de tout centraliser.",
     },
   ];
 
@@ -29,44 +29,44 @@ export function Features() {
     {
       icon: <Thermometer className="h-6 w-6" />,
       color: "text-red-600 bg-red-50",
-      title: "Relevés de température",
-      description: "Frigos, congélateurs, plats témoins. Alertes automatiques et immédiates en cas de dépassement de la tolérance.",
-      badge: "✓ Export DDPP",
+      title: "Relevés et contrôle de température en crèche",
+      description: "Consignez les températures des réfrigérateurs et congélateurs, consultez l'historique des mesures et suivez les alertes selon les seuils configurés.",
+      badge: "✓ Relevés et alertes",
     },
     {
       icon: <Package className="h-6 w-6" />,
       color: "text-blue-600 bg-blue-50",
-      title: "Traçabilité alimentaire",
-      description: "Réception de marchandises, numéros de lots, gestion des DLC/DLUO. Saisie manuelle facilitée et suivi sans faille.",
-      badge: "✓ Export DDPP",
+      title: "Traçabilité alimentaire en crèche",
+      description: "Enregistrez la réception des repas et marchandises, les numéros de lots et les dates limites pour retrouver les informations utiles lors de vos vérifications.",
+      badge: "✓ DLC et lots",
     },
     {
       icon: <Baby className="h-6 w-6" />,
       color: "text-pink-600 bg-pink-50",
-      title: "Biberonnerie ANSES",
-      description: "Préparation des biberons, horodatage, durée de conservation de 1h et gestion du lait maternel ou infantile selon les recommandations de l'ANSES.",
-      badge: "✓ Norme ANSES",
+      title: "Traçabilité de la biberonnerie",
+      description: "Suivez la préparation des biberons, les horaires et les informations relatives au lait infantile ou maternel, selon les protocoles appliqués dans votre établissement.",
+      badge: "✓ Biberonnerie",
     },
     {
       icon: <Sparkles className="h-6 w-6" />,
       color: "text-green-600 bg-green-50",
-      title: "Plan de nettoyage",
-      description: "Suivi des zones, fréquences de nettoyage, émargement horodaté et sécurisé par chaque professionnel de l'équipe.",
-      badge: "✓ Export DDPP",
+      title: "Plan de nettoyage et de désinfection en crèche",
+      description: "Organisez les zones et fréquences d'entretien, consignez les opérations réalisées et conservez un historique horodaté pour le suivi de l'équipe.",
+      badge: "✓ Nettoyage et émargement",
     },
     {
       icon: <Users className="h-6 w-6" />,
       color: "text-indigo-600 bg-indigo-50",
-      title: "Suivi enfants",
-      description: "Repas, siestes, changes, soins et événements. Centralisez tout dans l'appli et générez une fiche de transmission claire pour chaque famille.",
-      badge: "✓ Pour l'équipe & parents",
+      title: "Suivi quotidien des enfants",
+      description: "Repas, siestes, changes et événements : centralisez les informations utiles aux transmissions entre professionnels et familles.",
+      badge: "✓ Équipe et familles",
     },
     {
       icon: <FileDown className="h-6 w-6" />,
       color: "text-purple-600 bg-purple-50",
-      title: "Exports DDPP / PMI",
-      description: "Générez un dossier d'exportation PDF complet en 3 clics, couvrant jusqu'à 12 mois glissants d'historique de traçabilité.",
-      badge: "✓ Historique et exports disponibles",
+      title: "Historique et exports pour les contrôles DDPP / PMI",
+      description: "Retrouvez vos relevés et documents de traçabilité dans un historique centralisé et préparez les exports PDF utiles aux vérifications.",
+      badge: "✓ Exports DDPP / PMI",
     },
   ];
 
@@ -143,10 +143,10 @@ export function Features() {
             variants={scrollVariants}
           >
             <h2 className="text-3xl font-extrabold text-gray-900 md:text-5xl tracking-tight">
-              Centralisez votre traçabilité HACCP en crèche
+              Une application HACCP pour centraliser la traçabilité en crèche
             </h2>
             <p className="mt-4 text-lg text-gray-500">
-              Pensé avec et pour les professionnels de la petite enfance en crèche et MAM.
+              Pensée pour les crèches, micro-crèches, EAJE et MAM, RZPan'Da réunit les principales tâches de suivi sanitaire et de traçabilité dans une seule application.
             </p>
           </motion.div>
 

@@ -7,16 +7,36 @@ import { motion, AnimatePresence } from "framer-motion";
 export function FAQ() {
   const faqs = [
     {
-      question: "RZPan'Da garantit-il à lui seul la conformité de ma crèche ?",
-      answer: "Non. RZPan'Da est un outil de gestion et de traçabilité. Il aide à centraliser des relevés, historiques et justificatifs, mais la structure reste responsable de l’application des textes, procédures et protocoles qui lui sont applicables.",
+      question: "Un logiciel HACCP suffit-il à assurer la conformité de ma crèche ?",
+      answer: "Non. RZPan'Da facilite la saisie, la centralisation et la consultation de certaines données de traçabilité. La conformité dépend également des procédures de votre établissement, de leur application et des exigences réglementaires qui vous concernent.",
     },
     {
-      question: "Mon équipe n’est pas à l’aise avec le digital.",
+      question: "Comment RZPan'Da aide-t-il à organiser les informations du plan de maîtrise sanitaire (PMS) ?",
+      answer: "L'application permet de centraliser plusieurs suivis utiles à votre organisation sanitaire, notamment les relevés de température, la traçabilité alimentaire et le nettoyage. Elle ne remplace pas à elle seule l'élaboration et la mise en œuvre de votre PMS.",
+    },
+    {
+      question: "Puis-je suivre la biberonnerie et les informations de traçabilité des biberons ?",
+      answer: "RZPan'Da permet de consigner les informations de préparation et de suivi de la biberonnerie décrites dans l'application. Les protocoles de conservation et de manipulation applicables restent à définir et vérifier selon les situations et recommandations en vigueur.",
+    },
+    {
+      question: "Puis-je préparer mes documents pour un contrôle DDPP ou PMI ?",
+      answer: "RZPan'Da regroupe les historiques et propose des exports de données de suivi. Ces documents peuvent faciliter vos préparatifs, sans garantir le résultat d'un contrôle ni remplacer les justificatifs propres à votre structure.",
+    },
+    {
+      question: "RZPan'Da convient-il aux micro-crèches et aux réseaux de plusieurs structures ?",
+      answer: "RZPan'Da s'adresse notamment aux crèches et micro-crèches. Pour un réseau de plusieurs établissements, contactez notre équipe afin d'étudier les modalités adaptées à votre organisation.",
+    },
+    {
+      question: "Le module RZPan'Da Qualité est-il déjà disponible ?",
+      answer: "RZPan'Da Qualité figure dans notre feuille de route. Ses fonctionnalités et sa disponibilité seront confirmées lors de son lancement.",
+    },
+    {
+      question: "Mon équipe n'est pas à l'aise avec le digital.",
       answer: "L'application a été pensée pour le terrain, pas pour des ingénieurs. Les saisies se font en 30 secondes chrono avec de grands boutons tactiles. De plus, chaque professionnel utilise un code PIN individuel très simple pour signer ses actions, éliminant le besoin de gérer des mots de passe complexes au quotidien.",
     },
     {
       question: "Quelles données sont stockées et où ?",
-      answer: "Toutes vos données (fiches enfants, relevés HACCP) sont stockées de façon sécurisée en Europe sur des serveurs conformes au RGPD. Nous effectuons des sauvegardes automatiques quotidiennes pour vous garantir un historique de 12 mois glissants sans risque de perte.",
+      answer: "Toutes vos données (fiches enfants, relevés HACCP) sont stockées de façon sécurisée en Europe sur des serveurs conformes au RGPD. Nous effectuons des sauvegardes automatiques quotidiennes pour vous garantir un historique sans risque de perte.",
     },
     {
       question: "Je peux importer mes enfants ou mes équipements existants ?",
@@ -24,27 +44,15 @@ export function FAQ() {
     },
     {
       question: "Ça fonctionne sur tablette ? Smartphone ?",
-      answer: "Oui, responsive complet. Les équipes utilisent principalement tablette en salle. Les gestionnaires utilisent ordinateur pour les exports. Pas d’appli native à télécharger, tout dans le navigateur.",
+      answer: "Oui, responsive complet. Les équipes utilisent principalement la tablette en salle. Les gestionnaires utilisent l'ordinateur pour les exports. Aucune application native à télécharger, tout se passe directement dans votre navigateur.",
     },
     {
-      question: "Qu’est-ce qui se passe après les 30 jours d’essai ?",
-      answer: "Rien d’automatique. L’essai se termine, vous décidez. Si vous ne faites rien, le compte passe en mode lecture (vos données restent accessibles 6 mois). Aucun prélèvement sans votre accord explicite.",
+      question: "Qu'est-ce qui se passe après les 30 jours d'essai ?",
+      answer: "Rien d'automatique. L'essai se termine, vous décidez. Si vous ne faites rien, le compte passe en mode lecture (vos données restent accessibles 6 mois). Aucun prélèvement sans votre accord explicite.",
     },
     {
-      question: "Vous avez combien de clients aujourd’hui ?",
-      answer: "Nous sommes en phase early access avec nos premières structures pilotes. C’est pour cela que les 20 premiers clients bénéficient de 3 mois gratuits et d’un accompagnement direct du fondateur.",
-    },
-    {
-      question: "Mon réseau a 4 micro-crèches, comment ça marche ?",
-      answer: "Chaque structure a son abonnement indépendant. Un même utilisateur (vous, la gestionnaire) peut basculer entre les 4 structures d’un clic. Les exports DDPP sont par structure (comme le demande la réglementation).",
-    },
-    //{
-    //question: "Différence concrète avec Meeko ou Leia ?",
-    // answer: "Meeko ne fait PAS le HACCP (températures, traçabilité). Leia fait le HACCP mais n’a ni portail parents ni suivi enfants détaillé. RZPan’Da est le seul à tout combiner, à un prix plus bas.",
-    //},
-    {
-      question: "Puis-je parler à une vraie personne avant de m’inscrire ?",
-      answer: "Oui. Prenez 20 minutes avec le fondateur via notre Calendly. Pas de commercial, pas de script. Juste une conversation pour voir si l’outil vous correspond.",
+      question: "Puis-je parler à une vraie personne avant de m'inscrire ?",
+      answer: "Oui. Prenez rendez-vous avec notre équipe via notre page contact. Pas de script commercial agressif : juste un échange direct pour voir si l'outil correspond aux besoins de votre établissement.",
     },
   ];
 
@@ -59,7 +67,7 @@ export function FAQ() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-3xl font-extrabold text-gray-900 md:text-5xl tracking-tight">
-            Les questions qu’on vous pose tous les jours.
+            Les questions qu'on vous pose tous les jours
           </h2>
         </motion.div>
 
