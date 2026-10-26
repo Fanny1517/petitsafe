@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookiePreferencesButton } from "@/components/layout/cookie-preferences-button";
 
 export function Footer() {
   return (
@@ -15,6 +16,8 @@ export function Footer() {
         <Link href="/confidentialite/" className="hover:text-rzpanda-primary hover:underline">
           Confidentialité
         </Link>
+        <span aria-hidden="true">|</span>
+        <CookiePreferencesButton />
       </nav>
     </footer>
   );

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Mail, Linkedin, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { demanderGuideDDPP } from "@/app/actions/newsletter";
+import { CookiePreferencesButton } from "@/components/layout/cookie-preferences-button";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -218,7 +219,22 @@ export function Footer() {
               className="h-8 md:h-9 w-auto object-contain"
             />
           </div>
-          <p className="text-sm text-gray-400">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-500">
+            <Link href="/mentions-legales/" className="transition hover:text-gray-900">
+              Mentions légales
+            </Link>
+            <span aria-hidden="true" className="text-gray-300">·</span>
+            <Link href="/cgu/" className="transition hover:text-gray-900">
+              CGU
+            </Link>
+            <span aria-hidden="true" className="text-gray-300">·</span>
+            <Link href="/confidentialite/" className="transition hover:text-gray-900">
+              Confidentialité
+            </Link>
+            <span aria-hidden="true" className="text-gray-300">·</span>
+            <CookiePreferencesButton className="transition hover:text-gray-900" />
+          </div>
+          <p className="text-xs text-gray-400">
             © 2026 RZPan'Da · Conçu en France 🇫🇷 · rzpanda.com
           </p>
         </div>
