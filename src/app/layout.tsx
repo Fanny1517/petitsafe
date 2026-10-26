@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
-import { CookieBanner } from "@/components/layout/cookie-banner";
+import { CookieConsentBanner } from "@/components/layout/cookie-consent";
+import { TrackingScripts } from "@/components/layout/tracking-scripts";
 import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -44,10 +45,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        <script
+          id="google-consent-mode-v2-default"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 500
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-rzpanda-fond antialiased">
         <div className="flex-1">{children}</div>
         <Footer />
-        <CookieBanner />
+        <CookieConsentBanner />
+        <TrackingScripts />
         <Toaster
           position="top-right"
           richColors
