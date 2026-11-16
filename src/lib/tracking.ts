@@ -2,10 +2,54 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
-    fbq?: unknown;
+    fbq?: (...args: unknown[]) => void;
     _fbq?: unknown;
     lintrk?: unknown;
     _linkedin_data_partner_ids?: string[];
+  }
+}
+
+let metaConsentEventSent = false;
+let contactSuccessEventSent = false;
+
+/**
+ * Reinitialise le verrou d'envoi de l'evenement de consentement Meta (tests unitaires).
+ */
+export function resetMetaConsentState() {
+  metaConsentEventSent = false;
+}
+
+/**
+ * Reinitialise le verrou d'envoi de l'evenement de conversion contact (tests unitaires).
+ */
+export function resetContactSuccessState() {
+  contactSuccessEventSent = false;
+}
+
+/**
+ * Notifie GTM et Meta Pixel lors de l'accord ou du retrait du consentement marketing.
+ */
+export function notifyMetaConsent(marketingGranted: boolean) {
+  if (typeof window === "undefined") return;
+
+  if (marketingGranted) {
+    if (typeof window.fbq === "function") {
+      window.fbq("consent", "grant");
+    }
+
+    if (!metaConsentEventSent) {
+      metaConsentEventSent = true;
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "rz_marketing_consent_granted",
+      });
+    }
+    return;
+  }
+
+  metaConsentEventSent = false;
+  if (typeof window.fbq === "function") {
+    window.fbq("consent", "revoke");
   }
 }
 
@@ -104,4 +148,36 @@ export function initLinkedInInsight(partnerId?: string) {
 export function initMarketingTrackers() {
   initMetaPixel();
   initLinkedInInsight();
+}
+
+/**
+ * Pousse l'evenement GTM d'activation de compte dans le dataLayer apres confirmation serveur.
+ */
+export function trackRegistrationActivated(
+  registrationType: "trial" = "trial"
+) {
+  if (typeof window === "undefined") return;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "rz_registration_activated",
+    registration_type: registrationType,
+  });
+}
+
+/**
+ * Pousse une seule fois l'evenement GTM de conversion du formulaire de contact dans le dataLayer,
+ * sans aucune donnee personnelle.
+ */
+export function trackContactSuccess() {
+  if (typeof window === "undefined") return;
+  if (contactSuccessEventSent) return;
+
+  contactSuccessEventSent = true;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "rz_contact_success",
+    form_id: "contact",
+    lead_type: "demo",
+  });
 }

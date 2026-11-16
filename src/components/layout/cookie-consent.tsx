@@ -3,10 +3,24 @@
 import { useEffect } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import "vanilla-cookieconsent/dist/cookieconsent.css";
-import { initMarketingTrackers, updateGtagConsent } from "@/lib/tracking";
+import {
+  initMarketingTrackers,
+  notifyMetaConsent,
+  updateGtagConsent,
+} from "@/lib/tracking";
 
 export function CookieConsentBanner() {
   useEffect(() => {
+    const syncConsent = () => {
+      const analytics = CookieConsent.acceptedCategory("analytics");
+      const marketing = CookieConsent.acceptedCategory("marketing");
+      updateGtagConsent(analytics, marketing);
+      notifyMetaConsent(marketing);
+      if (marketing) {
+        initMarketingTrackers();
+      }
+    };
+
     CookieConsent.run({
       guiOptions: {
         consentModal: {
@@ -103,22 +117,8 @@ export function CookieConsentBanner() {
           },
         },
       },
-      onConsent: () => {
-        const analytics = CookieConsent.acceptedCategory("analytics");
-        const marketing = CookieConsent.acceptedCategory("marketing");
-        updateGtagConsent(analytics, marketing);
-        if (marketing) {
-          initMarketingTrackers();
-        }
-      },
-      onChange: () => {
-        const analytics = CookieConsent.acceptedCategory("analytics");
-        const marketing = CookieConsent.acceptedCategory("marketing");
-        updateGtagConsent(analytics, marketing);
-        if (marketing) {
-          initMarketingTrackers();
-        }
-      },
+      onConsent: syncConsent,
+      onChange: syncConsent,
     });
   }, []);
 
