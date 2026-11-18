@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
 import { envoyerMessageContact } from "@/app/actions/contact";
+import { trackContactSuccess } from "@/lib/tracking";
 
 export default function ContactPage() {
   const [nom, setNom] = useState("");
@@ -15,18 +16,24 @@ export default function ContactPage() {
   const [website, setWebsite] = useState(""); // Champ honeypot anti-spam
   const [isPending, setIsPending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current || isPending) return;
     if (!nom || !email || !sujet || !message) {
       toast.error("Veuillez remplir tous les champs obligatoires.");
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsPending(true);
     try {
       const res = await envoyerMessageContact({ nom, email, sujet, message, website });
       if (res.success) {
+        if (!website.trim()) {
+          trackContactSuccess();
+        }
         setIsSuccess(true);
         toast.success("Votre message a été envoyé avec succès !");
         setNom("");
@@ -40,6 +47,7 @@ export default function ContactPage() {
     } catch {
       toast.error("Une erreur inattendue est survenue.");
     } finally {
+      isSubmittingRef.current = false;
       setIsPending(false);
     }
   };

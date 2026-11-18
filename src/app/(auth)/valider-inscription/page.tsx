@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { validerInscription, type ValidationResult } from "@/app/actions/valider-inscription";
+import { trackRegistrationActivated } from "@/lib/tracking";
 import { CheckCircle2, AlertTriangle, Loader2, ArrowRight, Key, Sparkles } from "lucide-react";
 
 function ValiderInscriptionContent() {
@@ -33,6 +34,9 @@ function ValiderInscriptionContent() {
       try {
         const res = await validerInscription(token!);
         setResult(res);
+        if (res.success) {
+          trackRegistrationActivated("trial");
+        }
       } catch (err) {
         setResult({
           success: false,
